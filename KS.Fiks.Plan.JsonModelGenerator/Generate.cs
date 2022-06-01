@@ -22,8 +22,6 @@ static class Generator
         //const string outputFolder = "Models";
         //Directory.CreateDirectory(outputFolder);
 
-        outputFolder += "Models";
-        
         var schemaFolder = new DirectoryInfo(sourcePath);
         var schemasToGenerate = schemaFolder
             .GetFiles()
@@ -62,9 +60,9 @@ static class Generator
             generator.Settings.Namespace = $"{commonNamespace}.{namespacePrefix}";
             var classAsString = generator.GenerateFile();
             Console.Out.WriteLine($"file: {classAsString}");
-            Directory.CreateDirectory($"./{outputFolder}/{namespacePrefix}/");
+            Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/");
             //TODO Hente filnavn fra title i hvert schema i stedet
-            File.WriteAllText($"./{outputFolder}/{namespacePrefix}/{ToUpper(classFilename)}.cs", classAsString);
+            File.WriteAllText($"./{outputFolder}/Models/{namespacePrefix}/{ToUpper(classFilename)}.cs", classAsString);
         }
     }
 

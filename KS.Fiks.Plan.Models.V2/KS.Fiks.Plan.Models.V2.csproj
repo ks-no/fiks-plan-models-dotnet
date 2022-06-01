@@ -7,4 +7,8 @@
         <RootNamespace>KS.Fiks.Arkiv.Models.V1</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
 </Project>
