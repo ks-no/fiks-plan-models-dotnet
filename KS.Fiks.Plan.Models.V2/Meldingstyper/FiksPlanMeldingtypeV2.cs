@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace KS.Fiks.Plan.Models.V2.Meldingstyper
 {
-    public class FiksPlanMeldingtyper
+    public class FiksPlanMeldingtypeV2
     {
         // Forespørsler-innsyn
         public const string FinnPlanerForMatrikkelenhet = "no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.finn";
