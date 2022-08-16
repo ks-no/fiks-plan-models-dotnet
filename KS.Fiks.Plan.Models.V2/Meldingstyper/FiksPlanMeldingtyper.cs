@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace KS.Fiks.Arkiv.Models.V1.Meldingstyper
+namespace KS.Fiks.Arkiv.Models.V2.Meldingstyper
 {
     public class FiksPlanMeldingtyper
     {
