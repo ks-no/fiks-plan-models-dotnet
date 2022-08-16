@@ -1,13 +1,41 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>KS.Fiks.Arkiv.Models.V1</RootNamespace>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Title>KS.Fiks.Plan.Models.V2</Title>
+        <Authors>KS - Kommunesektorens Organisasjon</Authors>
+        <Company>KS - Kommunesektorens Organisasjon</Company>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageIcon>KS.png</PackageIcon>
+        <RepositoryUrl>https://github.com/ks-no/fiks-plan-models-dotnet</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>FIKS</PackageTags>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <VersionPrefix>0.0.1</VersionPrefix>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>KS.Fiks.Arkiv.Models.V1</PackageId>
+        <Description>C# klasser som følger json-skjema spesifisert i https://github.com/ks-no/fiks-plan-specification.</Description>
+        <PackageProjectUrl>https://github.com/ks-no/fiks-arkiv-models-dotnet</PackageProjectUrl>
+        <AssemblyName>KS.Fiks.Plan.Models.V2</AssemblyName>
+        <RootNamespace>KS.Fiks.Plan.Models.V2</RootNamespace>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>fiks-io-strongly-named-key.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>
+        <EmbeddedResource Include="Schema/V2/*.json" />
+<!--        <EmbeddedResource Include="Schema/V1/meldingstyper/meldingstyper.json" />-->
+        <None Include="KS.png">
+            <Pack>true</Pack>
+            <PackagePath>/</PackagePath>
+        </None>
+        <None Include="LICENSE" Pack="true" PackagePath="" />
+        <None Include="README.md" Pack="true" PackagePath="" />
+        <None Include="fiks-io-strongly-named-key.snk">
+            <Link>fiks-io-strongly-named-key.snk</Link>
+        </None>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 

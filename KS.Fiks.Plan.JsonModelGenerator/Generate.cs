@@ -57,11 +57,12 @@ static class Generator
             }
             
             var generator = new CSharpGenerator(schemaFile);
-            generator.Settings.Namespace = $"{commonNamespace}.{namespacePrefix}";
+            generator.Settings.Namespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}";
+            generator.Settings.InlineNamedAny = true;
             var classAsString = generator.GenerateFile();
             Console.Out.WriteLine($"file: {classAsString}");
             Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/");
-            //TODO Hente filnavn fra title i hvert schema i stedet
+            //TODO Hente filnavn fra title i hvert schema i stedet?
             File.WriteAllText($"./{outputFolder}/Models/{namespacePrefix}/{ToUpper(classFilename)}.cs", classAsString);
         }
     }
