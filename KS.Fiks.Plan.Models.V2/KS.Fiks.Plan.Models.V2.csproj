@@ -14,7 +14,7 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <VersionPrefix>0.0.1</VersionPrefix>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageId>KS.Fiks.Arkiv.Models.V1</PackageId>
+        <PackageId>KS.Fiks.Plan.Models.V2</PackageId>
         <Description>C# klasser som følger json-skjema spesifisert i https://github.com/ks-no/fiks-plan-specification.</Description>
         <PackageProjectUrl>https://github.com/ks-no/fiks-arkiv-models-dotnet</PackageProjectUrl>
         <AssemblyName>KS.Fiks.Plan.Models.V2</AssemblyName>
