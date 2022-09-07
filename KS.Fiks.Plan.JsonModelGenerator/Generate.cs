@@ -13,6 +13,7 @@ static class Generator
     const string feilmeldingNamespace = "feilmelding";
     const string oppdateringNamespace = "oppdatering";
     const string innsynNamespace = "innsyn";
+    const string fellesNamespace = "felles";
     
     public static void Generate(string sourcePath, string outputFolder)
     {
@@ -29,9 +30,12 @@ static class Generator
             .Select(file => Path.Combine(sourcePath, file.Name));
 
         //var schemaFilenames = Directory.GetFiles(@"./Schema");
-
+        
         foreach (var schemaFilename in schemasToGenerate)
         {
+            if(!schemaFilename.Contains("no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.schema"))
+                continue;
+            
             Console.WriteLine($"Genererer kode basert på json schema {schemaFilename}");
             var schemaFile =
                 JsonSchema.FromFileAsync(schemaFilename).Result;
@@ -50,20 +54,52 @@ static class Generator
             {
                 namespacePrefix = innsynNamespace;
                 classFilename = GetClassName(schemaFilename, innsynNamespace);
+            } else if (schemaFilename.Contains($".{fellesNamespace}."))
+            {
+                namespacePrefix = fellesNamespace;
+                classFilename = GetClassName(schemaFilename, fellesNamespace);
             }
             else
             {
                 throw new NotSupportedException($"Json schema filen {schemaFilename} tilhører ikke noe tidligere kjent namespace. Sjekk om det bør opprettes et nytt eller om denne skal tilhøre en av de eksiterende namespace.");
             }
             
-            var generator = new CSharpGenerator(schemaFile);
-            generator.Settings.Namespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}";
-            generator.Settings.InlineNamedAny = true;
+            var generator = new CSharpGenerator(schemaFile)
+            {
+                Settings =
+                {
+                    Namespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}",
+                    ClassStyle = CSharpClassStyle.Poco,
+                    TypeNameGenerator = new MyTypeNameGenerator(),
+                }
+            };
+
+
             var classAsString = generator.GenerateFile();
-            Console.Out.WriteLine($"file: {classAsString}");
-            Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/");
+            var types = generator.GenerateTypes();
+
+            foreach (var codeArtifact in types)
+            {
+                Console.Out.WriteLine("tjobing");
+                Console.Out.WriteLine(codeArtifact.Code);
+            }
+
+            //TODO Skrive ut codeartifact til egen fil og droppe de som vi har som felles
+            
+
+
+            //Console.Out.WriteLine($"file: {classAsString}");
+            //Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/");
             //TODO Hente filnavn fra title i hvert schema i stedet?
-            File.WriteAllText($"./{outputFolder}/Models/{namespacePrefix}/{ToUpper(classFilename)}.cs", classAsString);
+            //File.WriteAllText($"./{outputFolder}/Models/{namespacePrefix}/{ToUpper(classFilename)}.cs", classAsString);
+        }
+    }
+
+    public class MyTypeNameGenerator : ITypeNameGenerator
+    {
+        public string Generate(JsonSchema schema, string typeNameHint, IEnumerable<string> reservedTypeNames)
+        {
+            throw new NotImplementedException();
         }
     }
 
