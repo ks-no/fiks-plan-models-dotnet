@@ -3,61 +3,59 @@ using System.IO;
 using NJsonSchema;
 using NJsonSchema.CodeGeneration.CSharp;
 
-
-
 Generator.Generate(args[0], args[1]);
 
 static class Generator
 {
     const string commonNamespace = "KS.Fiks.Plan.Models.V2";
-    const string feilmeldingNamespace = "feilmelding";
-    const string oppdateringNamespace = "oppdatering";
-    const string innsynNamespace = "innsyn";
-    const string fellesNamespace = "felles";
+    const string feilmeldingSubNamespace = "feilmelding";
+    const string oppdateringSubNamespace = "oppdatering";
+    const string innsynSubNamespace = "innsyn";
+    const string fellesSubNamespace = "felles";
+    const string fellesNamespace = $"{commonNamespace}.{fellesSubNamespace}";
     
+    private static readonly string[] fellesTyper = { "NasjonalArealplanId" };
+
     public static void Generate(string sourcePath, string outputFolder)
     {
-        // Denne genererer klasser, men har tilsynelatende noen problemer med å bli helt korrekt i resultatet for alle schema. Det kan være noe med schemafilene.
-        // Filene genereres i bin/Debug/netcoreapp3.1/Models mappen
-
-        //const string outputFolder = "Models";
-        //Directory.CreateDirectory(outputFolder);
-
         var schemaFolder = new DirectoryInfo(sourcePath);
         var schemasToGenerate = schemaFolder
             .GetFiles()
             .Where(file => file.Extension.Equals(".json"))
             .Select(file => Path.Combine(sourcePath, file.Name));
 
-        //var schemaFilenames = Directory.GetFiles(@"./Schema");
         
         foreach (var schemaFilename in schemasToGenerate)
         {
-            if(!schemaFilename.Contains("no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.schema"))
+            //Skipper felles skjema som nasjonalarealplanid fordi den må genereres manuelt. Vi klarer ikke å generere hvor oneOf er brukt 
+            if (schemaFilename.Contains("nasjonalarealplanid.schema"))
+            {
                 continue;
-            
+            }
+
             Console.WriteLine($"Genererer kode basert på json schema {schemaFilename}");
+            
             var schemaFile =
                 JsonSchema.FromFileAsync(schemaFilename).Result;
 
             var namespacePrefix = "";
             var classFilename = "";
-            if (schemaFilename.Contains($".{feilmeldingNamespace}."))
+            if (schemaFilename.Contains($".{feilmeldingSubNamespace}."))
             {
-                namespacePrefix = feilmeldingNamespace;
-                classFilename = GetClassName(schemaFilename, feilmeldingNamespace);
-            } else if (schemaFilename.Contains($".{oppdateringNamespace}."))
+                namespacePrefix = feilmeldingSubNamespace;
+                classFilename = GetClassName(schemaFilename, feilmeldingSubNamespace);
+            } else if (schemaFilename.Contains($".{oppdateringSubNamespace}."))
             {
-                namespacePrefix = oppdateringNamespace;
-                classFilename = GetClassName(schemaFilename, oppdateringNamespace);
-            } else if (schemaFilename.Contains($".{innsynNamespace}."))
+                namespacePrefix = oppdateringSubNamespace;
+                classFilename = GetClassName(schemaFilename, oppdateringSubNamespace);
+            } else if (schemaFilename.Contains($".{innsynSubNamespace}."))
             {
-                namespacePrefix = innsynNamespace;
-                classFilename = GetClassName(schemaFilename, innsynNamespace);
-            } else if (schemaFilename.Contains($".{fellesNamespace}."))
+                namespacePrefix = innsynSubNamespace;
+                classFilename = GetClassName(schemaFilename, innsynSubNamespace);
+            } else if (schemaFilename.Contains($".{fellesSubNamespace}."))
             {
-                namespacePrefix = fellesNamespace;
-                classFilename = GetClassName(schemaFilename, fellesNamespace);
+                namespacePrefix = fellesSubNamespace;
+                classFilename = GetClassName(schemaFilename, fellesSubNamespace);
             }
             else
             {
@@ -74,24 +72,44 @@ static class Generator
                 }
             };
 
+            Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/");
 
-            var classAsString = generator.GenerateFile();
+            // Need to do this in order to get the types. Dont remove
+            var classAsString = generator.GenerateFile(); 
+            
             var types = generator.GenerateTypes();
+
+            var usingCode = "";
+            foreach (var codeArtifact in types)
+            {
+                Console.Out.WriteLine($"Typename: {codeArtifact.TypeName}");
+                
+                // Skip fellestyper og bruk using i stedet
+                if (fellesTyper.Contains(codeArtifact.TypeName))
+                {
+                    usingCode = $"using {fellesNamespace};\n\n";
+                }
+            }
 
             foreach (var codeArtifact in types)
             {
-                Console.Out.WriteLine("tjobing");
-                Console.Out.WriteLine(codeArtifact.Code);
+                var code = "";
+                
+                // Skip fellestyper og bruk using i stedet
+                if (fellesTyper.Contains(codeArtifact.TypeName))
+                {
+                    Console.Out.WriteLine($"Skipping {codeArtifact.TypeName}");
+                    continue;
+                }
+                
+                code = $"{usingCode}" +
+                           $"namespace KS.Fiks.Plan.Models.V2.{namespacePrefix}.{classFilename} {{\n" +
+                           "#pragma warning disable // Disable all warnings\n\n" +
+                           $"{codeArtifact.Code.Replace(" partial ", " ")}\n" +
+                           "}";
+                
+                File.WriteAllText($"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/{ToUpper(codeArtifact.TypeName)}.cs", code);
             }
-
-            //TODO Skrive ut codeartifact til egen fil og droppe de som vi har som felles
-            
-
-
-            //Console.Out.WriteLine($"file: {classAsString}");
-            //Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/");
-            //TODO Hente filnavn fra title i hvert schema i stedet?
-            //File.WriteAllText($"./{outputFolder}/Models/{namespacePrefix}/{ToUpper(classFilename)}.cs", classAsString);
         }
     }
 
@@ -99,7 +117,11 @@ static class Generator
     {
         public string Generate(JsonSchema schema, string typeNameHint, IEnumerable<string> reservedTypeNames)
         {
-            throw new NotImplementedException();
+            //TODO fikse denne slik at namegenerator funker med ref skjema. Nå ble det feil mtp at den kaller feltet for Nasjonalarealplanid
+            // Console.Out.WriteLine($"typeNameHint {typeNameHint}");
+            // Console.Out.WriteLine($"title {schema.Title}");
+
+            return !string.IsNullOrEmpty(schema.Title) ? schema.Title : typeNameHint;
         }
     }
 
