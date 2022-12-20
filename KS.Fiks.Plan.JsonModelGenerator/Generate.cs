@@ -28,7 +28,7 @@ static class Generator
         foreach (var schemaFilename in schemasToGenerate)
         {
             //Skipper felles skjema som nasjonalarealplanid fordi den må genereres manuelt. Vi klarer ikke å generere hvor oneOf er brukt 
-            if (schemaFilename.Contains("nasjonalarealplanid.schema"))
+            if (schemaFilename.Contains("nasjonalarealplanid"))
             {
                 continue;
             }

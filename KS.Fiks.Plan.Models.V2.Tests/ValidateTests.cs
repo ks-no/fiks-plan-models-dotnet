@@ -15,7 +15,7 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        
+
     }
 
     [Test] 
@@ -64,7 +64,7 @@ public class Tests
     [Test]
     public void Validate_NasjonalArealplanId()
     {
-        var jsonFileReader = File.OpenText("./../../../../Schema/V2/nasjonalarealplanid.v2.schema.json");
+        var jsonFileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
         var jsonTextReader = new JsonTextReader(jsonFileReader);
         var validationSchema = JSchema.Load(jsonTextReader);
         AddAdditionalPropertiesFalseToSchemaProperties(validationSchema.Properties);
@@ -146,8 +146,8 @@ public class Tests
     private static JSchema GetJSchema(string schemaPath)
     {
         var resolver = new JSchemaPreloadedResolver();
-        var fileReader = File.OpenText("./../../../../Schema/V2/nasjonalarealplanid.v2.schema.json");
-        resolver.Add(new Uri("https://no.ks.fiks.gi.plan.felles/nasjonalarealplanid.v2.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
+        var fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
+        resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         var jsonFileReader = File.OpenText(schemaPath);
         var jsonTextReader = new JsonTextReader(jsonFileReader);
         //var validationSchema = JSchema.Load(new JsonTextReader(validationSchemaReader), resolver);

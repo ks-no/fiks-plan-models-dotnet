@@ -1,10 +1,59 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Plan.Models.V2", "KS.Fiks.Plan.Models.V2\KS.Fiks.Plan.Models.V2.csproj", "{36B72A36-2159-41DC-8C48-C141511266A1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Plan.JsonModelGenerator", "KS.Fiks.Plan.JsonModelGenerator\KS.Fiks.Plan.JsonModelGenerator.csproj", "{6A2C1666-E0B2-42B6-A403-A4C4FD72CD54}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Plan.Models.V2.Tests", "KS.Fiks.Plan.Models.V2.Tests\KS.Fiks.Plan.Models.V2.Tests.csproj", "{4C1F49B6-D216-426F-B44E-C2CD64701A11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{923DFBA6-9B20-41E4-A66B-AE14D9930086}"
+	ProjectSection(SolutionItems) = preProject
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.meldingomplanident.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.meldingomplanident.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.dispensasjonplan.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.dispensasjonplan.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.dispensasjonplan.registrer.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.dispensasjonplan.registrer.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater.schema.json = Schema\V2\no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.relaterteplaner.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.relaterteplaner.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planomraader.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planomraader.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planomraader.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planomraader.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planfil.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planfil.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforomraade.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforomraade.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforomraade.finn.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforomraade.finn.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.finn.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.finn.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforadresse.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforadresse.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforadresse.finn.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planerforadresse.finn.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planer.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planer.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planer.finn.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planer.finn.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.plandokumenter.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.plandokumenter.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.plandokumenter.finn.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.plandokumenter.finn.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planbehandlinger.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planbehandlinger.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.planbehandlinger.finn.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.planbehandlinger.finn.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.midlertidigforbud.sjekk.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.midlertidigforbud.sjekk.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.midlertidigforbud.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.midlertidigforbud.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.kodeliste.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.kodeliste.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.kodeliste.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.kodeliste.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.dispensasjoner.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.dispensasjoner.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.dispensasjoner.finn.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.dispensasjoner.finn.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.bboxforplan.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.bboxforplan.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.bboxforplan.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.bboxforplan.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.arealplan.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.arealplan.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.arealplan.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.arealplan.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.aktoerer.resultat.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.aktoerer.resultat.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json = Schema\V2\no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.feilmelding.ugyldigforespoersel.schema.json = Schema\V2\no.ks.fiks.plan.v2.feilmelding.ugyldigforespoersel.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.feilmelding.serverfeil.schema.json = Schema\V2\no.ks.fiks.plan.v2.feilmelding.serverfeil.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.feilmelding.ikkefunnet.schema.json = Schema\V2\no.ks.fiks.plan.v2.feilmelding.ikkefunnet.schema.json
+		Schema\V2\no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json = Schema\V2\no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
