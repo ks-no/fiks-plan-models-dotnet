@@ -1,20 +1,12 @@
 ﻿{
-    "nasjonalArealplanId": {
-        "administrativEnhet": {
-            "fylkesnummer": "100"
-        },
-        "planidentifikasjon": "01_27_1988"
+  "nasjonalArealplanId": {
+    "administrativEnhet": {
+      "fylkesnummer": "100"
     },
-    "planbehandling": {
-        "dato": "2020-01-01",
-        "saksnummer": {
-            "saksaar": 2020,
-            "sakssekvensnummer": 12345
-        },
-        "planbehandlingtype": {
-            "kodeverdi": "13",
-            "kodebeskrivelse": "Plan vedtatt med innsigelse"
-        },
-        "navn": "navn på registrering"
-    }
+    "planidentifikasjon": "01_27_1988"
+  },
+  "saksnummer": {
+    "saksaar": 2001,
+    "sakssekvensnummer": 12345
+  }
 }

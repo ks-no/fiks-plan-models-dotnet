@@ -21,6 +21,7 @@ public class Tests
     [Test] 
     public void Validate_HentAktoererSchema_Med_Valid_Json()
     {
+        var isValid = false;
         var jsonPath = $"payloadValid.json";
             
         var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
@@ -28,21 +29,20 @@ public class Tests
 
         try
         {
-            json.Validate(validationSchema);
+            isValid = json.IsValid(validationSchema);
         }
         catch (Exception e)
         {
             Console.Out.WriteLine($"{jsonPath} feilet!!");
             Console.Out.WriteLine($"{jsonPath} - Exception message: {e.Message}");
-            Assert.Fail($"Validering for {jsonPath} feilet");
         }
-        Assert.Pass();
+        Assert.IsTrue(isValid);
     }
     
     [Test] 
     public void Validate_HentAktoererSchema_Med_NotValid_Json()
     {
-        var validationFailed = false;
+        var isValid = false;
         var jsonPath = $"payloadNotValid.json";
             
         var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
@@ -50,15 +50,15 @@ public class Tests
 
         try
         {
-            json.Validate(validationSchema);
+            isValid = json.IsValid(validationSchema);
         }
         catch (Exception e)
         {
-            validationFailed = true;
+            isValid = false;
             Console.Out.WriteLine($"{jsonPath} feilet som forventet.");
             Console.Out.WriteLine($"{jsonPath} - Exception message: {e.Message}");
         }
-        Assert.IsTrue(validationFailed);
+        Assert.IsFalse(isValid);
     }
     
     [Test]
@@ -142,7 +142,7 @@ public class Tests
         Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Kommunenummer);
         Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Fylkesnummer);
     }
-    
+
     private static JSchema GetJSchema(string schemaPath)
     {
         var resolver = new JSchemaPreloadedResolver();
