@@ -19,7 +19,11 @@ namespace KS.Fiks.Plan.Models.V2.felles {
 
             return administrativEnhet;
         }
-        
+
+        //TODO settes denne til true får man exception ved serialisering.
+        //Newtonsoft.Json.JsonWriterException : Token PropertyName in state Property would result in an invalid JSON object. Path 'nasjonalArealplanId'.
+        public override bool CanWrite => false;
+
         public override void WriteJson(JsonWriter writer, object? administrativEnhetObject, JsonSerializer serializer)
         {
             if (administrativEnhetObject is AdministrativEnhet == false)
@@ -28,11 +32,25 @@ namespace KS.Fiks.Plan.Models.V2.felles {
             }
 
             var admEnh = (AdministrativEnhet) administrativEnhetObject;
-            if (admEnh.isOneOfValid())
+            if (!admEnh.isOneOfValid())
             {
                 throw new ArgumentException(
                     "AdministrativEnhet object have more than one property set and violates the oneOf rule");
             }
+        }
+
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        {
+            var value = base.ReadJson(reader, objectType, existingValue, serializer);
+            var admEnh = (AdministrativEnhet)value;
+
+            if (!admEnh.isOneOfValid())
+            {
+                throw new ArgumentException(
+                    "AdministrativEnhet object have more than one property set and violates the oneOf rule");
+            }
+
+            return value;
         }
     }
 }

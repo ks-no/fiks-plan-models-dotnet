@@ -109,7 +109,25 @@ public class Tests
     }
     
     [Test]
-    public void HentAktoerer_NasjonalArealplanId_OneOf_Not_Valid_Test()
+    public void HentAktoerer_NasjonalArealplanId_OneOf_Not_Valid_Deseialization_Test()
+    {
+        var jsonPath = $"payloadNotValid.json";
+        var json = GetJson(jsonPath).ToString();
+
+        try
+        {
+            JsonConvert.DeserializeObject<HentAktoerer>(json);
+        }
+        catch (Exception e)
+        {
+            Assert.AreEqual(e.Message, "AdministrativEnhet object have more than one property set and violates the oneOf rule");
+            Assert.Pass();
+        }
+        Assert.Fail();
+    }
+
+    [Test]
+    public void HentAktoerer_NasjonalArealplanId_OneOf_Not_Valid_SerializationTest()
     {
         var hentAktoerer = new HentAktoerer()
         {
@@ -129,18 +147,16 @@ public class Tests
             }
         };
 
-        var json = JsonConvert.SerializeObject(hentAktoerer);
-    
-        Console.Out.WriteLineAsync($"Json serialized: {json}");
-
-        var hentAktoererDeserialized = JsonConvert.DeserializeObject<HentAktoerer>(json);
-
-        Assert.AreEqual(hentAktoerer.Saksnummer.Saksaar, hentAktoererDeserialized.Saksnummer.Saksaar);
-        Assert.AreEqual(hentAktoerer.Saksnummer.Sakssekvensnummer, hentAktoererDeserialized.Saksnummer.Sakssekvensnummer);
-        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Landskode, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Landskode);
-        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.Planidentifikasjon, hentAktoererDeserialized.NasjonalArealplanId.Planidentifikasjon);
-        Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Kommunenummer);
-        Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Fylkesnummer);
+        try
+        {
+            JsonConvert.SerializeObject(hentAktoerer);
+        }
+        catch (Exception e)
+        {
+            Console.Out.WriteLine($"Klarte ikke å serialisere json - Exception message: {e.Message}");
+            Assert.Pass();
+        }
+        Assert.Fail();
     }
 
     private static JSchema GetJSchema(string schemaPath)
