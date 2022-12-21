@@ -157,6 +157,8 @@ public class Tests
             Assert.Pass();
         }
         Assert.Fail();
+
+        //TODO denne feiler. AdmEnhetConverter må justeres/evt erstattes med noe annet
     }
 
     private static JSchema GetJSchema(string schemaPath)
