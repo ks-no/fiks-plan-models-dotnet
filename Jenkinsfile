@@ -54,7 +54,7 @@ pipeline {
         stage('Generate models') {
           agent {
             docker {
-              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.401-alpine3.16"
+              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.404-alpine3.16"
               args '-v $HOME/.nuget:/.nuget -v $HOME/.dotnet:/.dotnet'  
             }
           }
@@ -88,7 +88,7 @@ pipeline {
           }
           agent {
             docker {
-              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.401-alpine3.16"
+              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.404-alpine3.16"
               args '-v $HOME/.nuget:/.nuget -v $HOME/.dotnet:/.dotnet'     
             }
           }
@@ -121,7 +121,7 @@ pipeline {
           }
           agent {
             docker {
-              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.401-alpine3.16"
+              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.404-alpine3.16"
               args '-v $HOME/.nuget:/.nuget -v $HOME/.dotnet:/.dotnet'     
             }
           }          
@@ -146,7 +146,7 @@ pipeline {
           }
           agent {
             docker {
-              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.401-alpine3.16"
+              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.404-alpine3.16"
               args '-v $HOME/.nuget:/.nuget -v $HOME/.dotnet:/.dotnet'     
             }
           }          
@@ -177,7 +177,7 @@ pipeline {
           }
           agent {
             docker {
-              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.401-alpine3.16"
+              image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0.404-alpine3.16"
               args '-v $HOME/.nuget:/.nuget -v $HOME/.dotnet:/.dotnet'     
             }
           }
