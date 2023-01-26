@@ -74,6 +74,83 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             return Skjemanavn[meldingstypeNavn];
         }
 
+        public static readonly List<string> InnsynTyper = new List<string>()
+        {
+            FinnPlanerForMatrikkelenhet,
+            FinnPlanerForAdresse,
+            FinnPlaner,
+            FinnDispensasjoner,
+            FinnPlanbehandlinger,
+            HentArealplan,
+            HentGjeldendePlanbestemmelser,
+            HentAktoerer,
+            HentRelatertePlaner,
+            HentKodeliste,
+            FinnPlandokumenter,
+            HentPlanfil,
+            FinnPlanerForOmraade,
+            HentBboxForPlan,
+            HentPlanomraader,
+            SjekkMidlertidigForbud,
+            ResultatFinnPlanerForMatrikkelenhet,
+            ResultatFinnPlanerForAdresse,
+            ResultatFinnPlaner,
+            ResultatFinnDispensasjoner,
+            ResultatFinnPlanbehandlinger,
+            ResultatHentArealplan,
+            ResultatHentGjeldendePlanbestemmelser,
+            ResultatHentAktoerer,
+            ResultatHentRelatertePlaner,
+            ResultatHentKodeliste,
+            ResultatFinnPlandokumenter,
+            ResultatHentPlanfil,
+            ResultatFinnPlanerForOmraade,
+            ResultatHentBboxForPlan,
+            ResultatHentPlanomraader,
+            ResultatSjekkMidlertidigForbud
+        };
+
+        public static readonly List<string> OppdateringTyper = new List<string>()
+        {
+            OpprettArealplan,
+            RegistrertPlanavgrensning,
+            RegistrerPlanbehandling,
+            RegistrerMidlertidigForbudMotTiltak,
+            OppdaterArealplan,
+            ResultatOpprettArealplan,
+            ResultatMottat,
+            RegistrerDispensasjonFraPlan,
+            OppdaterDispensasjon,
+            ResultatRegistrerDispensasjonFraPlan
+        };
+
+        public static readonly List<string> FeilmeldingTyper = new List<string>()
+        {
+            Ugyldigforespoersel,
+            Serverfeil,
+            Ikkefunnet
+        };
+
+        public static bool IsInnsynType(string meldingstype)
+        {
+            return InnsynTyper.Contains(meldingstype);
+        }
+
+        public static bool IsOppdateringType(string meldingstype)
+        {
+            return OppdateringTyper.Contains(meldingstype);
+        }
+
+        public static bool IsFeilmelding(string meldingstype)
+        {
+            return FeilmeldingTyper.Contains(meldingstype);
+        }
+
+        public static bool IsGyldigProtokollType(string meldingstype)
+        {
+            return IsInnsynType(meldingstype) || IsOppdateringType(meldingstype) || IsFeilmelding(meldingstype);
+        }
+
         private static void initSkjemanavn()
         {
             Skjemanavn = new Dictionary<string, string>();
