@@ -1,0 +1,13 @@
+﻿{
+  "nasjonalArealplanId": {
+    "administrativEnhet": {
+      "kommunenummer": "0821",
+      "fylkesnummer": "100"
+    },
+    "planidentifikasjon": "01_27_1988"
+  },
+  "saksnummer": {
+    "saksaar": false,
+    "sakssekvensnummer": 12345
+  }
+}

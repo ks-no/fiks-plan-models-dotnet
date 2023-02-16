@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+
+        <RootNamespace>TestProject1</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.14" />
+        <PackageReference Include="NUnit" Version="3.13.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+        <PackageReference Include="coverlet.collector" Version="3.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.schema.json" />
+      <None Remove="payload.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KS.Fiks.Plan.Models.V2\KS.Fiks.Plan.Models.V2.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="payloadNotValid.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="payloadValid.json" />
+      <Content Include="payloadValid.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>

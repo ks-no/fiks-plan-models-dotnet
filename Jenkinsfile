@@ -178,7 +178,7 @@ pipeline {
           agent {
             docker {
               image "docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0"
-              args '-v $HOME/.nuget:/.nuget -v $HOME/.dotnet:/.dotnet  -e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp'
+              args '-v $HOME/.nuget:/.nuget -v $HOME/.dotnet:/.dotnet -e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp'
             }
           }
           steps {
