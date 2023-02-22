@@ -87,7 +87,6 @@ public class Tests
                 {
                     Type = AdministrativEnhetType.Landskode,
                     Nummer = "123"
-                    // Landskode = "123"
                 },
                 Planidentifikasjon = "tjobing"
             }
@@ -158,13 +157,7 @@ public class Tests
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         var jsonFileReader = File.OpenText(schemaPath);
         var jsonTextReader = new JsonTextReader(jsonFileReader);
-        //var validationSchema = JSchema.Load(new JsonTextReader(validationSchemaReader), resolver);
 
-      /*  var jSchemaReaderSettings = new JSchemaReaderSettings()
-        {
-            Resolver = resolver,
-            BaseUri = new Uri(schemaPath)
-        };*/
         var validationSchema = JSchema.Load(jsonTextReader, resolver);
         AddAdditionalPropertiesFalseToSchemaProperties(validationSchema.Properties);
     
