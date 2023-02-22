@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using KS.Fiks.Plan.Models.V2.felles;
+using KS.Fiks.Plan.Models.V2.felles.Nasjonalarealplanid;
 using KS.Fiks.Plan.Models.V2.innsyn.AktoererHent;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,7 +22,7 @@ public class Tests
     public void Validate_HentAktoererSchema_Med_Valid_Json()
     {
         var isValid = false;
-        var jsonPath = $"payloadValid.json";
+        var jsonPath = $"./payloads/innsyn-aktoerer-hent/payloadValid.json";
             
         var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
         var json = GetJson(jsonPath);
@@ -43,7 +43,7 @@ public class Tests
     public void Validate_HentAktoererSchema_Med_NotValid_Json()
     {
         var isValid = false;
-        var jsonPath = $"payloadNotValid.json";
+        var jsonPath = $"./payloads/innsyn-aktoerer-hent/payloadNotValid.json";
             
         var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
         var json = GetJson(jsonPath);
@@ -72,7 +72,7 @@ public class Tests
     }
     
     [Test]
-    public void HentAktoerer_NasjonalArealplanId_OneOf_Is_Ok_Test()
+    public void HentAktoerer_NasjonalArealplanId_Enum_Is_Ok_Test()
     {
         var hentAktoerer = new HentAktoerer()
         {
@@ -85,7 +85,9 @@ public class Tests
             {
                 AdministrativEnhet = new AdministrativEnhet()
                 {
-                    Landskode = "123"
+                    Type = AdministrativEnhetType.Landskode,
+                    Nummer = "123"
+                    // Landskode = "123"
                 },
                 Planidentifikasjon = "tjobing"
             }
@@ -102,16 +104,14 @@ public class Tests
 
         Assert.AreEqual(hentAktoerer.Saksnummer.Saksaar, hentAktoererDeserialized.Saksnummer.Saksaar);
         Assert.AreEqual(hentAktoerer.Saksnummer.Sakssekvensnummer, hentAktoererDeserialized.Saksnummer.Sakssekvensnummer);
-        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Landskode, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Landskode);
+        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Nummer, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Nummer);
         Assert.AreEqual(hentAktoerer.NasjonalArealplanId.Planidentifikasjon, hentAktoererDeserialized.NasjonalArealplanId.Planidentifikasjon);
-        Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Kommunenummer);
-        Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Fylkesnummer);
     }
     
     [Test]
-    public void HentAktoerer_NasjonalArealplanId_OneOf_Not_Valid_Deseialization_Test()
+    public void HentAktoerer_NasjonalArealplanId_Enum_Not_Valid_Deserialization_Test()
     {
-        var jsonPath = $"payloadNotValid.json";
+        var jsonPath = $"./payloads/innsyn-aktoerer-hent/payloadNotValid.json";
         var json = GetJson(jsonPath).ToString();
 
         try
@@ -120,14 +120,14 @@ public class Tests
         }
         catch (Exception e)
         {
-            Assert.AreEqual(e.Message, "AdministrativEnhet object have more than one property set and violates the oneOf rule");
+            Assert.IsTrue(e.Message.Contains("Error converting"));
             Assert.Pass();
         }
         Assert.Fail();
     }
 
     [Test]
-    public void HentAktoerer_NasjonalArealplanId_OneOf_Not_Valid_SerializationTest()
+    public void HentAktoerer_NasjonalArealplanId_Med_Enum_SerializationTest()
     {
         var hentAktoerer = new HentAktoerer()
         {
@@ -140,25 +140,15 @@ public class Tests
             {
                 AdministrativEnhet = new AdministrativEnhet()
                 {
-                    Landskode = "123",
-                    Fylkesnummer = "2"
+                    Type = AdministrativEnhetType.Fylkesnummer,
+                    Nummer = "123"
                 },
                 Planidentifikasjon = "tjobing"
             }
         };
+    
+        var json = JsonConvert.SerializeObject(hentAktoerer);
 
-        try
-        {
-            JsonConvert.SerializeObject(hentAktoerer);
-        }
-        catch (Exception e)
-        {
-            Console.Out.WriteLine($"Klarte ikke å serialisere json - Exception message: {e.Message}");
-            Assert.Pass();
-        }
-        Assert.Fail();
-
-        //TODO denne feiler. AdmEnhetConverter må justeres/evt erstattes med noe annet
     }
 
     private static JSchema GetJSchema(string schemaPath)

@@ -27,11 +27,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="payloadNotValid.json">
+      <Content Include="payloads\innsyn-aktoerer-hent\payloadValid.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <None Remove="payloadValid.json" />
-      <Content Include="payloadValid.json">
+      <Content Include="payloads\innsyn-aktoerer-hent\payloadNotValid.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

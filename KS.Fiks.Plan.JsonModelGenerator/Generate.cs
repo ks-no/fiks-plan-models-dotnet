@@ -7,14 +7,15 @@ Generator.Generate(args[0], args[1]);
 
 static class Generator
 {
-    const string commonNamespace = "KS.Fiks.Plan.Models.V2";
-    const string feilmeldingSubNamespace = "feilmelding";
-    const string oppdateringSubNamespace = "oppdatering";
-    const string innsynSubNamespace = "innsyn";
-    const string fellesSubNamespace = "felles";
-    const string fellesNamespace = $"{commonNamespace}.{fellesSubNamespace}";
+    private const string commonNamespace = "KS.Fiks.Plan.Models.V2";
+    private const string feilmeldingSubNamespace = "feilmelding";
+    private const string oppdateringSubNamespace = "oppdatering";
+    private const string innsynSubNamespace = "innsyn";
+    private const string fellesSubNamespace = "felles";
+    private const string fellesNamespace = $"{commonNamespace}.{fellesSubNamespace}";
     
-    private static readonly string[] fellesTyper = { "NasjonalArealplanId" };
+    private static readonly string[] fellesTyper = { "NasjonalArealplanId", "AdministrativEnhet", "AdministrativEnhetType" };
+    private static readonly string fellesGeneratedSubNamespace = "Nasjonalarealplanid";
 
     public static void Generate(string sourcePath, string outputFolder)
     {
@@ -27,12 +28,6 @@ static class Generator
         
         foreach (var schemaFilename in schemasToGenerate)
         {
-            //Skipper felles skjema som nasjonalarealplanid fordi den må genereres manuelt. Vi klarer ikke å generere hvor oneOf er brukt 
-            if (schemaFilename.Contains("nasjonalarealplanid"))
-            {
-                continue;
-            }
-
             Console.WriteLine($"Genererer kode basert på json schema {schemaFilename}");
             
             var schemaFile =
@@ -74,7 +69,7 @@ static class Generator
 
             Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/");
 
-            // Need to do this in order to get the types. Dont remove
+            // Need to do this in order to get the types. Do not remove!
             var classAsString = generator.GenerateFile(); 
             
             var types = generator.GenerateTypes();
@@ -84,24 +79,24 @@ static class Generator
             {
                 Console.Out.WriteLine($"Typename: {codeArtifact.TypeName}");
                 
-                // Skip fellestyper og bruk using i stedet
-                if (fellesTyper.Contains(codeArtifact.TypeName))
+                // Legg på using hvis det er en fellestype
+                if (!schemaFilename.Contains(".felles.") && fellesTyper.Contains(codeArtifact.TypeName))
                 {
-                    usingCode = $"using {fellesNamespace};\n\n";
+                    usingCode += $"using {fellesNamespace}.{fellesGeneratedSubNamespace};\n\n";    
                 }
             }
 
             foreach (var codeArtifact in types)
             {
                 var code = "";
-                
+
                 // Skip fellestyper og bruk using i stedet
-                if (fellesTyper.Contains(codeArtifact.TypeName))
+                if (!schemaFilename.Contains(".felles.") && fellesTyper.Contains(codeArtifact.TypeName))
                 {
                     Console.Out.WriteLine($"Skipping {codeArtifact.TypeName}");
                     continue;
                 }
-                
+
                 code = $"{usingCode}" +
                            $"namespace KS.Fiks.Plan.Models.V2.{namespacePrefix}.{classFilename} {{\n" +
                            "#pragma warning disable // Disable all warnings\n\n" +

@@ -1,7 +1,8 @@
 ﻿{
   "nasjonalArealplanId": {
     "administrativEnhet": {
-      "fylkesnummer": "100"
+      "type": "landskode",
+      "nummer": "123"
     },
     "planidentifikasjon": "01_27_1988"
   },
