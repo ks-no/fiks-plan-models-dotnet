@@ -80,7 +80,7 @@ static class Generator
                 Console.Out.WriteLine($"Typename: {codeArtifact.TypeName}");
                 
                 // Legg på using hvis det er en fellestype
-                if (!schemaFilename.Contains(".felles.") && fellesTyper.Contains(codeArtifact.TypeName))
+                if (!schemaFilename.Contains($".{fellesSubNamespace}.") && fellesTyper.Contains(codeArtifact.TypeName))
                 {
                     usingCode += $"using {fellesNamespace}.{fellesGeneratedSubNamespace};\n\n";    
                 }
