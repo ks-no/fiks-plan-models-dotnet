@@ -147,7 +147,7 @@ public class Tests
         };
     
         var json = JsonConvert.SerializeObject(hentAktoerer);
-
+        Assert.Pass();
     }
 
     private static JSchema GetJSchema(string schemaPath)
