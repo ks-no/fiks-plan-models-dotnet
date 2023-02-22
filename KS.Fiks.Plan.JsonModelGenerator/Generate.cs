@@ -91,7 +91,7 @@ static class Generator
                 var code = "";
 
                 // Skip fellestyper og bruk using i stedet
-                if (!schemaFilename.Contains(".felles.") && fellesTyper.Contains(codeArtifact.TypeName))
+                if (!schemaFilename.Contains($".{fellesSubNamespace}.") && fellesTyper.Contains(codeArtifact.TypeName))
                 {
                     Console.Out.WriteLine($"Skipping {codeArtifact.TypeName}");
                     continue;
