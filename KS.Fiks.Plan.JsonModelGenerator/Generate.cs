@@ -13,54 +13,108 @@ static class Generator
     const string innsynSubNamespace = "innsyn";
     const string fellesSubNamespace = "felles";
     const string fellesNamespace = $"{commonNamespace}.{fellesSubNamespace}";
+
+    private static readonly string[] fellesFilenamesSorted = new []
+    {
+        "no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json",
+        "no.ks.fiks.plan.v2.felles.dispensasjon.schema.json",
+        "no.ks.fiks.plan.v2.felles.arealplan.schema.json",
+        "no.ks.fiks.plan.v2.felles.planbehandling.schema.json",
+        "no.ks.fiks.plan.v2.felles.plandokument.schema.json",
+        
+    };
     
-    private static readonly string[] fellesTyper = { "NasjonalArealplanId" };
+    private static readonly string[] fellesNamespaces = new []
+    {
+        $"{commonNamespace}.{fellesNamespace}.Arealplan",
+        $"{commonNamespace}.{fellesNamespace}.Dispensasjon",
+        $"{commonNamespace}.{fellesNamespace}.NasjonalarealplanId",
+        $"{commonNamespace}.{fellesNamespace}.NasjonalarealplanId",
+        $"{commonNamespace}.{fellesNamespace}.NasjonalarealplanId",
+    };
+
+    private static readonly string[] fellesSchemas = { "NasjonalArealplanId", "Arealplan" };
+
+    private static IEnumerable<string> allFellesSchemas;
 
     public static void Generate(string sourcePath, string outputFolder)
     {
         var schemaFolder = new DirectoryInfo(sourcePath);
+        
+        allFellesSchemas = schemaFolder
+             .GetFiles()
+             .Where(file => file.Extension.Equals(".json") && file.Name.Contains(".felles.")) 
+             .Select(file => Path.Combine(sourcePath, file.Name));
+
+        var fellesSchemasToGenerateSorted = new List<string>();
+        foreach (var filename in fellesFilenamesSorted)
+        {
+            fellesSchemasToGenerateSorted.Add(Path.Combine(sourcePath, filename));
+        }
+        
         var schemasToGenerate = schemaFolder
             .GetFiles()
-            .Where(file => file.Extension.Equals(".json"))
+            .Where(file => file.Extension.Equals(".json") && ! file.Name.Contains(".felles."))
             .Select(file => Path.Combine(sourcePath, file.Name));
 
-        
-        foreach (var schemaFilename in schemasToGenerate)
-        {
-            //Skipper felles skjema som nasjonalarealplanid fordi den må genereres manuelt. Vi klarer ikke å generere hvor oneOf er brukt 
-            if (schemaFilename.Contains("nasjonalarealplanid"))
-            {
-                continue;
-            }
+        var fellesTypes = GetTypes(fellesSchemasToGenerateSorted);
 
-            Console.WriteLine($"Genererer kode basert på json schema {schemaFilename}");
-            
+        GenerateClasses(outputFolder, fellesSchemasToGenerateSorted, fellesTypes);
+        GenerateClasses(outputFolder, schemasToGenerate, fellesTypes);
+    }
+
+    private static HashSet<string> GetNamespacesForType(IEnumerable<string> schemas, string typeName)
+    {
+        var foundNamespaces = new HashSet<string>();
+
+        foreach (var schemaFilename in schemas)
+        {
+
+            var namespacePrefix = GetNamespacePrefix(schemaFilename);
             var schemaFile =
                 JsonSchema.FromFileAsync(schemaFilename).Result;
+            var classFilename = GetClassName(schemaFilename, fellesSubNamespace);
+            var fullNamespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}";
 
-            var namespacePrefix = "";
-            var classFilename = "";
-            if (schemaFilename.Contains($".{feilmeldingSubNamespace}."))
+            var generator = new CSharpGenerator(schemaFile)
             {
-                namespacePrefix = feilmeldingSubNamespace;
-                classFilename = GetClassName(schemaFilename, feilmeldingSubNamespace);
-            } else if (schemaFilename.Contains($".{oppdateringSubNamespace}."))
+                Settings =
+                {
+                    Namespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}",
+                    ClassStyle = CSharpClassStyle.Poco,
+                    TypeNameGenerator = new MyTypeNameGenerator(),
+                }
+            };
+
+            // Need to do this in order to get the types. Dont remove
+            var classAsString = generator.GenerateFile();
+
+            var types = generator.GenerateTypes();
+
+            foreach (var codeArtifact in types)
             {
-                namespacePrefix = oppdateringSubNamespace;
-                classFilename = GetClassName(schemaFilename, oppdateringSubNamespace);
-            } else if (schemaFilename.Contains($".{innsynSubNamespace}."))
-            {
-                namespacePrefix = innsynSubNamespace;
-                classFilename = GetClassName(schemaFilename, innsynSubNamespace);
-            } else if (schemaFilename.Contains($".{fellesSubNamespace}."))
-            {
-                namespacePrefix = fellesSubNamespace;
-                classFilename = GetClassName(schemaFilename, fellesSubNamespace);
+                if (typeName.Equals(codeArtifact.TypeName))
+                {
+                    Console.Out.WriteLine($"Found namespace {fullNamespace} for typename: {codeArtifact.TypeName}");
+                    foundNamespaces.Add(fullNamespace);
+                }
             }
-            else
-            {
-                throw new NotSupportedException($"Json schema filen {schemaFilename} tilhører ikke noe tidligere kjent namespace. Sjekk om det bør opprettes et nytt eller om denne skal tilhøre en av de eksiterende namespace.");
-            }
+        }
+        return foundNamespaces;
+    }
+
+
+    private static HashSet<string> GetTypes(IEnumerable<string> schemasToGenerate)
+    {
+        var typenames = new HashSet<string>();
+        foreach (var schemaFilename in schemasToGenerate)
+        {
+            //Console.WriteLine($"Finding types for {schemaFilename}");
+
+            var namespacePrefix = fellesSubNamespace;
+            var schemaFile =
+                JsonSchema.FromFileAsync(schemaFilename).Result;
+            var classFilename = GetClassName(schemaFilename, fellesSubNamespace);
             
             var generator = new CSharpGenerator(schemaFile)
             {
@@ -72,45 +126,135 @@ static class Generator
                 }
             };
 
+            // Need to do this in order to get the types. Dont remove
+            var classAsString = generator.GenerateFile();
+
+            var types = generator.GenerateTypes();
+
+            foreach (var codeArtifact in types)
+            {
+                //Console.Out.WriteLine($"Found typename: {codeArtifact.TypeName}");
+                typenames.Add(codeArtifact.TypeName);
+            }
+        }
+
+        return typenames;
+    }
+
+    private static List<string> GenerateClasses(string outputFolder, IEnumerable<string> schemasToGenerate, HashSet<string> usingTypes = null)
+    {
+        bool isFelles;
+        var generatedTypes = new HashSet<string>();
+        var generatedClassNamespaces = new List<string>();
+        foreach (var schemaFilename in schemasToGenerate)
+        {
+            Console.WriteLine($"Generating code based on json schema {schemaFilename}");
+            
+
+            var schemaFile =
+                JsonSchema.FromFileAsync(schemaFilename).Result;
+
+            var namespacePrefix = GetNamespacePrefix(schemaFilename);
+            var classFilename = GetClassName(schemaFilename, namespacePrefix);
+            isFelles = namespacePrefix == fellesSubNamespace;
+            
+            var fullNamespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}";
+            generatedClassNamespaces.Add(fullNamespace);
+
+            var generator = new CSharpGenerator(schemaFile)
+            {
+                Settings =
+                {
+                    Namespace = fullNamespace,
+                    ClassStyle = CSharpClassStyle.Poco,
+                    TypeNameGenerator = new MyTypeNameGenerator(),
+                }
+            };
+
             Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/");
 
             // Need to do this in order to get the types. Dont remove
-            var classAsString = generator.GenerateFile(); 
-            
+            var classAsString = generator.GenerateFile();
+           
             var types = generator.GenerateTypes();
 
             var usingCode = "";
+            var usingsSet = new HashSet<string>(); 
             foreach (var codeArtifact in types)
             {
-                Console.Out.WriteLine($"Typename: {codeArtifact.TypeName}");
-                
-                // Skip fellestyper og bruk using i stedet
-                if (fellesTyper.Contains(codeArtifact.TypeName))
+                // Add using to all code artifacts
+                if (usingTypes != null && usingTypes.Contains(codeArtifact.TypeName))
                 {
-                    usingCode = $"using {fellesNamespace};\n\n";
+                    Console.Out.WriteLine($"Add using to class because {codeArtifact.TypeName} found in {fellesNamespace} namespace and is already generated");
+                    
+                    usingsSet.UnionWith(GetNamespacesForType(allFellesSchemas, codeArtifact.TypeName));
                 }
             }
+
+            foreach (var distinctUsing in usingsSet)
+            {
+                usingCode += $"using {distinctUsing};\n";
+            }
+
+            usingCode += "\n\n";
 
             foreach (var codeArtifact in types)
             {
                 var code = "";
-                
-                // Skip fellestyper og bruk using i stedet
-                if (fellesTyper.Contains(codeArtifact.TypeName))
+     
+                if (isFelles && generatedTypes.Contains(codeArtifact.TypeName))
                 {
-                    Console.Out.WriteLine($"Skipping {codeArtifact.TypeName}");
+                    Console.Out.WriteLine($"Skipping already generated type {codeArtifact.TypeName} in this generate run through the {fellesNamespace} namespace.");
+                    continue;
+                } // Skip generate this type since it is already created in the "felles" namespace. Include it with using instead.
+                else if (!isFelles && usingTypes != null && usingTypes.Contains(codeArtifact.TypeName))
+                {
+                    Console.Out.WriteLine($"Skipping already generated type {codeArtifact.TypeName} in the {fellesNamespace}. Include instead through {fellesNamespace} namespace");
                     continue;
                 }
-                
+
                 code = $"{usingCode}" +
-                           $"namespace KS.Fiks.Plan.Models.V2.{namespacePrefix}.{classFilename} {{\n" +
-                           "#pragma warning disable // Disable all warnings\n\n" +
-                           $"{codeArtifact.Code.Replace(" partial ", " ")}\n" +
-                           "}";
-                
-                File.WriteAllText($"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/{ToUpper(codeArtifact.TypeName)}.cs", code);
+                       $"namespace KS.Fiks.Plan.Models.V2.{namespacePrefix}.{classFilename} {{\n" +
+                       "#pragma warning disable // Disable all warnings\n\n" +
+                       $"{codeArtifact.Code.Replace(" partial ", " ")}\n" +
+                       "}";
+
+                File.WriteAllText(
+                    $"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/{ToUpper(codeArtifact.TypeName)}.cs", code);
+
+                generatedTypes.Add(codeArtifact.TypeName);
             }
         }
+
+        return generatedClassNamespaces;
+    }
+
+    private static string GetNamespacePrefix(string schemaFilename)
+    {
+        string namespacePrefix;
+        if (schemaFilename.Contains($".{feilmeldingSubNamespace}."))
+        {
+            namespacePrefix = feilmeldingSubNamespace;
+        }
+        else if (schemaFilename.Contains($".{oppdateringSubNamespace}."))
+        {
+            namespacePrefix = oppdateringSubNamespace;
+        }
+        else if (schemaFilename.Contains($".{innsynSubNamespace}."))
+        {
+            namespacePrefix = innsynSubNamespace;
+        }
+        else if (schemaFilename.Contains($".{fellesSubNamespace}."))
+        {
+            namespacePrefix = fellesSubNamespace;
+        }
+        else
+        {
+            throw new NotSupportedException(
+                $"Json schema filen {schemaFilename} tilhører ikke noe tidligere kjent namespace. Sjekk om det bør opprettes et nytt eller om denne skal tilhøre en av de eksiterende namespace.");
+        }
+
+        return namespacePrefix;
     }
 
     public class MyTypeNameGenerator : ITypeNameGenerator

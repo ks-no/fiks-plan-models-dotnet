@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using KS.Fiks.Plan.Models.V2.felles;
 using KS.Fiks.Plan.Models.V2.innsyn.AktoererHent;
+using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHent;
+using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHentResultat;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
+using Saksnummer = KS.Fiks.Plan.Models.V2.innsyn.AktoererHent.Saksnummer;
 
 namespace TestProject1;
 
@@ -74,6 +77,19 @@ public class Tests
     [Test]
     public void HentAktoerer_NasjonalArealplanId_OneOf_Is_Ok_Test()
     {
+        var hent = new HentArealplan()
+        {
+
+        };
+
+        var ar = new HentArealplanResultat()
+        {
+            Arealplan = new Arealplan()
+            {
+                
+            }
+        };
+        
         var hentAktoerer = new HentAktoerer()
         {
             Saksnummer = new Saksnummer()
