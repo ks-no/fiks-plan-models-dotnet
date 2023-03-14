@@ -23,15 +23,6 @@ static class Generator
         "no.ks.fiks.plan.v2.felles.plandokument.schema.json",
         
     };
-    
-    private static readonly string[] fellesNamespaces = new []
-    {
-        $"{commonNamespace}.{fellesNamespace}.Arealplan",
-        $"{commonNamespace}.{fellesNamespace}.Dispensasjon",
-        $"{commonNamespace}.{fellesNamespace}.NasjonalarealplanId",
-        $"{commonNamespace}.{fellesNamespace}.NasjonalarealplanId",
-        $"{commonNamespace}.{fellesNamespace}.NasjonalarealplanId",
-    };
 
     private static readonly string[] fellesSchemas = { "NasjonalArealplanId", "Arealplan" };
 
@@ -102,8 +93,7 @@ static class Generator
         }
         return foundNamespaces;
     }
-
-
+    
     private static HashSet<string> GetTypes(IEnumerable<string> schemasToGenerate)
     {
         var typenames = new HashSet<string>();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using KS.Fiks.Plan.Models.V2.felles;
+using KS.Fiks.Plan.Models.V2.felles.Nasjonalarealplanid;
 using KS.Fiks.Plan.Models.V2.innsyn.AktoererHent;
 using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHent;
 using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHentResultat;
@@ -77,18 +78,7 @@ public class Tests
     [Test]
     public void HentAktoerer_NasjonalArealplanId_OneOf_Is_Ok_Test()
     {
-        var hent = new HentArealplan()
-        {
 
-        };
-
-        var ar = new HentArealplanResultat()
-        {
-            Arealplan = new Arealplan()
-            {
-                
-            }
-        };
         
         var hentAktoerer = new HentAktoerer()
         {
