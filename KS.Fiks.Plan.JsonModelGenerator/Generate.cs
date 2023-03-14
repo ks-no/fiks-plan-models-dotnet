@@ -102,11 +102,17 @@ static class Generator
         var typenames = new HashSet<string>();
         foreach (var schemaFilename in schemasToGenerate)
         {
-            //Console.WriteLine($"Finding types for {schemaFilename}");
+            Console.WriteLine($"Finding types for {schemaFilename}");
 
             var namespacePrefix = fellesSubNamespace;
-            var schemaFile =
-                JsonSchema.FromFileAsync(schemaFilename).Result;
+            if (!File.Exists(schemaFilename))
+            {
+                Console.Error.WriteLine($"Error: Schemafile {schemaFilename} missing. Cant resolve types");
+                continue;
+            }
+
+            var schemaFile = JsonSchema.FromFileAsync(schemaFilename).Result;
+                
             var classFilename = GetClassName(schemaFilename, fellesSubNamespace);
             
             var generator = new CSharpGenerator(schemaFile)
@@ -142,7 +148,13 @@ static class Generator
         foreach (var schemaFilename in schemasToGenerate)
         {
             Console.WriteLine($"Generating code based on json schema {schemaFilename}");
-            
+
+            if (!File.Exists(schemaFilename))
+            {
+                Console.Error.WriteLine($"Error: Schemafile {schemaFilename} missing. Cant generate classes");
+                continue;
+            }
+
 
             var schemaFile =
                 JsonSchema.FromFileAsync(schemaFilename).Result;
