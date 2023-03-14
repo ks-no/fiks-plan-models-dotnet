@@ -12,11 +12,14 @@ static class Generator
     const string oppdateringSubNamespace = "oppdatering";
     const string innsynSubNamespace = "innsyn";
     const string fellesSubNamespace = "felles";
+    const string namespaceSuffix = "Typer";
     const string fellesNamespace = $"{commonNamespace}.{fellesSubNamespace}";
 
     private static readonly string[] fellesFilenamesSorted = new []
     {
         "no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json",
+        "no.ks.fiks.plan.v2.felles.posisjon.schema.json",
+        "no.ks.fiks.plan.v2.felles.saksnummer.schema.json",
         "no.ks.fiks.plan.v2.felles.dispensasjon.schema.json",
         "no.ks.fiks.plan.v2.felles.arealplan.schema.json",
         "no.ks.fiks.plan.v2.felles.planbehandling.schema.json",
@@ -26,7 +29,7 @@ static class Generator
 
     private static readonly string[] fellesSchemas = { "NasjonalArealplanId", "Arealplan" };
 
-    private static IEnumerable<string> allFellesSchemas;
+    private static IEnumerable<string>? allFellesSchemas;
 
     public static void Generate(string sourcePath, string outputFolder)
     {
@@ -37,12 +40,8 @@ static class Generator
              .Where(file => file.Extension.Equals(".json") && file.Name.Contains(".felles.")) 
              .Select(file => Path.Combine(sourcePath, file.Name));
 
-        var fellesSchemasToGenerateSorted = new List<string>();
-        foreach (var filename in fellesFilenamesSorted)
-        {
-            fellesSchemasToGenerateSorted.Add(Path.Combine(sourcePath, filename));
-        }
-        
+        var fellesSchemasToGenerateSorted = fellesFilenamesSorted.Select(filename => Path.Combine(sourcePath, filename)).ToList();
+
         var schemasToGenerate = schemaFolder
             .GetFiles()
             .Where(file => file.Extension.Equals(".json") && ! file.Name.Contains(".felles."))
@@ -54,18 +53,17 @@ static class Generator
         GenerateClasses(outputFolder, schemasToGenerate, fellesTypes);
     }
 
-    private static HashSet<string> GetNamespacesForType(IEnumerable<string> schemas, string typeName)
+    private static HashSet<string> GetNamespacesForType(IEnumerable<string>? schemas, string typeName)
     {
         var foundNamespaces = new HashSet<string>();
 
         foreach (var schemaFilename in schemas)
         {
-
             var namespacePrefix = GetNamespacePrefix(schemaFilename);
             var schemaFile =
                 JsonSchema.FromFileAsync(schemaFilename).Result;
             var classFilename = GetClassName(schemaFilename, fellesSubNamespace);
-            var fullNamespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}";
+            var fullNamespace = GetFullNamespace(namespacePrefix, classFilename);
 
             var generator = new CSharpGenerator(schemaFile)
             {
@@ -93,7 +91,12 @@ static class Generator
         }
         return foundNamespaces;
     }
-    
+
+    private static string GetFullNamespace(string namespacePrefix, string classFilename)
+    {
+        return $"{commonNamespace}.{namespacePrefix}.{classFilename}{namespaceSuffix}";
+    }
+
     private static HashSet<string> GetTypes(IEnumerable<string> schemasToGenerate)
     {
         var typenames = new HashSet<string>();
@@ -131,7 +134,7 @@ static class Generator
         return typenames;
     }
 
-    private static List<string> GenerateClasses(string outputFolder, IEnumerable<string> schemasToGenerate, HashSet<string> usingTypes = null)
+    private static List<string> GenerateClasses(string outputFolder, IEnumerable<string> schemasToGenerate, IReadOnlySet<string> usingTypes = null)
     {
         bool isFelles;
         var generatedTypes = new HashSet<string>();
@@ -147,8 +150,9 @@ static class Generator
             var namespacePrefix = GetNamespacePrefix(schemaFilename);
             var classFilename = GetClassName(schemaFilename, namespacePrefix);
             isFelles = namespacePrefix == fellesSubNamespace;
+
+            var fullNamespace = GetFullNamespace(namespacePrefix, classFilename);
             
-            var fullNamespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}";
             generatedClassNamespaces.Add(fullNamespace);
 
             var generator = new CSharpGenerator(schemaFile)
@@ -161,7 +165,7 @@ static class Generator
                 }
             };
 
-            Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/");
+            Directory.CreateDirectory($"./{outputFolder}/Models/{namespacePrefix}/{classFilename}{namespaceSuffix}/");
 
             // Need to do this in order to get the types. Dont remove
             var classAsString = generator.GenerateFile();
@@ -204,13 +208,13 @@ static class Generator
                 }
 
                 code = $"{usingCode}" +
-                       $"namespace KS.Fiks.Plan.Models.V2.{namespacePrefix}.{classFilename} {{\n" +
+                       $"namespace {GetFullNamespace(namespacePrefix, classFilename)} {{\n" +
                        "#pragma warning disable // Disable all warnings\n\n" +
                        $"{codeArtifact.Code.Replace(" partial ", " ")}\n" +
                        "}";
 
                 File.WriteAllText(
-                    $"./{outputFolder}/Models/{namespacePrefix}/{classFilename}/{ToUpper(codeArtifact.TypeName)}.cs", code);
+                    $"./{outputFolder}/Models/{namespacePrefix}/{classFilename}{namespaceSuffix}/{ToUpper(codeArtifact.TypeName)}.cs", code);
 
                 generatedTypes.Add(codeArtifact.TypeName);
             }

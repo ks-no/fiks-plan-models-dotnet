@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using KS.Fiks.Plan.Models.V2.felles;
-using KS.Fiks.Plan.Models.V2.felles.Nasjonalarealplanid;
-using KS.Fiks.Plan.Models.V2.innsyn.AktoererHent;
-using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHent;
-using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHentResultat;
+using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
+using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
+using KS.Fiks.Plan.Models.V2.innsyn.AktoererHentTyper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
-using Saksnummer = KS.Fiks.Plan.Models.V2.innsyn.AktoererHent.Saksnummer;
 
 namespace TestProject1;
 
@@ -79,19 +76,19 @@ public class Tests
     public void HentAktoerer_NasjonalArealplanId_OneOf_Is_Ok_Test()
     {
 
-        
         var hentAktoerer = new HentAktoerer()
         {
-            Saksnummer = new Saksnummer()
+            Saksnummer = new KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper.Saksnummer()
             {
                 Saksaar = 2021,
                 Sakssekvensnummer = 1
             },
             NasjonalArealplanId = new NasjonalArealplanId()
             {
-                AdministrativEnhet = new AdministrativEnhet()
+                AdministrativEnhet = new AdministrativEnhet
                 {
-                    Landskode = "123"
+                    Type = AdministrativEnhetType.Kommunenummer,
+                    Nummer = "1234",
                 },
                 Planidentifikasjon = "tjobing"
             }
@@ -108,10 +105,9 @@ public class Tests
 
         Assert.AreEqual(hentAktoerer.Saksnummer.Saksaar, hentAktoererDeserialized.Saksnummer.Saksaar);
         Assert.AreEqual(hentAktoerer.Saksnummer.Sakssekvensnummer, hentAktoererDeserialized.Saksnummer.Sakssekvensnummer);
-        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Landskode, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Landskode);
+        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Nummer, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Nummer);
+        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Type, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Type);
         Assert.AreEqual(hentAktoerer.NasjonalArealplanId.Planidentifikasjon, hentAktoererDeserialized.NasjonalArealplanId.Planidentifikasjon);
-        Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Kommunenummer);
-        Assert.IsNull(hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Fylkesnummer);
     }
     
     [Test]
@@ -144,10 +140,10 @@ public class Tests
             },
             NasjonalArealplanId = new NasjonalArealplanId()
             {
-                AdministrativEnhet = new AdministrativEnhet()
+                AdministrativEnhet = new AdministrativEnhet
                 {
-                    Landskode = "123",
-                    Fylkesnummer = "2"
+                    Type = AdministrativEnhetType.Kommunenummer,
+                    Nummer = "4321",
                 },
                 Planidentifikasjon = "tjobing"
             }
