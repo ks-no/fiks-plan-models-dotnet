@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
-using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.AktoererHentTyper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -78,7 +76,7 @@ public class Tests
 
         var hentAktoerer = new HentAktoerer()
         {
-            Saksnummer = new KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper.Saksnummer()
+            Saksnummer = new Saksnummer()
             {
                 Saksaar = 2021,
                 Sakssekvensnummer = 1
