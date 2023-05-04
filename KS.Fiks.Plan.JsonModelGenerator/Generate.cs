@@ -23,11 +23,9 @@ static class Generator
         "no.ks.fiks.plan.v2.felles.dispensasjon.schema.json",
         "no.ks.fiks.plan.v2.felles.arealplan.schema.json",
         "no.ks.fiks.plan.v2.felles.planbehandling.schema.json",
-        "no.ks.fiks.plan.v2.felles.plandokument.schema.json",
+        "no.ks.fiks.plan.v2.felles.dokument.schema.json",
         
     };
-
-    private static readonly string[] fellesSchemas = { "NasjonalArealplanId", "Arealplan" };
 
     private static IEnumerable<string>? allFellesSchemas;
 
