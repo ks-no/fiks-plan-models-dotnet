@@ -5,9 +5,10 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
     public class FiksPlanMeldingtypeV2
     {
         // Forespørsler-innsyn
-        public const string FinnPlanerForMatrikkelenhet = "no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.finn";
-        public const string FinnPlanerForAdresse = "no.ks.fiks.plan.v2.innsyn.planerforadresse.finn";
-        public const string FinnPlaner = "no.ks.fiks.plan.v2.innsyn.planer.finn";
+        public const string FinnArealplaner = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn";
+        public const string FinnArealplanerForMatrikkelenhet = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.matrikkelenhet";
+        public const string FinnArealplanerForAdresse = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.adresse";
+        public const string FinnArealplanerForOmraade = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.omraade";
         public const string FinnDispensasjoner = "no.ks.fiks.plan.v2.innsyn.dispensasjoner.finn";
         public const string FinnPlanbehandlinger = "no.ks.fiks.plan.v2.innsyn.planbehandlinger.finn";
         public const string HentArealplan = "no.ks.fiks.plan.v2.innsyn.arealplan.hent";
@@ -16,16 +17,13 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string HentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent";
         public const string HentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent";
         public const string FinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.finn";
-        public const string HentPlanfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent";
-        public const string FinnPlanerForOmraade = "no.ks.fiks.plan.v2.innsyn.planerforomraade.finn";
+        public const string HentDokumentfil = "no.ks.fiks.plan.v2.innsyn.dokumentfil.hent";
         public const string HentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent";
         public const string HentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent";
         public const string SjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigforbud.sjekk";
 
         // Resultat på forespørsler-innsyn
-        public const string ResultatFinnPlanerForMatrikkelenhet = "no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.resultat";
-        public const string ResultatFinnPlanerForAdresse = "no.ks.fiks.plan.v2.innsyn.planerforadresse.resultat";
-        public const string ResultatFinnPlaner = "no.ks.fiks.plan.v2.innsyn.planer.resultat";
+        public const string ResultatFinnArealplaner = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.resultat";
         public const string ResultatFinnDispensasjoner = "no.ks.fiks.plan.v2.innsyn.dispensasjoner.resultat";
         public const string ResultatFinnPlanbehandlinger = "no.ks.fiks.plan.v2.innsyn.planbehandlinger.resultat";
         public const string ResultatHentArealplan = "no.ks.fiks.plan.v2.innsyn.arealplan.resultat";
@@ -42,20 +40,32 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
 
         // Forespørsler-oppdatering
         public const string OpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett";
-        public const string RegistrertPlanavgrensning = "no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer";
+        public const string OppdaterArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater";
+        public const string RegistrerPlanavgrensning = "no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer";
         public const string RegistrerPlanbehandling = "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer";
         public const string RegistrerMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer";
-        public const string OppdaterArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater";
 
         // Resultat på forespørsler-oppdatering
-        public const string ResultatOpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.meldingomplanident.resultat";
-        public const string ResultatMottat = "no.ks.fiks.plan.v2.oppdatering.mottatt";
+        public const string ResultatOpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.resultat";
+        public const string MottattOpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.mottatt";
+        public const string MottattOppdaterArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater.mottatt";
+        public const string KvitteringOppdaterArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater.kvittering";
+        public const string MottattRegistrerPlanavgrensning = "no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer.mottatt";
+        public const string KvitteringRegistrerPlanavgrensning = "no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer.kvittering";
+        public const string MottattRegistrerPlanbehandling = "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.mottatt";
+        public const string KvitteringRegistrerPlanbehandling = "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.kvittering";
+        public const string MottattRegistrerMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer.mottatt";
+        public const string KvitteringRegistrerMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer.kvittering";
 
         // Ebyggesak 
-        public const string RegistrerDispensasjonFraPlan = "no.ks.fiks.plan.v2.oppdatering.dispensasjonplan.registrer";
+        public const string RegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer";
         public const string OppdaterDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater";
 
-        public const string ResultatRegistrerDispensasjonFraPlan = "no.ks.fiks.plan.v2.oppdatering.dispensasjonplan.resultat";
+        public const string ResultatRegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.resultat";
+        public const string MottattRegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.mottatt";
+        
+        public const string KvitteringOppdaterDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater.kvittering";
+        public const string MottatOppdaterDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater.mottatt";
 
         // Feilmeldinger 
         public const string Ugyldigforespoersel = "no.ks.fiks.plan.v2.feilmelding.ugyldigforespoersel";
@@ -76,9 +86,9 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
 
         public static readonly List<string> InnsynTyper = new List<string>()
         {
-            FinnPlanerForMatrikkelenhet,
-            FinnPlanerForAdresse,
-            FinnPlaner,
+            FinnArealplanerForMatrikkelenhet,
+            FinnArealplanerForAdresse,
+            FinnArealplaner,
             FinnDispensasjoner,
             FinnPlanbehandlinger,
             HentArealplan,
@@ -87,14 +97,12 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             HentRelatertePlaner,
             HentKodeliste,
             FinnPlandokumenter,
-            HentPlanfil,
-            FinnPlanerForOmraade,
+            HentDokumentfil,
+            FinnArealplanerForOmraade,
             HentBboxForPlan,
             HentPlanomraader,
             SjekkMidlertidigForbud,
-            ResultatFinnPlanerForMatrikkelenhet,
-            ResultatFinnPlanerForAdresse,
-            ResultatFinnPlaner,
+            ResultatFinnArealplaner,
             ResultatFinnDispensasjoner,
             ResultatFinnPlanbehandlinger,
             ResultatHentArealplan,
@@ -113,15 +121,28 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public static readonly List<string> OppdateringTyper = new List<string>()
         {
             OpprettArealplan,
-            RegistrertPlanavgrensning,
-            RegistrerPlanbehandling,
-            RegistrerMidlertidigForbudMotTiltak,
-            OppdaterArealplan,
+            MottattOpprettArealplan,
             ResultatOpprettArealplan,
-            ResultatMottat,
-            RegistrerDispensasjonFraPlan,
+            MottattOppdaterArealplan,
+            KvitteringOppdaterArealplan,
+            RegistrerPlanavgrensning,
+            MottattRegistrerPlanavgrensning,
+            KvitteringRegistrerPlanavgrensning,
+            RegistrerPlanbehandling,
+            MottattRegistrerPlanbehandling,
+            KvitteringRegistrerPlanbehandling,
+            RegistrerMidlertidigForbudMotTiltak,
+            MottattRegistrerMidlertidigForbudMotTiltak,
+            KvitteringRegistrerMidlertidigForbudMotTiltak,
+            OppdaterArealplan,
+            MottattOppdaterArealplan,
+            KvitteringOppdaterArealplan,
+            RegistrerDispensasjon,
+            MottattRegistrerDispensasjon,
+            ResultatRegistrerDispensasjon,
             OppdaterDispensasjon,
-            ResultatRegistrerDispensasjonFraPlan
+            MottatOppdaterDispensasjon,
+            KvitteringOppdaterDispensasjon,
         };
 
         public static readonly List<string> FeilmeldingTyper = new List<string>()
@@ -154,9 +175,9 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         private static void initSkjemanavn()
         {
             Skjemanavn = new Dictionary<string, string>();
-            AddSkjemanavnTilDictionary(FinnPlanerForMatrikkelenhet);
-            AddSkjemanavnTilDictionary(FinnPlanerForAdresse);
-            AddSkjemanavnTilDictionary(FinnPlaner);
+            AddSkjemanavnTilDictionary(FinnArealplanerForMatrikkelenhet);
+            AddSkjemanavnTilDictionary(FinnArealplanerForAdresse);
+            AddSkjemanavnTilDictionary(FinnArealplaner);
             AddSkjemanavnTilDictionary(FinnDispensasjoner);
             AddSkjemanavnTilDictionary(FinnPlanbehandlinger);
             AddSkjemanavnTilDictionary(HentArealplan);
@@ -165,13 +186,11 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(HentRelatertePlaner);
             AddSkjemanavnTilDictionary(HentKodeliste);
             AddSkjemanavnTilDictionary(FinnPlandokumenter);
-            AddSkjemanavnTilDictionary(HentPlanfil);
-            AddSkjemanavnTilDictionary(FinnPlanerForOmraade);
+            AddSkjemanavnTilDictionary(HentDokumentfil);
+            AddSkjemanavnTilDictionary(FinnArealplanerForOmraade);
             AddSkjemanavnTilDictionary(HentBboxForPlan);
             AddSkjemanavnTilDictionary(HentPlanomraader);
-            AddSkjemanavnTilDictionary(ResultatFinnPlanerForMatrikkelenhet);
-            AddSkjemanavnTilDictionary(ResultatFinnPlanerForAdresse);
-            AddSkjemanavnTilDictionary(ResultatFinnPlaner);
+            AddSkjemanavnTilDictionary(ResultatFinnArealplaner);
             AddSkjemanavnTilDictionary(ResultatFinnDispensasjoner);
             AddSkjemanavnTilDictionary(ResultatHentGjeldendePlanbestemmelser);
             AddSkjemanavnTilDictionary(ResultatHentAktoerer);
@@ -181,11 +200,10 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(ResultatFinnPlanerForOmraade);
             AddSkjemanavnTilDictionary(ResultatHentBboxForPlan);
             AddSkjemanavnTilDictionary(OpprettArealplan);
-            AddSkjemanavnTilDictionary(RegistrertPlanavgrensning);
+            AddSkjemanavnTilDictionary(RegistrerPlanavgrensning);
             AddSkjemanavnTilDictionary(RegistrerPlanbehandling);
             AddSkjemanavnTilDictionary(OppdaterArealplan);
-            AddSkjemanavnTilDictionary(ResultatMottat);
-            AddSkjemanavnTilDictionary(RegistrerDispensasjonFraPlan);
+            AddSkjemanavnTilDictionary(RegistrerDispensasjon);
             AddSkjemanavnTilDictionary(OppdaterDispensasjon);
             AddSkjemanavnTilDictionary(SjekkMidlertidigForbud);
             AddSkjemanavnTilDictionary(ResultatFinnPlanbehandlinger);
@@ -195,7 +213,19 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(ResultatSjekkMidlertidigForbud);
             AddSkjemanavnTilDictionary(RegistrerMidlertidigForbudMotTiltak);
             AddSkjemanavnTilDictionary(ResultatOpprettArealplan);
-            AddSkjemanavnTilDictionary(ResultatRegistrerDispensasjonFraPlan);
+            AddSkjemanavnTilDictionary(ResultatRegistrerDispensasjon);
+            AddSkjemanavnTilDictionary(MottatOppdaterDispensasjon);
+            AddSkjemanavnTilDictionary(MottattOppdaterArealplan);
+            AddSkjemanavnTilDictionary(MottattOpprettArealplan);
+            AddSkjemanavnTilDictionary(MottattRegistrerDispensasjon);
+            AddSkjemanavnTilDictionary(MottattRegistrerPlanavgrensning);
+            AddSkjemanavnTilDictionary(MottattRegistrerPlanbehandling);
+            AddSkjemanavnTilDictionary(MottattRegistrerMidlertidigForbudMotTiltak);
+            AddSkjemanavnTilDictionary(KvitteringOppdaterArealplan);
+            AddSkjemanavnTilDictionary(KvitteringOppdaterDispensasjon);
+            AddSkjemanavnTilDictionary(KvitteringRegistrerPlanavgrensning);
+            AddSkjemanavnTilDictionary(KvitteringRegistrerPlanbehandling);
+            AddSkjemanavnTilDictionary(KvitteringRegistrerMidlertidigForbudMotTiltak);
         }
 
         private static void AddSkjemanavnTilDictionary(string meldingstype)
