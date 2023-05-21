@@ -17,26 +17,26 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string HentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent";
         public const string HentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent";
         public const string FinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.finn";
-        public const string HentDokumentfil = "no.ks.fiks.plan.v2.innsyn.dokumentfil.hent";
+        public const string HentDokumentfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent";
         public const string HentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent";
         public const string HentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent";
         public const string SjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigforbud.sjekk";
 
         // Resultat på forespørsler-innsyn
         public const string ResultatFinnArealplaner = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.resultat";
-        public const string ResultatFinnDispensasjoner = "no.ks.fiks.plan.v2.innsyn.dispensasjoner.resultat";
-        public const string ResultatFinnPlanbehandlinger = "no.ks.fiks.plan.v2.innsyn.planbehandlinger.resultat";
-        public const string ResultatHentArealplan = "no.ks.fiks.plan.v2.innsyn.arealplan.resultat";
-        public const string ResultatHentGjeldendePlanbestemmelser = "no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.resultat";
-        public const string ResultatHentAktoerer = "no.ks.fiks.plan.v2.innsyn.aktoerer.resultat";
-        public const string ResultatHentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.resultat";
-        public const string ResultatHentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.resultat";
-        public const string ResultatFinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.resultat";
-        public const string ResultatHentPlanfil = "no.ks.fiks.plan.v2.innsyn.planfil.resultat";
-        public const string ResultatFinnPlanerForOmraade = "no.ks.fiks.plan.v2.innsyn.planerforomraade.resultat";
-        public const string ResultatHentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.resultat";
-        public const string ResultatHentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.resultat";
-        public const string ResultatSjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigforbud.resultat";
+        public const string ResultatFinnDispensasjoner = "no.ks.fiks.plan.v2.innsyn.dispensasjoner.finn.resultat";
+        public const string ResultatFinnPlanbehandlinger = "no.ks.fiks.plan.v2.innsyn.planbehandlinger.finn.resultat";
+        public const string ResultatHentArealplan = "no.ks.fiks.plan.v2.innsyn.arealplan.hent.resultat";
+        public const string ResultatHentGjeldendePlanbestemmelser = "no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.hent.resultat";
+        public const string ResultatHentAktoerer = "no.ks.fiks.plan.v2.innsyn.aktoerer.hent.resultat";
+        public const string ResultatHentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent.resultat";
+        public const string ResultatHentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent.resultat";
+        public const string ResultatFinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.finn.resultat";
+        public const string ResultatHentPlanfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent.resultat";
+        public const string ResultatFinnPlanerForOmraade = "no.ks.fiks.plan.v2.innsyn.planerforomraade.hent.resultat";
+        public const string ResultatHentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent.resultat";
+        public const string ResultatHentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent.resultat";
+        public const string ResultatSjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigforbud.sjekk.resultat";
 
         // Forespørsler-oppdatering
         public const string OpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett";
