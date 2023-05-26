@@ -24,7 +24,7 @@ static class Generator
         "no.ks.fiks.plan.v2.felles.arealplan.schema.json",
         "no.ks.fiks.plan.v2.felles.planbehandling.schema.json",
         "no.ks.fiks.plan.v2.felles.dokument.schema.json",
-        
+        "no.ks.fiks.plan.v2.felles.midlertidigforbud.schema.json",
     };
 
     private static IEnumerable<string>? allFellesSchemas;
@@ -265,10 +265,6 @@ static class Generator
     {
         public string Generate(JsonSchema schema, string typeNameHint, IEnumerable<string> reservedTypeNames)
         {
-            //TODO fikse denne slik at namegenerator funker med ref skjema. Nå ble det feil mtp at den kaller feltet for Nasjonalarealplanid
-            // Console.Out.WriteLine($"typeNameHint {typeNameHint}");
-            // Console.Out.WriteLine($"title {schema.Title}");
-
             return !string.IsNullOrEmpty(schema.Title) ? schema.Title : typeNameHint;
         }
     }

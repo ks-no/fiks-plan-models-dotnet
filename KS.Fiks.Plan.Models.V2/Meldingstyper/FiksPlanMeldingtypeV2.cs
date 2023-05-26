@@ -20,7 +20,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string HentDokumentfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent";
         public const string HentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent";
         public const string HentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent";
-        public const string SjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigforbud.sjekk";
+        public const string SjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn";
 
         // Resultat på forespørsler-innsyn
         public const string ResultatFinnArealplaner = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.resultat";
@@ -36,7 +36,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string ResultatFinnPlanerForOmraade = "no.ks.fiks.plan.v2.innsyn.planerforomraade.hent.resultat";
         public const string ResultatHentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent.resultat";
         public const string ResultatHentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent.resultat";
-        public const string ResultatSjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigforbud.sjekk.resultat";
+        public const string ResultatSjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn.resultat";
 
         // Forespørsler-oppdatering
         public const string OpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett";
@@ -46,8 +46,8 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string RegistrerMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer";
 
         // Resultat på forespørsler-oppdatering
-        public const string ResultatOpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.resultat";
         public const string MottattOpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.mottatt";
+        public const string KvitteringOpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.kvittering";
         public const string MottattOppdaterArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater.mottatt";
         public const string KvitteringOppdaterArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.oppdater.kvittering";
         public const string MottattRegistrerPlanavgrensning = "no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer.mottatt";
@@ -61,7 +61,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string RegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer";
         public const string OppdaterDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater";
 
-        public const string ResultatRegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.resultat";
+        public const string KvitteringRegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.kvittering";
         public const string MottattRegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.mottatt";
         
         public const string KvitteringOppdaterDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater.kvittering";
@@ -122,7 +122,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         {
             OpprettArealplan,
             MottattOpprettArealplan,
-            ResultatOpprettArealplan,
+            KvitteringOpprettArealplan,
             MottattOppdaterArealplan,
             KvitteringOppdaterArealplan,
             RegistrerPlanavgrensning,
@@ -139,7 +139,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             KvitteringOppdaterArealplan,
             RegistrerDispensasjon,
             MottattRegistrerDispensasjon,
-            ResultatRegistrerDispensasjon,
+            KvitteringRegistrerDispensasjon,
             OppdaterDispensasjon,
             MottatOppdaterDispensasjon,
             KvitteringOppdaterDispensasjon,
@@ -212,8 +212,8 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(ResultatHentPlanomraader);
             AddSkjemanavnTilDictionary(ResultatSjekkMidlertidigForbud);
             AddSkjemanavnTilDictionary(RegistrerMidlertidigForbudMotTiltak);
-            AddSkjemanavnTilDictionary(ResultatOpprettArealplan);
-            AddSkjemanavnTilDictionary(ResultatRegistrerDispensasjon);
+            AddSkjemanavnTilDictionary(KvitteringOpprettArealplan);
+            AddSkjemanavnTilDictionary(KvitteringRegistrerDispensasjon);
             AddSkjemanavnTilDictionary(MottatOppdaterDispensasjon);
             AddSkjemanavnTilDictionary(MottattOppdaterArealplan);
             AddSkjemanavnTilDictionary(MottattOpprettArealplan);
