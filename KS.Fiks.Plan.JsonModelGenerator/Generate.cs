@@ -18,6 +18,7 @@ static class Generator
     private static readonly string[] fellesFilenamesSorted = new []
     {
         "no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json",
+        "no.ks.fiks.plan.v2.felles.omraade.schema.json",
         "no.ks.fiks.plan.v2.felles.dokument.schema.json",
         "no.ks.fiks.plan.v2.felles.posisjon.schema.json",
         "no.ks.fiks.plan.v2.felles.saksnummer.schema.json",

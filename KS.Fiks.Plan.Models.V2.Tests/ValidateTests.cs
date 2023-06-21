@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
+using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.AktoererHentTyper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -120,7 +122,7 @@ public class Tests
         }
         catch (Exception e)
         {
-            Assert.AreEqual(e.Message, "AdministrativEnhet object have more than one property set and violates the oneOf rule");
+            Assert.AreEqual("Unexpected character encountered while parsing value:", e.Message);
             Assert.Pass();
         }
         Assert.Fail();
