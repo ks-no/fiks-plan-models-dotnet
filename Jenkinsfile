@@ -46,7 +46,9 @@ pipeline {
             dir('temp') {
               git branch: params.triggerbranch,
               url: 'https://github.com/ks-no/fiks-plan-specification.git'
-              stash(name: 'json', includes: 'Schema/V2/*')
+              stash(name: 'jsonSchemas', includes: 'Schema/V2/*')
+              stash(name: 'kodelister', includes: 'Schema/V2/kodelister/**')
+              
 //               stash(name: 'json', includes: 'Schema/V2/meldingstyper/meldingstyper.json')
             }
           }
@@ -60,7 +62,7 @@ pipeline {
           }
           steps {
             dir("${GENERATOR_FOLDER}") {
-              unstash 'json'
+              unstash 'jsonSchemas'
               sh 'dotnet run Schema/V2 output'
               stash(name: 'generated', includes: 'output/**')
             }
@@ -96,7 +98,8 @@ pipeline {
             dir("${MODELS_FOLDER}") {
               sh 'mkdir -p /.nuget/NuGet'
               sh 'cp -f $NUGET_CONF ~/.nuget/NuGet/NuGet.Config'
-              unstash 'json'
+              unstash 'jsonSchemas'
+              unstash 'kodelister'
               unstash 'models'
               sh 'dotnet restore --configfile ${NUGET_CONF}'
               sh 'dotnet build --no-restore -c Release ${BUILD_SUFFIX}'
