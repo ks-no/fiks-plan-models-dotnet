@@ -28,6 +28,9 @@
     <ItemGroup>
         <EmbeddedResource Include="Schema/V2/*.json" />
         <!--EmbeddedResource Include="Schema/V2/kodelister/**/*.json" /-->
+        <Content Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper.json" Pack="true" PackagePath="">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dokumenttyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.forslagsstillertyper/*.json" />
@@ -43,7 +46,6 @@
             <PackagePath>/</PackagePath>
         </None>
         <None Include="LICENSE" Pack="true" PackagePath="" />
-        <None Include="README.md" Pack="true" PackagePath="" />
         <None Include="fiks-io-strongly-named-key.snk">
             <Link>fiks-io-strongly-named-key.snk</Link>
         </None>
