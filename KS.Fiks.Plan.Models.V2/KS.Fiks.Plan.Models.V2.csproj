@@ -27,8 +27,8 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Schema/V2/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.behandlingstyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper/*.json" />
+        <EmbeddedResource Include="Schema/V2/kodelister/**/*.json" />
+        <!--EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dokumenttyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.forslagsstillertyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.lovreferanser/*.json" />
@@ -36,7 +36,7 @@
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.planforholdtyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.planstatuser/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.plantyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.vertikalnivaa/*.json" />
+        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.vertikalnivaa/*.json" /-->
 <!--        <EmbeddedResource Include="Schema/V1/meldingstyper/meldingstyper.json" />-->
         <None Include="KS.png">
             <Pack>true</Pack>

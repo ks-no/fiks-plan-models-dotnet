@@ -47,7 +47,7 @@ pipeline {
               git branch: params.triggerbranch,
               url: 'https://github.com/ks-no/fiks-plan-specification.git'
               stash(name: 'jsonSchemas', includes: 'Schema/V2/*')
-              stash(name: 'kodelister', includes: 'Schema/V2/kodelister/**')
+           //   stash(name: 'kodelister', includes: 'Schema/V2/kodelister/**')
               
 //               stash(name: 'json', includes: 'Schema/V2/meldingstyper/meldingstyper.json')
             }
@@ -99,9 +99,10 @@ pipeline {
               sh 'mkdir -p /.nuget/NuGet'
               sh 'cp -f $NUGET_CONF ~/.nuget/NuGet/NuGet.Config'
               unstash 'jsonSchemas'
-              unstash 'kodelister'
+              // unstash 'kodelister'
               sh 'ls -l Schema/V2'
               sh 'ls -l Schema/V2/kodelister'
+              sh 'ls -l Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.behandlingstyper'
               unstash 'models'
               sh 'dotnet restore --configfile ${NUGET_CONF}'
               sh 'dotnet build --no-restore -c Release ${BUILD_SUFFIX}'
