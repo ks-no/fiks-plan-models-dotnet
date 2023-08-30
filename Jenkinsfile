@@ -100,6 +100,8 @@ pipeline {
               sh 'cp -f $NUGET_CONF ~/.nuget/NuGet/NuGet.Config'
               unstash 'jsonSchemas'
               unstash 'kodelister'
+              sh 'ls -l Schema/V2'
+              sh 'ls -l Schema/V2/kodelister'
               unstash 'models'
               sh 'dotnet restore --configfile ${NUGET_CONF}'
               sh 'dotnet build --no-restore -c Release ${BUILD_SUFFIX}'
