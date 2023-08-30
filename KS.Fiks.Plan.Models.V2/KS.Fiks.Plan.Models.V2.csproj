@@ -27,6 +27,7 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Schema/V2/*.json" />
+        <EmbeddedResource Include="Schema/V2/kodelister/**/*.json" />
 <!--        <EmbeddedResource Include="Schema/V1/meldingstyper/meldingstyper.json" />-->
         <None Include="KS.png">
             <Pack>true</Pack>
