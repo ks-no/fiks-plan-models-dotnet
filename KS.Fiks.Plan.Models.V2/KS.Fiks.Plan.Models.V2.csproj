@@ -46,6 +46,7 @@
             <PackagePath>/</PackagePath>
         </None>
         <None Include="LICENSE" Pack="true" PackagePath="" />
+        <None Include="README.md" Pack="true" PackagePath="" />
         <None Include="fiks-io-strongly-named-key.snk">
             <Link>fiks-io-strongly-named-key.snk</Link>
         </None>
