@@ -100,8 +100,6 @@ pipeline {
           }
           steps {
             dir("${MODELS_FOLDER}") {
-              sh 'mkdir -p /.nuget/NuGet'
-              sh 'cp -f $NUGET_CONF ~/.nuget/NuGet/NuGet.Config'
               unstash 'jsonSchemas'
               unstash 'kodelister'
               sh 'ls -l Schema/V2'

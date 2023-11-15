@@ -44,6 +44,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string RegistrerPlanavgrensning = "no.ks.fiks.plan.v2.oppdatering.planavgrensning.registrer";
         public const string RegistrerPlanbehandling = "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer";
         public const string RegistrerMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer";
+        public const string RegistrerPlanomraade = "no.ks.fiks.plan.v2.oppdatering.planomraade.registrer";
 
         // Resultat på forespørsler-oppdatering
         public const string MottattOpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett.mottatt";
@@ -56,6 +57,9 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string KvitteringRegistrerPlanbehandling = "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer.kvittering";
         public const string MottattRegistrerMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer.mottatt";
         public const string KvitteringRegistrerMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.oppdatering.midlertidigforbudmottiltak.registrer.kvittering";
+        public const string MottattRegistrerPlanomraade = "no.ks.fiks.plan.v2.oppdatering.planomraade.registrer.mottatt";
+        public const string KvitteringRegistrerPlanomraade = "no.ks.fiks.plan.v2.oppdatering.planomraade.registrer.kvittering";
+
 
         // Ebyggesak 
         public const string RegistrerDispensasjon = "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer";
@@ -143,6 +147,9 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             OppdaterDispensasjon,
             MottatOppdaterDispensasjon,
             KvitteringOppdaterDispensasjon,
+            RegistrerPlanomraade,
+            MottattRegistrerPlanomraade,
+            KvitteringRegistrerPlanomraade
         };
 
         public static readonly List<string> FeilmeldingTyper = new List<string>()
@@ -226,6 +233,9 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(KvitteringRegistrerPlanavgrensning);
             AddSkjemanavnTilDictionary(KvitteringRegistrerPlanbehandling);
             AddSkjemanavnTilDictionary(KvitteringRegistrerMidlertidigForbudMotTiltak);
+            AddSkjemanavnTilDictionary(RegistrerPlanomraade);
+            AddSkjemanavnTilDictionary(MottattRegistrerPlanomraade);
+            AddSkjemanavnTilDictionary(KvitteringRegistrerPlanomraade);
         }
 
         private static void AddSkjemanavnTilDictionary(string meldingstype)
