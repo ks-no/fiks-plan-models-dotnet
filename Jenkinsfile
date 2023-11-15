@@ -48,8 +48,7 @@ pipeline {
               url: 'https://github.com/ks-no/fiks-plan-specification.git'
               stash(name: 'jsonSchemas', includes: 'Schema/V2/*')
               stash(name: 'kodelister', includes: 'Schema/V2/kodelister/**/*')
-              
-//               stash(name: 'json', includes: 'Schema/V2/meldingstyper/meldingstyper.json')
+              stash(name: 'meldingstyper', includes: 'Schema/V2/meldingstyper/meldingstyper.json')
             }
           }
         }
@@ -102,9 +101,7 @@ pipeline {
             dir("${MODELS_FOLDER}") {
               unstash 'jsonSchemas'
               unstash 'kodelister'
-              sh 'ls -l Schema/V2'
-              sh 'ls -l Schema/V2/kodelister'
-              sh 'ls -l Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.behandlingstyper'
+              unstash 'meldingstyper'
               unstash 'models'
               sh 'dotnet restore --configfile ${NUGET_CONF}'
               sh 'dotnet build --no-restore -c Release ${BUILD_SUFFIX}'
