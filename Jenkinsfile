@@ -25,7 +25,7 @@ pipeline {
                 script {
                     env.GIT_SHA = sh(returnStdout: true, script: 'git rev-parse HEAD').substring(0, 7)
                     env.REPO_NAME = scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
-                    env.CURRENT_VERSION = findVersionSuffix()
+                    env.CURRENT_VERSION = findVersionPrefix()
                     env.NEXT_VERSION = params.specifiedVersion == "" ? incrementVersion(env.CURRENT_VERSION) : params.specifiedVersion
                     if(params.isRelease) {
                       env.VERSION_SUFFIX = ""
@@ -218,13 +218,15 @@ pipeline {
               gitCheckout(env.BRANCH_NAME)
               gitTag(isRelease, env.CURRENT_VERSION)
               prepareDotNetNoBuild(env.NEXT_VERSION)
-              gitPush()
               script {
                 currentBuild.description = "${env.user} released version ${env.CURRENT_VERSION}"
               }
-              withCredentials([usernamePassword(credentialsId: 'Github-token-login', passwordVariable: 'GITHUB_KEY', usernameVariable: 'USERNAME')]) {
-                  sh "~/.local/bin/http --ignore-stdin -a ${USERNAME}:${GITHUB_KEY} POST https://api.github.com/repos/ks-no/${env.REPO_NAME}/releases tag_name=\"${env.CURRENT_VERSION}\" body=\"Release utført av ${env.user}\n\n## Endringer:\n${params.releaseNotes}\n\n ## Sikkerhetsvurdering: \n${params.securityReview} \n\n ## Review: \n${params.reviewer == 'Endringene krever ikke review' ? params.reviewer : "Review gjort av ${params.reviewer}"}\""
-              }
+            }
+          }
+          post {
+            success {
+              gitPush()
+              createGithubRelease env.REPO_NAME, params.reviewer, params.releaseNotes, env.CURRENT_VERSION, env.user
             }
           }
         }
@@ -236,14 +238,47 @@ pipeline {
     }
 }
 
-def findVersionSuffix() {
-  def findCommand = $/find -name "**\KS.Fiks.Plan.Models.V2.csproj" -exec xpath '{}' '/Project/PropertyGroup/VersionPrefix/text()' \;/$
+def findVersionPrefix() {
+  
+    def files = findCsprojFiles()
+    
+    def versions = files.collect {
+      echo("Checking ${it}")
+      return extractVersion(readFile(file: it.getPath().trim(), encoding: 'UTF-8'))
+    }.findAll {
+      return it != null && ! it.trim().isEmpty()
+    }
+    echo "Found ${versions.size()} versions"
+    if(versions.size() > 0 && versions[0] != "") {
+      def currentVersion = versions[0]
+      echo "Version: ${currentVersion}"
+      return currentVersion
+    } else {
+      throw new Exception("No versionPrefix fond in csproj files")
+    }
+}
 
-  def version = sh(script: findCommand, returnStdout: true, label: 'Lookup current version from csproj files').trim().split('\n').find {
-    return it.trim().matches(versionPattern())
+@NonCPS
+def extractVersion(xml) {
+  def debom = { data ->
+    if(data?.length() > 0 && data[0] == '\uFEFF') return data.drop(1) else return data
   }
-  println("Version found: ${version}")
+  def xmlData = debom.call(xml)
+  def Project = new XmlSlurper().parseText(xmlData)
+  def version = Project['PropertyGroup']['VersionPrefix'].text().trim()
+  echo("Found version ${version}")
   return version
+}
+
+def findCsprojFiles() {
+  def files = findFiles(glob: '**/*.csproj').findAll {
+    return it.getName().toUpperCase().contains("TEST") == false && it.getName().toUpperCase().contains("EXAMPLE") == false
+  }
+  if(files.size() == 0) {
+    throw new Exception("No csproj files found")
+  }
+  echo("Found ${files.size()} csproj files")
+  return files
 }
 
 def incrementVersion(versionString) {
