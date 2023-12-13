@@ -8,7 +8,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string FinnArealplaner = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn";
         public const string FinnArealplanerForMatrikkelenhet = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.matrikkelenhet";
         public const string FinnArealplanerForAdresse = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.adresse";
-        public const string FinnArealplanerForOmraade = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.omraade";
+        public const string FinnArealplanerForFlate = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.flate";
         public const string FinnDispensasjoner = "no.ks.fiks.plan.v2.innsyn.dispensasjoner.finn";
         public const string FinnPlanbehandlinger = "no.ks.fiks.plan.v2.innsyn.planbehandlinger.finn";
         public const string HentArealplan = "no.ks.fiks.plan.v2.innsyn.arealplan.hent";
@@ -17,10 +17,10 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string HentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent";
         public const string HentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent";
         public const string FinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.finn";
-        public const string HentDokumentfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent";
+        public const string HentPlanfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent";
         public const string HentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent";
         public const string HentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent";
-        public const string SjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn";
+        public const string FinnMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn";
 
         // Resultat på forespørsler-innsyn
         public const string ResultatFinnArealplaner = "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.resultat";
@@ -33,7 +33,6 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string ResultatHentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent.resultat";
         public const string ResultatFinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.finn.resultat";
         public const string ResultatHentPlanfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent.resultat";
-        public const string ResultatFinnPlanerForOmraade = "no.ks.fiks.plan.v2.innsyn.planerforomraade.hent.resultat";
         public const string ResultatHentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent.resultat";
         public const string ResultatHentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent.resultat";
         public const string ResultatSjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn.resultat";
@@ -101,11 +100,11 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             HentRelatertePlaner,
             HentKodeliste,
             FinnPlandokumenter,
-            HentDokumentfil,
-            FinnArealplanerForOmraade,
+            HentPlanfil,
+            FinnArealplanerForFlate,
             HentBboxForPlan,
             HentPlanomraader,
-            SjekkMidlertidigForbud,
+            FinnMidlertidigForbudMotTiltak,
             ResultatFinnArealplaner,
             ResultatFinnDispensasjoner,
             ResultatFinnPlanbehandlinger,
@@ -116,7 +115,6 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             ResultatHentKodeliste,
             ResultatFinnPlandokumenter,
             ResultatHentPlanfil,
-            ResultatFinnPlanerForOmraade,
             ResultatHentBboxForPlan,
             ResultatHentPlanomraader,
             ResultatSjekkMidlertidigForbud
@@ -193,8 +191,8 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(HentRelatertePlaner);
             AddSkjemanavnTilDictionary(HentKodeliste);
             AddSkjemanavnTilDictionary(FinnPlandokumenter);
-            AddSkjemanavnTilDictionary(HentDokumentfil);
-            AddSkjemanavnTilDictionary(FinnArealplanerForOmraade);
+            AddSkjemanavnTilDictionary(HentPlanfil);
+            AddSkjemanavnTilDictionary(FinnArealplanerForFlate);
             AddSkjemanavnTilDictionary(HentBboxForPlan);
             AddSkjemanavnTilDictionary(HentPlanomraader);
             AddSkjemanavnTilDictionary(ResultatFinnArealplaner);
@@ -204,7 +202,6 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(ResultatHentRelatertePlaner);
             AddSkjemanavnTilDictionary(ResultatHentKodeliste);
             AddSkjemanavnTilDictionary(ResultatHentPlanfil);
-            AddSkjemanavnTilDictionary(ResultatFinnPlanerForOmraade);
             AddSkjemanavnTilDictionary(ResultatHentBboxForPlan);
             AddSkjemanavnTilDictionary(OpprettArealplan);
             AddSkjemanavnTilDictionary(RegistrerPlanavgrensning);
@@ -212,7 +209,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(OppdaterArealplan);
             AddSkjemanavnTilDictionary(RegistrerDispensasjon);
             AddSkjemanavnTilDictionary(OppdaterDispensasjon);
-            AddSkjemanavnTilDictionary(SjekkMidlertidigForbud);
+            AddSkjemanavnTilDictionary(FinnMidlertidigForbudMotTiltak);
             AddSkjemanavnTilDictionary(ResultatFinnPlanbehandlinger);
             AddSkjemanavnTilDictionary(ResultatHentArealplan);
             AddSkjemanavnTilDictionary(ResultatFinnPlandokumenter);
