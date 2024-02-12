@@ -16,8 +16,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string HentAktoerer = "no.ks.fiks.plan.v2.innsyn.aktoerer.hent";
         public const string HentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent";
         public const string HentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent";
-        public const string FinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.finn";
-        public const string HentPlanfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent";
+        public const string HentDokumentfil = "no.ks.fiks.plan.v2.innsyn.dokumentfil.hent";
         public const string HentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent";
         public const string HentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent";
         public const string FinnMidlertidigForbudMotTiltak = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn";
@@ -31,8 +30,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string ResultatHentAktoerer = "no.ks.fiks.plan.v2.innsyn.aktoerer.hent.resultat";
         public const string ResultatHentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent.resultat";
         public const string ResultatHentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent.resultat";
-        public const string ResultatFinnPlandokumenter = "no.ks.fiks.plan.v2.innsyn.plandokumenter.finn.resultat";
-        public const string ResultatHentPlanfil = "no.ks.fiks.plan.v2.innsyn.planfil.hent.resultat";
+        public const string ResultatHentDokumentfil = "no.ks.fiks.plan.v2.innsyn.dokumentfil.hent.resultat";
         public const string ResultatHentBboxForPlan = "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent.resultat";
         public const string ResultatHentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent.resultat";
         public const string ResultatSjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn.resultat";
@@ -99,8 +97,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             HentAktoerer,
             HentRelatertePlaner,
             HentKodeliste,
-            FinnPlandokumenter,
-            HentPlanfil,
+            HentDokumentfil,
             FinnArealplanerForFlate,
             HentBboxForPlan,
             HentPlanomraader,
@@ -113,8 +110,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             ResultatHentAktoerer,
             ResultatHentRelatertePlaner,
             ResultatHentKodeliste,
-            ResultatFinnPlandokumenter,
-            ResultatHentPlanfil,
+            ResultatHentDokumentfil,
             ResultatHentBboxForPlan,
             ResultatHentPlanomraader,
             ResultatSjekkMidlertidigForbud
@@ -190,8 +186,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(HentAktoerer);
             AddSkjemanavnTilDictionary(HentRelatertePlaner);
             AddSkjemanavnTilDictionary(HentKodeliste);
-            AddSkjemanavnTilDictionary(FinnPlandokumenter);
-            AddSkjemanavnTilDictionary(HentPlanfil);
+            AddSkjemanavnTilDictionary(HentDokumentfil);
             AddSkjemanavnTilDictionary(FinnArealplanerForFlate);
             AddSkjemanavnTilDictionary(HentBboxForPlan);
             AddSkjemanavnTilDictionary(HentPlanomraader);
@@ -201,7 +196,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(ResultatHentAktoerer);
             AddSkjemanavnTilDictionary(ResultatHentRelatertePlaner);
             AddSkjemanavnTilDictionary(ResultatHentKodeliste);
-            AddSkjemanavnTilDictionary(ResultatHentPlanfil);
+            AddSkjemanavnTilDictionary(ResultatHentDokumentfil);
             AddSkjemanavnTilDictionary(ResultatHentBboxForPlan);
             AddSkjemanavnTilDictionary(OpprettArealplan);
             AddSkjemanavnTilDictionary(RegistrerPlanavgrensning);
@@ -212,7 +207,6 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(FinnMidlertidigForbudMotTiltak);
             AddSkjemanavnTilDictionary(ResultatFinnPlanbehandlinger);
             AddSkjemanavnTilDictionary(ResultatHentArealplan);
-            AddSkjemanavnTilDictionary(ResultatFinnPlandokumenter);
             AddSkjemanavnTilDictionary(ResultatHentPlanomraader);
             AddSkjemanavnTilDictionary(ResultatSjekkMidlertidigForbud);
             AddSkjemanavnTilDictionary(RegistrerMidlertidigForbudMotTiltak);

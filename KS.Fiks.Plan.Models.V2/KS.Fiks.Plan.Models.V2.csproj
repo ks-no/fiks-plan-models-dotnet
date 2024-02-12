@@ -27,6 +27,8 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Schema/V2/*.json" />
+        <EmbeddedResource Include="Schema/V1/*.xsd" />
+        <EmbeddedResource Include="Schema/V2/meldingstyper/meldingstyper.json" />
         <!--EmbeddedResource Include="Schema/V2/kodelister/**/*.json" /-->
         <!--Content Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper.json" Pack="true" PackagePath="">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
