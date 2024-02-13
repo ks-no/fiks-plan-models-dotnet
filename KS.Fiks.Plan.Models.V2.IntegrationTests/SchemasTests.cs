@@ -10,12 +10,12 @@ using Xunit.Abstractions;
 
 namespace KS.Fiks.Plan.Models.V2.IntegrationTests
 {
-    public class TestCasesTests
+    public class SchemaTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private const string AssemblyManifestResourcePrefix = "KS.Fiks.Plan.Models.V2.Schema.V2.";
         private const string AssemblyManifestResourceSuffix = ".schema.json";
-        public TestCasesTests(ITestOutputHelper testOutputHelper)
+        public SchemaTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
         }
@@ -26,11 +26,7 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             // Needed this for the assembly to be loaded
             var testFoo = new RegistrerDispensasjon();
             testFoo.Dispensasjon = new Dispensasjon();
-            
-            var referencedAssemblies = Assembly
-                .GetExecutingAssembly()
-                .GetReferencedAssemblies();
-            
+
             var fiksPlanModelsAssembly = Assembly
                 .GetExecutingAssembly()
                 .GetReferencedAssemblies()
@@ -40,6 +36,20 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.RegistrerPlanavgrensning);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.RegistrerPlanomraade);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.HentDokumentfil);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.HentAktoerer);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.HentArealplan);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.HentKodeliste);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.HentPlanomraader);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.HentGjeldendePlandokumenter);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.HentRelatertePlaner);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.FinnArealplaner);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.FinnDispensasjoner);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.FinnPlanbehandlinger);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.FinnArealplanerForFlate);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.FinnArealplanerForAdresse);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.FinnArealplanerForMatrikkelenhet);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.FinnMidlertidigForbudMotTiltak);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatFinnArealplaner);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger);
@@ -47,12 +57,9 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentArealplan);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentKodeliste);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentPlanomraader);
-            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentGjeldendePlandokumenter);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud);
-            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentBboxForPlan);
-            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.MottatOppdaterDispensasjon);
-          
         }
 
         private void TestSchemaFileIsIncludedInAssembly(Assembly fiksPlanModelsAssembly, string schemaName)

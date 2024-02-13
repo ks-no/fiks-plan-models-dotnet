@@ -1,0 +1,73 @@
+﻿{
+  "dispensasjon": {
+    "identifikasjon": "1",
+    "dispensasjonType": {
+      "kodeverdi": "111",
+      "kodebeskrivelse": "Forbud",
+      "AdditionalProperties": {}
+    },
+    "dispensasjonFra": {
+      "kodeverdi": "PLAN",
+      "kodebeskrivelse": "Arealplaner",
+      "AdditionalProperties": {}
+    },
+    "nasjonalArealplanId": {
+      "administrativEnhet": {
+        "type": "fylkesnummer",
+        "nummer": "100"
+      },
+      "planidentifikasjon": "01_27_1988"
+    },
+    "begrunnelse": "Dispensation description",
+    "vedtaksdato": "2021-10-01",
+    "posisjon": {
+      "type": "Point",
+      "koordinater": [
+        1.1,
+        2.2
+      ],
+      "koordinatsystem": {
+        "kodeverdi": "",
+        "kodebeskrivelse": "",
+        "AdditionalProperties": {}
+      },
+      "AdditionalProperties": {}
+    },
+    "vertikalnivaa": {
+      "kodeverdi": "Test",
+      "kodebeskrivelse": "Beskrivelse",
+      "AdditionalProperties": {}
+    },
+    "beskrivelse": "Test",
+    "innvilgetDispensasjon": true,
+    "saksnummer": {
+      "saksaar": 2021,
+      "sakssekvensnummer": 14,
+      "AdditionalProperties": {}
+    },
+    "varigDispensasjon": true,
+    "varighetFra": "2021-10-01",
+    "varighetTil": "2029-10-01",
+    "plandokumenter": [
+      {
+        "tittel": "",
+        "dokumenttype": {
+          "kodeverdi": "",
+          "kodebeskrivelse": "",
+          "AdditionalProperties": {}
+        },
+        "referanseDokumentfil": {
+          "id": "",
+          "url": "",
+          "AdditionalProperties": {}
+        },
+        "mimetype": "",
+        "dokumentsdato": "2021-01-01",
+        "arkivnavn": "",
+        "AdditionalProperties": {}
+      }
+    ],
+    "AdditionalProperties": {}
+  },
+  "AdditionalProperties": {}
+}

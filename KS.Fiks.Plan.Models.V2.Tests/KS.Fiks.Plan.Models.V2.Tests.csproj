@@ -37,4 +37,26 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Validation\payloadNotValid.json" />
+      <None Remove="Validation\payloadValid.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Validation\registrerDispensasjonPayloadValid.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Validation\registrerDispensasjonPayloadValid2.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="Validation\hentAktoererPayloadValid.json" />
+      <EmbeddedResource Include="Validation\hentAktoererPayloadValid.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="Validation\hentAktoererPayloadNotValid.json" />
+      <EmbeddedResource Include="Validation\hentAktoererPayloadNotValid.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

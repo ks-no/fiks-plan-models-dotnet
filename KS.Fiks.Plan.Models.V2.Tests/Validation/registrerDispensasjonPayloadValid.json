@@ -1,0 +1,41 @@
+﻿{
+  "Dispensasjon": {
+    "Identifikasjon": "1",
+    "DispensasjonType": {
+      "Kodeverdi": "111",
+      "Kodebeskrivelse": "Forbud",
+      "AdditionalProperties": {}
+    },
+    "DispensasjonFra": {
+      "Kodeverdi": "PLAN",
+      "Kodebeskrivelse": "Arealplaner",
+      "AdditionalProperties": {}
+    },
+    "NasjonalArealplanId": {
+      "AdministrativEnhet": {
+        "Type": 0,
+        "Nummer": "1",
+        "AdditionalProperties": {}
+      },
+      "Planidentifikasjon": "Plan-Id",
+      "AdditionalProperties": {}
+    },
+    "Begrunnelse": "Dispensation description",
+    "Vedtaksdato": "2021-10-01T00:00:00+02:00",
+    "Posisjon": null,
+    "Vertikalnivaa": null,
+    "Beskrivelse": null,
+    "InnvilgetDispensasjon": true,
+    "Saksnummer": {
+      "Saksaar": 2021,
+      "Sakssekvensnummer": 14,
+      "AdditionalProperties": {}
+    },
+    "VarigDispensasjon": true,
+    "VarighetFra": "0001-01-01T00:00:00+00:00",
+    "VarighetTil": "0001-01-01T00:00:00+00:00",
+    "Plandokumenter": [],
+    "AdditionalProperties": {}
+  },
+  "AdditionalProperties": {}
+}

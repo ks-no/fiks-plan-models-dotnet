@@ -9,8 +9,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.6-rc.build.20240212153626724" />
+        <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.6-rc.build.20240213130950755" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15" />
         <PackageReference Include="NUnit" Version="3.13.3"/>
         <PackageReference Include="NUnit3TestAdapter" Version="4.2.1"/>
         <PackageReference Include="NUnit.Analyzers" Version="3.3.0"/>

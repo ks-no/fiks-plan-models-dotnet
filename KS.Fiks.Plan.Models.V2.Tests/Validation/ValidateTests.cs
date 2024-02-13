@@ -8,24 +8,32 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace KS.Fiks.Plan.Models.V2.Tests.Validation;
 
-public class Tests
+public class ValidateTests
 {
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public ValidateTests(ITestOutputHelper testOutputHelper)
+    {
+        _testOutputHelper = testOutputHelper;
+    }
+
 
     [Fact] 
     public void Validate_HentAktoererSchema_Med_Valid_Json()
     {
         var isValid = false;
-        var jsonPath = $"payloadValid.json";
+        var jsonPath = $"Validation/hentAktoererPayloadValid.json";
             
         var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
         var json = GetJson(jsonPath);
 
         try
         {
-            isValid = json.IsValid(validationSchema);
+            isValid = CheckIsValid(json, validationSchema);
         }
         catch (Exception e)
         {
@@ -34,12 +42,45 @@ public class Tests
         }
         Assert.True(isValid);
     }
-    
+
+    [Fact] 
+    public void Validate_RegistrerDispensasjonSchema_Med_Valid_Json()
+    {
+        var isValid = false;
+        var jsonPath = $"Validation/registrerDispensasjonPayloadValid2.json";
+            
+        var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.schema.json");
+        var json = GetJson(jsonPath);
+
+        try
+        {
+            isValid = CheckIsValid(json, validationSchema);
+        }
+        catch (Exception e)
+        {
+            Console.Out.WriteLine($"{jsonPath} feilet!!");
+            Console.Out.WriteLine($"{jsonPath} - Exception message: {e.Message}");
+        }
+        Assert.True(isValid);
+    }
+
+    private bool CheckIsValid(JObject json, JSchema validationSchema)
+    {
+        bool isValid;
+        IList<string> validatonErrorMessages;
+        isValid = json.IsValid(validationSchema, out validatonErrorMessages);
+        foreach (var errorMessage in validatonErrorMessages)
+        {
+            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
+        }
+        return isValid;
+    }
+
     [Fact] 
     public void Validate_HentAktoererSchema_Med_NotValid_Json()
     {
         var isValid = false;
-        var jsonPath = $"payloadNotValid.json";
+        var jsonPath = $"Validation/hentAktoererPyloadNotValid.json";
             
         var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
         var json = GetJson(jsonPath);
@@ -161,21 +202,30 @@ public class Tests
     private static JSchema GetJSchema(string schemaPath)
     {
         var resolver = new JSchemaPreloadedResolver();
+        // Add nasjonalarealplanid
         var fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
+        // Add saksnummer
+        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.saksnummer.schema.json");
+        resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.saksnummer.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
+        // Add posisjon
+        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.posisjon.schema.json");
+        resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.posisjon.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
+        // Add dokument
+        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.dokument.schema.json");
+        resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.dokument.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
+        // Add arealplan
+        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.arealplan.schema.json");
+        resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.arealplan.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
+        // Add dispensasjon
+        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.dispensasjon.schema.json");
+        resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.dispensasjon.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
+        
         var jsonFileReader = File.OpenText(schemaPath);
         var jsonTextReader = new JsonTextReader(jsonFileReader);
-        //var validationSchema = JSchema.Load(new JsonTextReader(validationSchemaReader), resolver);
 
-      /*  var jSchemaReaderSettings = new JSchemaReaderSettings()
-        {
-            Resolver = resolver,
-            BaseUri = new Uri(schemaPath)
-        };*/
         var validationSchema = JSchema.Load(jsonTextReader, resolver);
-        AddAdditionalPropertiesFalseToSchemaProperties(validationSchema.Properties);
-    
-    
+        //AddAdditionalPropertiesFalseToSchemaProperties(validationSchema.Properties);
         return validationSchema;
     }
 
