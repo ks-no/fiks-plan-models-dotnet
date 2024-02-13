@@ -7,19 +7,14 @@ using KS.Fiks.Plan.Models.V2.innsyn.AktoererHentTyper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
-using NUnit.Framework;
+using Xunit;
 
-namespace TestProject1;
+namespace KS.Fiks.Plan.Models.V2.Tests.Validation;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
-    {
 
-    }
-
-    [Test] 
+    [Fact] 
     public void Validate_HentAktoererSchema_Med_Valid_Json()
     {
         var isValid = false;
@@ -37,10 +32,10 @@ public class Tests
             Console.Out.WriteLine($"{jsonPath} feilet!!");
             Console.Out.WriteLine($"{jsonPath} - Exception message: {e.Message}");
         }
-        Assert.IsTrue(isValid);
+        Assert.True(isValid);
     }
     
-    [Test] 
+    [Fact] 
     public void Validate_HentAktoererSchema_Med_NotValid_Json()
     {
         var isValid = false;
@@ -59,10 +54,10 @@ public class Tests
             Console.Out.WriteLine($"{jsonPath} feilet som forventet.");
             Console.Out.WriteLine($"{jsonPath} - Exception message: {e.Message}");
         }
-        Assert.IsFalse(isValid);
+        Assert.False(isValid);
     }
     
-    [Test]
+    [Fact]
     public void Validate_NasjonalArealplanId()
     {
         var jsonFileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
@@ -72,7 +67,7 @@ public class Tests
 
     }
     
-    [Test]
+    [Fact]
     public void HentAktoerer_NasjonalArealplanId_OneOf_Is_Ok_Test()
     {
 
@@ -103,14 +98,14 @@ public class Tests
 
         var hentAktoererDeserialized = JsonConvert.DeserializeObject<HentAktoerer>(json);
 
-        Assert.AreEqual(hentAktoerer.Saksnummer.Saksaar, hentAktoererDeserialized.Saksnummer.Saksaar);
-        Assert.AreEqual(hentAktoerer.Saksnummer.Sakssekvensnummer, hentAktoererDeserialized.Saksnummer.Sakssekvensnummer);
-        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Nummer, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Nummer);
-        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Type, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Type);
-        Assert.AreEqual(hentAktoerer.NasjonalArealplanId.Planidentifikasjon, hentAktoererDeserialized.NasjonalArealplanId.Planidentifikasjon);
+        Assert.Equal(hentAktoerer.Saksnummer.Saksaar, hentAktoererDeserialized.Saksnummer.Saksaar);
+        Assert.Equal(hentAktoerer.Saksnummer.Sakssekvensnummer, hentAktoererDeserialized.Saksnummer.Sakssekvensnummer);
+        Assert.Equal(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Nummer, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Nummer);
+        Assert.Equal(hentAktoerer.NasjonalArealplanId.AdministrativEnhet.Type, hentAktoererDeserialized.NasjonalArealplanId.AdministrativEnhet.Type);
+        Assert.Equal(hentAktoerer.NasjonalArealplanId.Planidentifikasjon, hentAktoererDeserialized.NasjonalArealplanId.Planidentifikasjon);
     }
     
-    [Test]
+    [Fact]
     public void HentAktoerer_NasjonalArealplanId_OneOf_Not_Valid_Deseialization_Test()
     {
         var jsonPath = $"payloadNotValid.json";
@@ -122,13 +117,13 @@ public class Tests
         }
         catch (Exception e)
         {
-            Assert.AreEqual("Unexpected character encountered while parsing value:", e.Message);
-            Assert.Pass();
+            Assert.Equal("Unexpected character encountered while parsing value:", e.Message);
+            return;
         }
         Assert.Fail();
     }
 
-    [Test]
+    [Fact]
     public void HentAktoerer_NasjonalArealplanId_OneOf_Not_Valid_SerializationTest()
     {
         var hentAktoerer = new HentAktoerer()
@@ -156,7 +151,7 @@ public class Tests
         catch (Exception e)
         {
             Console.Out.WriteLine($"Klarte ikke å serialisere json - Exception message: {e.Message}");
-            Assert.Pass();
+            return;
         }
         Assert.Fail();
 

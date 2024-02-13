@@ -12,7 +12,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string FinnDispensasjoner = "no.ks.fiks.plan.v2.innsyn.dispensasjoner.finn";
         public const string FinnPlanbehandlinger = "no.ks.fiks.plan.v2.innsyn.planbehandlinger.finn";
         public const string HentArealplan = "no.ks.fiks.plan.v2.innsyn.arealplan.hent";
-        public const string HentGjeldendePlanbestemmelser = "no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.hent";
+        public const string HentGjeldendePlandokumenter = "no.ks.fiks.plan.v2.innsyn.gjeldendeplandokumenter.hent";
         public const string HentAktoerer = "no.ks.fiks.plan.v2.innsyn.aktoerer.hent";
         public const string HentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent";
         public const string HentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent";
@@ -26,7 +26,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string ResultatFinnDispensasjoner = "no.ks.fiks.plan.v2.innsyn.dispensasjoner.finn.resultat";
         public const string ResultatFinnPlanbehandlinger = "no.ks.fiks.plan.v2.innsyn.planbehandlinger.finn.resultat";
         public const string ResultatHentArealplan = "no.ks.fiks.plan.v2.innsyn.arealplan.hent.resultat";
-        public const string ResultatHentGjeldendePlanbestemmelser = "no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.hent.resultat";
+        public const string ResultatHentGjeldendePlandokumenter = "no.ks.fiks.plan.v2.innsyn.gjeldendeplandokumenter.hent.resultat";
         public const string ResultatHentAktoerer = "no.ks.fiks.plan.v2.innsyn.aktoerer.hent.resultat";
         public const string ResultatHentRelatertePlaner = "no.ks.fiks.plan.v2.innsyn.relaterteplaner.hent.resultat";
         public const string ResultatHentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent.resultat";
@@ -93,7 +93,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             FinnDispensasjoner,
             FinnPlanbehandlinger,
             HentArealplan,
-            HentGjeldendePlanbestemmelser,
+            HentGjeldendePlandokumenter,
             HentAktoerer,
             HentRelatertePlaner,
             HentKodeliste,
@@ -106,7 +106,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             ResultatFinnDispensasjoner,
             ResultatFinnPlanbehandlinger,
             ResultatHentArealplan,
-            ResultatHentGjeldendePlanbestemmelser,
+            ResultatHentGjeldendePlandokumenter,
             ResultatHentAktoerer,
             ResultatHentRelatertePlaner,
             ResultatHentKodeliste,
@@ -182,7 +182,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(FinnDispensasjoner);
             AddSkjemanavnTilDictionary(FinnPlanbehandlinger);
             AddSkjemanavnTilDictionary(HentArealplan);
-            AddSkjemanavnTilDictionary(HentGjeldendePlanbestemmelser);
+            AddSkjemanavnTilDictionary(HentGjeldendePlandokumenter);
             AddSkjemanavnTilDictionary(HentAktoerer);
             AddSkjemanavnTilDictionary(HentRelatertePlaner);
             AddSkjemanavnTilDictionary(HentKodeliste);
@@ -192,7 +192,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(HentPlanomraader);
             AddSkjemanavnTilDictionary(ResultatFinnArealplaner);
             AddSkjemanavnTilDictionary(ResultatFinnDispensasjoner);
-            AddSkjemanavnTilDictionary(ResultatHentGjeldendePlanbestemmelser);
+            AddSkjemanavnTilDictionary(ResultatHentGjeldendePlandokumenter);
             AddSkjemanavnTilDictionary(ResultatHentAktoerer);
             AddSkjemanavnTilDictionary(ResultatHentRelatertePlaner);
             AddSkjemanavnTilDictionary(ResultatHentKodeliste);

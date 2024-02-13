@@ -41,7 +41,7 @@
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.planstatuser/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.plantyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.vertikalnivaa/*.json" />
-        <EmbeddedResource Include="Schema/V2/meldingstyper/meldingstyper.json" />
+        <!--EmbeddedResource Include="Schema/V2/meldingstyper/meldingstyper.json" /-->
         <None Include="KS.png">
             <Pack>true</Pack>
             <PackagePath>/</PackagePath>

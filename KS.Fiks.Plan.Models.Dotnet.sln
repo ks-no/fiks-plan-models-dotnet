@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Plan.JsonModelGener
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Plan.Models.V2.Tests", "KS.Fiks.Plan.Models.V2.Tests\KS.Fiks.Plan.Models.V2.Tests.csproj", "{4C1F49B6-D216-426F-B44E-C2CD64701A11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Plan.Models.V2.IntegrationTests", "KS.Fiks.Plan.Models.V2.IntegrationTests\KS.Fiks.Plan.Models.V2.IntegrationTests.csproj", "{968A6E52-3179-497A-AD74-23CC58F3A910}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{4C1F49B6-D216-426F-B44E-C2CD64701A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C1F49B6-D216-426F-B44E-C2CD64701A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C1F49B6-D216-426F-B44E-C2CD64701A11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968A6E52-3179-497A-AD74-23CC58F3A910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968A6E52-3179-497A-AD74-23CC58F3A910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968A6E52-3179-497A-AD74-23CC58F3A910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968A6E52-3179-497A-AD74-23CC58F3A910}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
