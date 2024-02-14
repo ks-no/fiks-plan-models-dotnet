@@ -71,6 +71,7 @@ static class Generator
                     Namespace = $"{commonNamespace}.{namespacePrefix}.{classFilename}",
                     ClassStyle = CSharpClassStyle.Poco,
                     TypeNameGenerator = new MyTypeNameGenerator(),
+                    GenerateOptionalPropertiesAsNullable = true
                 }
             };
 
@@ -173,6 +174,7 @@ static class Generator
                     Namespace = fullNamespace,
                     ClassStyle = CSharpClassStyle.Poco,
                     TypeNameGenerator = new MyTypeNameGenerator(),
+                    GenerateOptionalPropertiesAsNullable = true
                 }
             };
 

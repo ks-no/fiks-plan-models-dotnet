@@ -178,6 +178,10 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             };
             
             var jsonString = JsonConvert.SerializeObject(hentArealplanResultat, new Newtonsoft.Json.Converters.StringEnumConverter());
+
+            _testOutputHelper.WriteLine($"Json:\n{jsonString}");
+            Assert.DoesNotContain("vedtaksdato", jsonString);
+
             var jObject = JObject.Parse(jsonString);
             
             // Get Schemafile
