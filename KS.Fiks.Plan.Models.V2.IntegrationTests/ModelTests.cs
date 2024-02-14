@@ -1,12 +1,16 @@
 #nullable enable
 using System.Reflection;
+using KS.Fiks.Plan.Models.V2.felles.ArealplanTyper;
 using KS.Fiks.Plan.Models.V2.felles.DispensasjonTyper;
 using KS.Fiks.Plan.Models.V2.felles.DokumentTyper;
 using KS.Fiks.Plan.Models.V2.felles.FlateTyper;
 using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
+using KS.Fiks.Plan.Models.V2.felles.PlanbehandlingTyper;
 using KS.Fiks.Plan.Models.V2.felles.PosisjonTyper;
 using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
+using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHentResultatTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
+using KS.Fiks.Plan.Models.V2.oppdatering.ArealplanOpprettTyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerTyper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -26,6 +30,8 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
         private const string FellesDokumentSchema = "no.ks.fiks.plan.v2.felles.dokument";
         private const string FellesNasjonalarealplanidSchema = "no.ks.fiks.plan.v2.felles.nasjonalarealplanid";
         private const string FellesPosisjonSchema = "no.ks.fiks.plan.v2.felles.posisjon";
+        private const string FellesArealplanSchema = "no.ks.fiks.plan.v2.felles.arealplan";
+        private const string FellesPlanbehandlingSchema = "no.ks.fiks.plan.v2.felles.planbehandling";
         
         public ModelTests(ITestOutputHelper testOutputHelper)
         {
@@ -102,6 +108,89 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             Assert.True(isValid);
         }
 
+        [Fact]
+        public void Opprett_Og_Valider_Opprett_Arealplan()
+        {
+            // Needed this for the assembly to be loaded
+            var opprettArealplan = new OpprettArealplan()
+            {
+                Plannavn = "Test",
+                Plantype = new Plantype()
+                {
+                    Kodebeskrivelse = "",
+                    Kodeverdi = ""
+                },
+                Planstatus = new Planstatus()
+                {
+                    Kodebeskrivelse = "",
+                    Kodeverdi = ""
+                },
+                Lovreferanse = new Lovreferanse()
+                {
+                    Kodeverdi = "",
+                    Kodebeskrivelse = ""
+                },
+                Saksnummer = new Saksnummer()
+                {
+                    Saksaar = 2024,
+                    Sakssekvensnummer = 1
+                }
+            };
+            
+            var jsonString = JsonConvert.SerializeObject(opprettArealplan, new Newtonsoft.Json.Converters.StringEnumConverter());
+            var jObject = JObject.Parse(jsonString);
+            
+            // Get Schemafile
+            var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.OpprettArealplan);
+            IList<string> validatonErrorMessages;
+            var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
+            foreach (var errorMessage in validatonErrorMessages)
+            {
+                _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
+            }
+            Assert.True(isValid);
+        }
+        
+        [Fact]
+        public void Opprett_Og_Valider_Hent_Arealplan_Resultat()
+        {
+            // Needed this for the assembly to be loaded
+            var hentArealplanResultat = new HentArealplanResultat()
+            {
+                Arealplan = new Arealplan()
+                {
+                    NasjonalArealplanId = new NasjonalArealplanId()
+                    {
+                        AdministrativEnhet = new AdministrativEnhet()
+                        {
+                            Type = AdministrativEnhetType.Kommunenummer,
+                            Nummer = "1"
+                        },
+                        Planidentifikasjon = "Test"
+                    },
+                    Plantype = new Plantype()
+                    {
+                        Kodebeskrivelse = "",
+                        Kodeverdi = ""
+                    },
+                    Plannavn = "Test"
+                }
+            };
+            
+            var jsonString = JsonConvert.SerializeObject(hentArealplanResultat, new Newtonsoft.Json.Converters.StringEnumConverter());
+            var jObject = JObject.Parse(jsonString);
+            
+            // Get Schemafile
+            var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatHentArealplan);
+            IList<string> validatonErrorMessages;
+            var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
+            foreach (var errorMessage in validatonErrorMessages)
+            {
+                _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
+            }
+            Assert.True(isValid);
+        }
+
         private JSchema GetSchemaFile(string schemaName)
         {
             var resolver = new JSchemaPreloadedResolver();
@@ -122,6 +211,8 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             ResolveFellesSchema(resolver,FellesSaksnummerSchema);
             ResolveFellesSchema(resolver,FellesPosisjonSchema);
             ResolveFellesSchema(resolver,FellesDispensasjonSchema);
+            ResolveFellesSchema(resolver,FellesArealplanSchema);
+            ResolveFellesSchema(resolver,FellesPlanbehandlingSchema);
         }
         
         private void ResolveFellesSchema(JSchemaPreloadedResolver resolver, string schemaname)
