@@ -1,7 +1,11 @@
-# Generering av nuget pakker for Fiks-Plan spesifikasjonen
-Produserer nuget pakke som inneholder json skjema og genererte modeller for Fiks Plan protokollen.
+# Fiks Plan nuget-pakke og eksempler
 
-For øyeblikket er det nuget pakken `KS.Fiks.Plan.Models.V2`
+## Nuget pakke
+Prosjektet `KS.Fiks.Plan.Models.V2` inneholder hjelpeklasser for protokollen og produserer nuget pakken `KS.Fiks.Plan.Models.V2` som inneholder hjelpeklassene, json skjema og genererte modeller for Fiks Plan protokollen.
+
+## Test og eksempler
+Det er et test-prosjekt, `KS.Fiks.Plan.Models.V2.IntegrationTests` som viser eksempler på oppbygging av meldingstyper vha de genererte modellene. Testene validerer deretter også json mot skjema.
+
 
 ## Generering
 
