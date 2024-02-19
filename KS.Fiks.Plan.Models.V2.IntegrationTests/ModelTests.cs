@@ -181,7 +181,7 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
 
             _testOutputHelper.WriteLine($"Json:\n{jsonString}");
             Assert.DoesNotContain("vedtaksdato", jsonString);
-
+            
             var jObject = JObject.Parse(jsonString);
             
             // Get Schemafile
