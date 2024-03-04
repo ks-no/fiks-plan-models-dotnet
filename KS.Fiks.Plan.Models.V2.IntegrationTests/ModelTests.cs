@@ -8,7 +8,9 @@ using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
 using KS.Fiks.Plan.Models.V2.felles.PlanbehandlingTyper;
 using KS.Fiks.Plan.Models.V2.felles.PosisjonTyper;
 using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
+using KS.Fiks.Plan.Models.V2.innsyn.AktoererHentResultatTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHentResultatTyper;
+using KS.Fiks.Plan.Models.V2.innsyn.PlanbehandlingerFinnResultatTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.ArealplanOpprettTyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerTyper;
@@ -111,7 +113,6 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
         [Fact]
         public void Opprett_Og_Valider_Opprett_Arealplan()
         {
-            // Needed this for the assembly to be loaded
             var opprettArealplan = new OpprettArealplan()
             {
                 Plannavn = "Test",
@@ -154,7 +155,6 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
         [Fact]
         public void Opprett_Og_Valider_Hent_Arealplan_Resultat()
         {
-            // Needed this for the assembly to be loaded
             var hentArealplanResultat = new HentArealplanResultat()
             {
                 Arealplan = new Arealplan()
@@ -186,6 +186,74 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             
             // Get Schemafile
             var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatHentArealplan);
+            IList<string> validatonErrorMessages;
+            var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
+            foreach (var errorMessage in validatonErrorMessages)
+            {
+                _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
+            }
+            Assert.True(isValid);
+        }
+        
+        [Fact]
+        public void Opprett_Og_Valider_Hent_Aktoerer_Resultat()
+        {
+            var hentAktoererResultat = new HentAktoererResultat()
+            {
+                Aktoerer = new List<aktoerer>() { new aktoerer() {Rolle = "Testrolle"}}
+            };
+            
+            var jsonString = JsonConvert.SerializeObject(hentAktoererResultat, new Newtonsoft.Json.Converters.StringEnumConverter());
+
+            _testOutputHelper.WriteLine($"Json:\n{jsonString}");
+            
+            var jObject = JObject.Parse(jsonString);
+            
+            // Get Schemafile
+            var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatHentAktoerer);
+            IList<string> validatonErrorMessages;
+            var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
+            foreach (var errorMessage in validatonErrorMessages)
+            {
+                _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
+            }
+            Assert.True(isValid);
+        }
+        
+        [Fact]
+        public void Opprett_Og_Valider_Finn_Planbehandlinger_Resultat()
+        {
+            var finnPlanbehandlingerResultat = new FinnPlanbehandlingerResultat()
+            {
+                Planbehandlinger = new List<Planbehandling>() { 
+                    new Planbehandling()
+                    {
+                        Posisjon = new Posisjon()
+                        {
+                            Type = PosisjonType.Point,
+                            Koordinatsystem = new Koordinatsystem() // Kode
+                            {
+                                Kodeverdi = "",
+                                Kodebeskrivelse = ""
+                            }
+                        },
+                        Planbehandlingtype = new Planbehandlingtype() // Kode
+                        {
+                            Kodeverdi = "",
+                            Kodebeskrivelse = ""
+                        }
+                    }
+                }
+            };
+            
+            var jsonString = JsonConvert.SerializeObject(finnPlanbehandlingerResultat, new Newtonsoft.Json.Converters.StringEnumConverter());
+
+            _testOutputHelper.WriteLine($"Json:\n{jsonString}");
+            
+            var jObject = JObject.Parse(jsonString);
+            
+            // Get Schemafile
+            var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatHentAktoerer);
             IList<string> validatonErrorMessages;
             var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
             foreach (var errorMessage in validatonErrorMessages)
