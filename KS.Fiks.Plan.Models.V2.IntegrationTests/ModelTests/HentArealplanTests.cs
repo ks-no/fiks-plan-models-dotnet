@@ -58,5 +58,9 @@ public class HentArealplanTests : ModelTestsBase
             _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
         }
         Assert.True(isValid);
+        
+        // Deserialize test
+        var deserialized = JsonConvert.DeserializeObject<HentArealplanResultat>(jsonString);
+        Assert.True(deserialized.Arealplan.NasjonalArealplanId.AdministrativEnhet.Type == AdministrativEnhetType.Kommunenummer);
     }
 }
