@@ -70,6 +70,11 @@ public class FinnPlanbehandlingerTests : ModelTestsBase
                         {
                             Kodeverdi = "",
                             Kodebeskrivelse = ""
+                        },
+                        Koordinater = new List<double>(2)
+                        {
+                            2.2,
+                            2.2
                         }
                     },
                     Planbehandlingtype = new Planbehandlingtype() // Kode

@@ -80,6 +80,11 @@ public class FinnDispensasjonerTests : ModelTestsBase
                         {
                             Kodeverdi = "",
                             Kodebeskrivelse = ""
+                        },
+                        Koordinater = new List<double>(2)
+                        {
+                            2.2,
+                            3.3
                         }
                     },
                     DispensasjonType = new DispensasjonType() // Kode
