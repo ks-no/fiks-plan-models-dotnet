@@ -4,7 +4,7 @@ using Newtonsoft.Json.Schema;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace KS.Fiks.Plan.Models.V2.IntegrationTests.ModelTests;
+namespace KS.Fiks.Plan.Models.V2.IntegrationTests.ValidateModelTests;
 
 public class ModelTestsBase
 {

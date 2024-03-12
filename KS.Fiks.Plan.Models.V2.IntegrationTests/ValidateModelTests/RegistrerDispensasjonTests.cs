@@ -4,6 +4,7 @@ using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
 using KS.Fiks.Plan.Models.V2.felles.PosisjonTyper;
 using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
+using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerKvitteringTyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerTyper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,7 +12,7 @@ using Newtonsoft.Json.Schema;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace KS.Fiks.Plan.Models.V2.IntegrationTests.ModelTests;
+namespace KS.Fiks.Plan.Models.V2.IntegrationTests.ValidateModelTests;
 
 public class RegistrerDispensasjonTests : ModelTestsBase
 {
@@ -82,6 +83,31 @@ public class RegistrerDispensasjonTests : ModelTestsBase
 
         // Get Schemafile
         var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.RegistrerDispensasjon);
+        IList<string> validatonErrorMessages;
+        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
+        foreach (var errorMessage in validatonErrorMessages)
+        {
+            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
+        }
+
+        Assert.True(isValid);
+    }
+    
+    [Fact]
+    public void Opprett_Og_Valider_Registrer_Dispensasjon_Kvittering()
+    {
+        // Needed this for the assembly to be loaded
+        var registrerDispensasjonKvittering = new RegistrerDispensasjonKvittering()
+        {
+            Identifikasjon = "1",
+        };
+
+        var jsonString =
+            JsonConvert.SerializeObject(registrerDispensasjonKvittering, new Newtonsoft.Json.Converters.StringEnumConverter());
+        var jObject = JObject.Parse(jsonString);
+
+        // Get Schemafile
+        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.KvitteringRegistrerDispensasjon);
         IList<string> validatonErrorMessages;
         var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
         foreach (var errorMessage in validatonErrorMessages)
