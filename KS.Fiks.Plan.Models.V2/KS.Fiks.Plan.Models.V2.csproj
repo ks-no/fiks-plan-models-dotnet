@@ -12,7 +12,7 @@
         <PackageTags>FIKS</PackageTags>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <VersionPrefix>0.9.8</VersionPrefix>
+        <VersionPrefix>0.9.9</VersionPrefix>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>KS.Fiks.Plan.Models.V2</PackageId>
         <Description>C# klasser som følger json-skjema spesifisert i https://github.com/ks-no/fiks-plan-specification.</Description>
