@@ -6,6 +6,7 @@ using KS.Fiks.Plan.Models.V2.innsyn.PlanbehandlingerFinnResultatTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.PlanbehandlingerFinnTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
@@ -37,7 +38,7 @@ public class FinnPlanbehandlingerTests : ModelTestsBase
             InkluderPlandokumenter = true
         };
         
-        var jsonString = JsonConvert.SerializeObject(finnPlanbehandlinger, new Newtonsoft.Json.Converters.StringEnumConverter());
+        var jsonString = JsonConvert.SerializeObject(finnPlanbehandlinger, new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
             
@@ -86,7 +87,7 @@ public class FinnPlanbehandlingerTests : ModelTestsBase
             }
         };
             
-        var jsonString = JsonConvert.SerializeObject(finnPlanbehandlingerResultat, new Newtonsoft.Json.Converters.StringEnumConverter());
+        var jsonString = JsonConvert.SerializeObject(finnPlanbehandlingerResultat, new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
             

@@ -7,6 +7,7 @@ using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerKvitteringTyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerTyper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
@@ -78,7 +79,7 @@ public class RegistrerDispensasjonTests : ModelTestsBase
         };
 
         var jsonString =
-            JsonConvert.SerializeObject(registrerDispensasjon, new Newtonsoft.Json.Converters.StringEnumConverter());
+            JsonConvert.SerializeObject(registrerDispensasjon, new StringEnumConverter());
         var jObject = JObject.Parse(jsonString);
 
         // Get Schemafile
@@ -103,7 +104,7 @@ public class RegistrerDispensasjonTests : ModelTestsBase
         };
 
         var jsonString =
-            JsonConvert.SerializeObject(registrerDispensasjonKvittering, new Newtonsoft.Json.Converters.StringEnumConverter());
+            JsonConvert.SerializeObject(registrerDispensasjonKvittering, new StringEnumConverter());
         var jObject = JObject.Parse(jsonString);
 
         // Get Schemafile

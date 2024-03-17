@@ -6,6 +6,7 @@ using KS.Fiks.Plan.Models.V2.innsyn.DispensasjonerFinnResultatTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.DispensasjonerFinnTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
@@ -37,7 +38,7 @@ public class FinnDispensasjonerTests : ModelTestsBase
         };
         
         var jsonString = JsonConvert.SerializeObject(finnDispensasjonerResultat,
-            new Newtonsoft.Json.Converters.StringEnumConverter());
+            new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
 
@@ -107,7 +108,7 @@ public class FinnDispensasjonerTests : ModelTestsBase
         };
 
         var jsonString = JsonConvert.SerializeObject(finnDispensasjonerResultat,
-            new Newtonsoft.Json.Converters.StringEnumConverter());
+            new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
 

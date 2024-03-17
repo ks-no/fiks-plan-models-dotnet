@@ -5,6 +5,7 @@ using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.ArealplanOpprettKvitteringTyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.ArealplanOpprettTyper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
@@ -48,7 +49,7 @@ public class OpprettArealplanTests : ModelTestsBase
         };
 
         var jsonString =
-            JsonConvert.SerializeObject(opprettArealplan, new Newtonsoft.Json.Converters.StringEnumConverter());
+            JsonConvert.SerializeObject(opprettArealplan, new StringEnumConverter());
         var jObject = JObject.Parse(jsonString);
 
         // Get Schemafile
@@ -85,7 +86,7 @@ public class OpprettArealplanTests : ModelTestsBase
         };
 
         var jsonString =
-            JsonConvert.SerializeObject(opprettArealplanKvittering, new Newtonsoft.Json.Converters.StringEnumConverter());
+            JsonConvert.SerializeObject(opprettArealplanKvittering, new StringEnumConverter());
         var jObject = JObject.Parse(jsonString);
 
         // Get Schemafile

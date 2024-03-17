@@ -31,7 +31,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         public const string ResultatHentKodeliste = "no.ks.fiks.plan.v2.innsyn.kodeliste.hent.resultat";
         public const string ResultatHentDokumentfil = "no.ks.fiks.plan.v2.innsyn.dokumentfil.hent.resultat";
         public const string ResultatHentPlanomraader = "no.ks.fiks.plan.v2.innsyn.planomraader.hent.resultat";
-        public const string ResultatSjekkMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn.resultat";
+        public const string ResultatFinnMidlertidigForbud = "no.ks.fiks.plan.v2.innsyn.midlertidigeforbudmottiltak.finn.resultat";
 
         // Forespørsler-oppdatering
         public const string OpprettArealplan = "no.ks.fiks.plan.v2.oppdatering.arealplan.opprett";
@@ -109,7 +109,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             ResultatHentKodeliste,
             ResultatHentDokumentfil,
             ResultatHentPlanomraader,
-            ResultatSjekkMidlertidigForbud
+            ResultatFinnMidlertidigForbud
         };
 
         public static readonly List<string> OppdateringTyper = new List<string>()
@@ -202,7 +202,7 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             AddSkjemanavnTilDictionary(ResultatFinnPlanbehandlinger);
             AddSkjemanavnTilDictionary(ResultatHentArealplan);
             AddSkjemanavnTilDictionary(ResultatHentPlanomraader);
-            AddSkjemanavnTilDictionary(ResultatSjekkMidlertidigForbud);
+            AddSkjemanavnTilDictionary(ResultatFinnMidlertidigForbud);
             AddSkjemanavnTilDictionary(RegistrerMidlertidigForbudMotTiltak);
             AddSkjemanavnTilDictionary(KvitteringOpprettArealplan);
             AddSkjemanavnTilDictionary(KvitteringRegistrerDispensasjon);

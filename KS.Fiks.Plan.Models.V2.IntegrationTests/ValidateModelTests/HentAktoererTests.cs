@@ -4,6 +4,7 @@ using KS.Fiks.Plan.Models.V2.innsyn.AktoererHentResultatTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.AktoererHentTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
@@ -40,7 +41,7 @@ public class HentAktoererTests : ModelTestsBase
         };
 
         var jsonString =
-            JsonConvert.SerializeObject(hentAktoerer, new Newtonsoft.Json.Converters.StringEnumConverter());
+            JsonConvert.SerializeObject(hentAktoerer, new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
 
@@ -67,7 +68,7 @@ public class HentAktoererTests : ModelTestsBase
         };
 
         var jsonString =
-            JsonConvert.SerializeObject(hentAktoererResultat, new Newtonsoft.Json.Converters.StringEnumConverter());
+            JsonConvert.SerializeObject(hentAktoererResultat, new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
 

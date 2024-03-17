@@ -1,6 +1,6 @@
 using KS.Fiks.Plan.Models.V2.felles.ArealplanTyper;
 using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
-using KS.Fiks.Plan.Models.V2.innsyn.ArealplanerFinnForAdresseTyper;
+using KS.Fiks.Plan.Models.V2.innsyn.ArealplanerFinnForMatrikkelenhetTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.ArealplanerFinnResultatTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using Newtonsoft.Json;
@@ -12,22 +12,23 @@ using Xunit.Abstractions;
 
 namespace KS.Fiks.Plan.Models.V2.IntegrationTests.ValidateModelTests;
 
-public class FinnArealplanerForAdresseTests : ModelTestsBase
+public class FinnArealplanerForMatrikkelenhetTests : ModelTestsBase
 {
-    public FinnArealplanerForAdresseTests(ITestOutputHelper testOutputHelper)
+    public FinnArealplanerForMatrikkelenhetTests(ITestOutputHelper testOutputHelper)
     {
         _testOutputHelper = testOutputHelper;
     }
 
     [Fact]
-    public void Opprett_Og_Valider_Finn_Arealplaner_For_Adresse()
+    public void Opprett_Og_Valider_Finn_Arealplaner_For_Matrikkelenhet()
     {
-        var finnArealplaner = new FinnArealplanerForAdresse()
+        var finnArealplaner = new FinnArealplanerForMatrikkelenhet()
         {
-            Adresse = new Adresse()
+            Matrikkelnummer = new Matrikkelnummer()
             {
-                Adressenavn = "Et adressenavn",
-                Adressenummer = 100
+                Kommunenummer = "4601",
+                Gaardsnummer = 76,
+                Bruksnummer = 1
             }
         };
         
@@ -39,7 +40,7 @@ public class FinnArealplanerForAdresseTests : ModelTestsBase
         var jObject = JObject.Parse(jsonString);
 
         // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.FinnArealplanerForAdresse);
+        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.FinnArealplanerForMatrikkelenhet);
         IList<string> validatonErrorMessages;
         var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
         foreach (var errorMessage in validatonErrorMessages)

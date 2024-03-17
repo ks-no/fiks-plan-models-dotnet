@@ -4,6 +4,7 @@ using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHentResultatTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.ArealplanHentTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
@@ -35,7 +36,7 @@ public class HentArealplanTests : ModelTestsBase
             InkluderPlanbehandlinger = true
         };
         
-        var jsonString = JsonConvert.SerializeObject(hentArealplan, new Newtonsoft.Json.Converters.StringEnumConverter());
+        var jsonString = JsonConvert.SerializeObject(hentArealplan, new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
         Assert.DoesNotContain("vedtaksdato", jsonString);
@@ -78,7 +79,7 @@ public class HentArealplanTests : ModelTestsBase
             }
         };
             
-        var jsonString = JsonConvert.SerializeObject(hentArealplanResultat, new Newtonsoft.Json.Converters.StringEnumConverter());
+        var jsonString = JsonConvert.SerializeObject(hentArealplanResultat, new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
         Assert.DoesNotContain("vedtaksdato", jsonString);

@@ -4,6 +4,7 @@ using KS.Fiks.Plan.Models.V2.innsyn.ArealplanerFinnResultatTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.ArealplanerFinnTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
@@ -35,7 +36,7 @@ public class FinnArealplanerTests : ModelTestsBase
         };
         
         var jsonString = JsonConvert.SerializeObject(finnArealplaner,
-            new Newtonsoft.Json.Converters.StringEnumConverter());
+            new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
 
@@ -95,7 +96,7 @@ public class FinnArealplanerTests : ModelTestsBase
         };
         
         var jsonString = JsonConvert.SerializeObject(finnArealplanerResultat,
-            new Newtonsoft.Json.Converters.StringEnumConverter());
+            new StringEnumConverter());
 
         _testOutputHelper.WriteLine($"Json:\n{jsonString}");
 

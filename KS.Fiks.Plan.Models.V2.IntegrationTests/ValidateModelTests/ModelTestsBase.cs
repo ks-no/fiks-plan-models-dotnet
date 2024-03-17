@@ -19,6 +19,7 @@ public class ModelTestsBase
     private const string FellesArealplanSchema = "no.ks.fiks.plan.v2.felles.arealplan";
     private const string FellesPlanbehandlingSchema = "no.ks.fiks.plan.v2.felles.planbehandling";
     private const string FellesFlateSchema = "no.ks.fiks.plan.v2.felles.flate";
+    private const string FellesMidlertidigforbudSchema = "no.ks.fiks.plan.v2.felles.midlertidigforbud";
 
 
     protected JSchema GetSchemaFile(string schemaName)
@@ -44,6 +45,7 @@ public class ModelTestsBase
         ResolveFellesSchema(resolver, FellesArealplanSchema);
         ResolveFellesSchema(resolver, FellesPlanbehandlingSchema);
         ResolveFellesSchema(resolver, FellesFlateSchema);
+        ResolveFellesSchema(resolver, FellesMidlertidigforbudSchema);
     }
 
     private void ResolveFellesSchema(JSchemaPreloadedResolver resolver, string schemaname)
