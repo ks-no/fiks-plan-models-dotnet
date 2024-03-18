@@ -26,7 +26,6 @@ public class RegistrerPlanavgrensningTests : ModelTestsBase
     [Fact]
     public void Opprett_Og_Valider_Registrer_Planavgrensning()
     {
-        // Needed this for the assembly to be loaded
         var registrerPlanavgrensning = new RegistrerPlanavgrensning()
         {
             NasjonalArealplanId = new NasjonalArealplanId()

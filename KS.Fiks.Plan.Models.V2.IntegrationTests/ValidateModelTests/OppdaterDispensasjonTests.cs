@@ -25,7 +25,6 @@ public class OppdaterDispensasjonTests : ModelTestsBase
     [Fact]
     public void Opprett_Og_Valider_Oppdater_Dispensasjon()
     {
-        // Needed this for the assembly to be loaded
         var oppdaterDispensasjon = new OppdaterDispensasjon()
         {
             OpphevIdentifikasjon = "true", // Bør denne være bool?

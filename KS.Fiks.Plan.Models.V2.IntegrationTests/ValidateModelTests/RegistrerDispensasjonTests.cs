@@ -25,7 +25,6 @@ public class RegistrerDispensasjonTests : ModelTestsBase
     [Fact]
     public void Opprett_Og_Valider_Registrer_Dispensasjon()
     {
-        // Needed this for the assembly to be loaded
         var registrerDispensasjon = new RegistrerDispensasjon();
         registrerDispensasjon.Dispensasjon = new Dispensasjon()
         {
@@ -97,7 +96,6 @@ public class RegistrerDispensasjonTests : ModelTestsBase
     [Fact]
     public void Opprett_Og_Valider_Registrer_Dispensasjon_Kvittering()
     {
-        // Needed this for the assembly to be loaded
         var registrerDispensasjonKvittering = new RegistrerDispensasjonKvittering()
         {
             Identifikasjon = "1",
