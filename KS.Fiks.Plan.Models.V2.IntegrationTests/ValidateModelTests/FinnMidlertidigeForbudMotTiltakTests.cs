@@ -111,7 +111,7 @@ public class FinnMidlertidigeForbudMotTiltakTests : ModelTestsBase
         var jObject = JObject.Parse(jsonString);
 
         // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud);
+        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatFinnMidlertidigForbud);
         IList<string> validatonErrorMessages;
         var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
         foreach (var errorMessage in validatonErrorMessages)

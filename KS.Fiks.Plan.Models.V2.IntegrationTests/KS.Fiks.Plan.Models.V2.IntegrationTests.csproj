@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.8" />
+        <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.9" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15" />

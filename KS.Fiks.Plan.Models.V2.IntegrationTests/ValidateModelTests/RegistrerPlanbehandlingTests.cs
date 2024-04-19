@@ -1,18 +1,11 @@
-using KS.Fiks.Plan.Models.V2.felles.DispensasjonTyper;
+using KS.Fiks.Plan.Models.V2.felles.DokumentTyper;
 using KS.Fiks.Plan.Models.V2.felles.FlateTyper;
 using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
 using KS.Fiks.Plan.Models.V2.felles.PlanbehandlingTyper;
 using KS.Fiks.Plan.Models.V2.felles.PosisjonTyper;
 using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
-using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerKvitteringTyper;
-using KS.Fiks.Plan.Models.V2.oppdatering.DispensasjonRegistrerTyper;
-using KS.Fiks.Plan.Models.V2.oppdatering.PlanavgrensningRegistrerTyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.PlanbehandlingRegistrerTyper;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -28,7 +21,7 @@ public class RegistrerPlanbehandlingTests : ModelTestsBase
     [Fact]
     public void Opprett_Og_Valider_Registrer_Planbehandling()
     {
-        var registrerPlanavgrensning = new RegistrerPlanbehandling()
+        var registrerPlanbehandling = new RegistrerPlanbehandling()
         {
             NasjonalArealplanId = new NasjonalArealplanId()
             {
@@ -64,19 +57,58 @@ public class RegistrerPlanbehandlingTests : ModelTestsBase
             }
         };
 
-        var jsonString =
-            JsonConvert.SerializeObject(registrerPlanavgrensning, new StringEnumConverter());
-        var jObject = JObject.Parse(jsonString);
+        ValidateWithSchema(registrerPlanbehandling, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
+    }
 
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.RegistrerPlanavgrensning);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
+    [Fact]
+    public void Besluttet_Offentlig_Ettersyn_Registrer_Planbehandling()
+    {
+        var registrerPlanbehandling2 = new RegistrerPlanbehandling()
         {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
+            NasjonalArealplanId = new NasjonalArealplanId()
+            {
+                AdministrativEnhet = new AdministrativEnhet()
+                {
+                    Type = AdministrativEnhetType.Kommunenummer,
+                    Nummer = "0821"
+                },
+                Planidentifikasjon = "01_27_1988"
+            },
+            Planbehandling = new Planbehandling()
+            {
+                Navn = "Navn på registrering",
+                Saksnummer = new Saksnummer()
+                {
+                    Saksaar = 2020,
+                    Sakssekvensnummer = 1234
+                },
+                Planbehandlingtype = new Planbehandlingtype()
+                {
+                    Kodeverdi = "11",
+                    Kodebeskrivelse = "Besluttet offentlig ettersyn"
+                }
+            }
+        };
 
-        Assert.True(isValid);
+        registrerPlanbehandling2.Planbehandling.Plandokumenter = new List<Dokument>();
+        registrerPlanbehandling2.Planbehandling.Plandokumenter.Add(
+            new Dokument()
+            {
+                Tittel = "Vedtak",
+                ReferanseDokumentfil = new ReferanseDokumentfil()
+                {
+                    Id = "vedtak.pdf", // Dette er for dokumenter som er på vei inn, og vil være navnet på filen slik den heter i ASIC pakken som payload
+                    Url = "https://en-url-til-der-filen-ligger/vedtak.pdf" // Dette er for dokumenter som blir hentet fra planregister
+                },
+                Dokumenttype = new Dokumenttype()
+                {
+                    Kodeverdi = "VEDTAK",
+                    Kodebeskrivelse = "Vedtak"
+                }
+            }
+        );
+
+        var jsonString = ValidateWithSchema(registrerPlanbehandling2, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
+        WriteJsonSampleFile(System.Reflection.MethodBase.GetCurrentMethod()?.Name, jsonString);
     }
 }

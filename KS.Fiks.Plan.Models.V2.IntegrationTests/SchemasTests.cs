@@ -59,7 +59,7 @@ namespace KS.Fiks.Plan.Models.V2.IntegrationTests
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentPlanomraader);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentGjeldendePlandokumenter);
             TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner);
-            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud);
+            TestSchemaFileIsIncludedInAssembly(fiksPlanModelsAssembly, FiksPlanMeldingtypeV2.ResultatFinnMidlertidigForbud);
         }
 
         private void TestSchemaFileIsIncludedInAssembly(Assembly fiksPlanModelsAssembly, string schemaName)

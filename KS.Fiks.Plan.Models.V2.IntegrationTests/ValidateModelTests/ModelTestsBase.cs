@@ -1,5 +1,7 @@
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Xunit;
 using Xunit.Abstractions;
@@ -76,5 +78,30 @@ public class ModelTestsBase
 
         Assert.NotNull(schemaStream);
         return schemaStream;
+    }
+
+    protected string ValidateWithSchema(object jsonObject, string schemaName)
+    {
+        var jsonString =
+            JsonConvert.SerializeObject(jsonObject, new StringEnumConverter());
+        var jObject = JObject.Parse(jsonString);
+
+        // Get Schemafile
+        var jSchema = GetSchemaFile(schemaName);
+        IList<string> validatonErrorMessages;
+        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
+        foreach (var errorMessage in validatonErrorMessages)
+        {
+            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
+        }
+
+        Assert.True(isValid);
+        return jsonString;
+    }
+
+    protected void WriteJsonSampleFile(string? filename, string jsonString)
+    {
+        Directory.CreateDirectory($"./Samples/");
+        File.WriteAllText($"./Samples/{filename}.json", jsonString);
     }
 }
