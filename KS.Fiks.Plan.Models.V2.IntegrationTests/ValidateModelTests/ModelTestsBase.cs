@@ -99,9 +99,8 @@ public class ModelTestsBase
         return jsonString;
     }
 
-    protected void WriteJsonSampleFile(string? filename, string jsonString)
+    protected void WriteJsonSampleFile(string? sampleName, string jsonString)
     {
-        Directory.CreateDirectory($"./Samples/");
-        File.WriteAllText($"./Samples/{filename}.json", jsonString);
+        File.WriteAllText($"./../../../../KS.Fiks.Plan.Models.V2/Samples/{sampleName}/payload.json", jsonString);
     }
 }

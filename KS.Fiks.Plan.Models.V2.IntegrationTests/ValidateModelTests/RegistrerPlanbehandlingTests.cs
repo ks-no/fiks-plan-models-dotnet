@@ -109,6 +109,6 @@ public class RegistrerPlanbehandlingTests : ModelTestsBase
         );
 
         var jsonString = ValidateWithSchema(registrerPlanbehandling2, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
-        WriteJsonSampleFile(System.Reflection.MethodBase.GetCurrentMethod()?.Name, jsonString);
+        WriteJsonSampleFile("BesluttetOffentligEttersyn", jsonString);
     }
 }
