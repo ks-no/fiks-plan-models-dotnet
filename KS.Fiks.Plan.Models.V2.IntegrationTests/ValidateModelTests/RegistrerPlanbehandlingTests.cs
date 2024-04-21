@@ -1,3 +1,4 @@
+using KS.Fiks.Plan.Models.V2.felles.ArealplanTyper;
 using KS.Fiks.Plan.Models.V2.felles.DokumentTyper;
 using KS.Fiks.Plan.Models.V2.felles.FlateTyper;
 using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
@@ -110,5 +111,81 @@ public class RegistrerPlanbehandlingTests : ModelTestsBase
 
         var jsonString = ValidateWithSchema(registrerPlanbehandling2, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
         WriteJsonSampleFile("BesluttetOffentligEttersyn", jsonString);
+    }
+    
+    
+    [Fact]
+    public void Bestilling_Av_Oppstartsmoete_Registrer_Planbehandling()
+    {
+        var registrerPlanbehandling2 = new RegistrerPlanbehandling()
+        {
+            NasjonalArealplanId = new NasjonalArealplanId()
+            {
+                AdministrativEnhet = new AdministrativEnhet()
+                {
+                    Type = AdministrativEnhetType.Kommunenummer,
+                    Nummer = "0821"
+                },
+                Planidentifikasjon = "01_27_1988"
+            },
+            Planbehandling = new Planbehandling()
+            {
+                Navn = "Navn på registrering",
+                Saksnummer = new Saksnummer()
+                {
+                    Saksaar = 2020,
+                    Sakssekvensnummer = 12345
+                },
+                Planbehandlingtype = new Planbehandlingtype()
+                {
+                    Kodeverdi = "1",
+                    Kodebeskrivelse = "Mottatt planinitiativ/Bestilling av oppstartsmøte"
+                }
+            },
+            Planstatus = new Planstatus()
+            {
+                Kodeverdi = "0",
+                Kodebeskrivelse = "Planide"
+            }
+        };
+
+        registrerPlanbehandling2.Planbehandling.Plandokumenter = new List<Dokument>();
+        registrerPlanbehandling2.Planbehandling.Plandokumenter.Add(
+            new Dokument()
+            {
+                Tittel = "Planinitiativ",
+                ReferanseDokumentfil = new ReferanseDokumentfil()
+                {
+                    Id = "Planinitiativ.pdf", // Dette er for dokumenter som er på vei inn, og vil være navnet på filen slik den heter i ASIC pakken som payload
+                    Url = "https://en-url-til-der-filen-ligger/vedtak.pdf" // Dette er for dokumenter som blir hentet fra planregister
+                },
+                Dokumenttype = new Dokumenttype()
+                {
+                    Kodeverdi = "KORR",
+                    Kodebeskrivelse = "Korrespondanse"
+                },
+                Arkivnavn = "Planinitiativ"
+            }
+        );
+        registrerPlanbehandling2.Planbehandling.Plandokumenter.Add(
+            new Dokument()
+            {
+                Tittel = "Planområde",
+                ReferanseDokumentfil = new ReferanseDokumentfil()
+                {
+                    Id = "Planomraade.pdf", // Dette er for dokumenter som er på vei inn, og vil være navnet på filen slik den heter i ASIC pakken som payload
+                    Url = "https://en-url-til-der-filen-ligger/vedtak.pdf" // Dette er for dokumenter som blir hentet fra planregister
+                },
+                Dokumenttype = new Dokumenttype()
+                {
+                    Kodeverdi = "KART",
+                    Kodebeskrivelse = "Kart"
+                },
+                Arkivnavn = "Planområde"
+            }
+        );
+
+        var jsonString = ValidateWithSchema(registrerPlanbehandling2, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
+        WriteJsonSampleFile("BestillingAvOppstartsmøte", jsonString);
     }
 }
