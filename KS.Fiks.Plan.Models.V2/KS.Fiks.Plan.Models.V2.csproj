@@ -57,6 +57,8 @@
 
     <ItemGroup>
       <Folder Include="Models" />
+      <Folder Include="Samples\Responses\" />
+      <Folder Include="Samples\Requests\" />
     </ItemGroup>
 
 </Project>

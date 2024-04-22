@@ -24,36 +24,20 @@ public class FinnDispensasjonerTests : ModelTestsBase
     [Fact]
     public void Opprett_Og_Valider_Finn_Dispensasjoner()
     {
-        var finnDispensasjonerResultat = new FinnDispensasjoner()
+        var finnDispensasjoner = new FinnDispensasjoner()
         {
             Soekekriterier = new List<soekekriterier>()
             {
                 new soekekriterier()
                 {
-                    Felt = soekekriterierFelt.Identifikasjon,
+                    Felt = soekekriterierFelt.NasjonalArealplanId_planidentifikasjon,
                     Operator = soekekriterierOperator.Equal,
-                    Parameterverdier = "1"
+                    Parameterverdier = "09062018-2"
                 }
             }
         };
-        
-        var jsonString = JsonConvert.SerializeObject(finnDispensasjonerResultat,
-            new StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-
-        var jObject = JObject.Parse(jsonString);
-
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.FinnDispensasjoner);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(finnDispensasjoner, FiksPlanMeldingtypeV2.FinnDispensasjoner);
+        WriteJsonSampleFile("Requests/FinnDispensasjoner", jsonString);
     }
 
     [Fact]

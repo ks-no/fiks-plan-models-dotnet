@@ -110,7 +110,7 @@ public class RegistrerPlanbehandlingTests : ModelTestsBase
         );
 
         var jsonString = ValidateWithSchema(registrerPlanbehandling2, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
-        WriteJsonSampleFile("BesluttetOffentligEttersyn", jsonString);
+        WriteJsonSampleFile("Requests/BesluttetOffentligEttersyn", jsonString);
     }
     
     
@@ -186,6 +186,6 @@ public class RegistrerPlanbehandlingTests : ModelTestsBase
         );
 
         var jsonString = ValidateWithSchema(registrerPlanbehandling2, FiksPlanMeldingtypeV2.RegistrerPlanbehandling);
-        WriteJsonSampleFile("BestillingAvOppstartsmøte", jsonString);
+        WriteJsonSampleFile("Requests/BestillingAvOppstartsmøte", jsonString);
     }
 }
