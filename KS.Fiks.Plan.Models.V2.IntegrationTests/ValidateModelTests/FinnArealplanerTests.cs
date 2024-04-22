@@ -28,30 +28,15 @@ public class FinnArealplanerTests : ModelTestsBase
             {
                 new soekekriterier()
                 {
-                    Felt = soekekriterierFelt.Plannavn,
+                    Felt = soekekriterierFelt.NasjonalArealplanId_planidentifikasjon,
                     Operator = soekekriterierOperator.Equal,
-                    Parameterverdier = "Testplanen"
+                    Parameterverdier = "09062018-2"
                 }
             }
         };
         
-        var jsonString = JsonConvert.SerializeObject(finnArealplaner,
-            new StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-
-        var jObject = JObject.Parse(jsonString);
-
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.FinnArealplaner);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(finnArealplaner, FiksPlanMeldingtypeV2.FinnArealplaner);
+        WriteJsonSampleFile("Requests/FinnArealplaner", jsonString);
     }
     
     [Fact]
@@ -68,15 +53,15 @@ public class FinnArealplanerTests : ModelTestsBase
                         AdministrativEnhet = new AdministrativEnhet()
                         {
                             Type = AdministrativEnhetType.Kommunenummer,
-                            Nummer = "1"
+                            Nummer = "0821",
                         },
-                        Planidentifikasjon = "",
+                        Planidentifikasjon = "09062018-2",
                     },
-                    Plannavn = "",
+                    Plannavn = "plannavn",
                     Planstatus = new Planstatus()
                     {
-                        Kodeverdi = "2",
-                        Kodebeskrivelse = "Planforslag"
+                        Kodeverdi = "1",
+                        Kodebeskrivelse = "Planstatus"
                     },
                     Plantype = new Plantype() // Kode
                     {
@@ -95,22 +80,7 @@ public class FinnArealplanerTests : ModelTestsBase
             }
         };
         
-        var jsonString = JsonConvert.SerializeObject(finnArealplanerResultat,
-            new StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-
-        var jObject = JObject.Parse(jsonString);
-
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatFinnArealplaner);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(finnArealplanerResultat, FiksPlanMeldingtypeV2.ResultatFinnArealplaner);
+        WriteJsonSampleFile("Responses/FinnArealplaner", jsonString);
     }
 }

@@ -31,95 +31,20 @@ public class FinnArealplanerForFlateTests : ModelTestsBase
                 Type = FlateType.Polygon,
                 Koordinatsystem = new Koordinatsystem()
                 {
-                    Kodeverdi = "",
+                    Kodeverdi = "EPSG:3857",
                     Kodebeskrivelse = ""
                 },
                 Koordinater = new List<ICollection<double>>(4)
                 {
-                    new List<double>() {2.2, 3.3},
-                    new List<double>() {2.2, 3.3},
-                    new List<double>() {2.2, 3.3},
-                    new List<double>() {2.2, 3.3},
+                    new List<double>() {-68282685.41516227, -6465204.835748881},
+                    new List<double>() {-89087359.34248951, -60693710.296802774},
+                    new List<double>() {54140328.89114547, -74610475.49858013},
+                    new List<double>() {-30574113.323342994, 11972045.14759487},
                 }
             }
         };
         
-        var jsonString = JsonConvert.SerializeObject(finnArealplaner,
-            new Newtonsoft.Json.Converters.StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-
-        var jObject = JObject.Parse(jsonString);
-
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.FinnArealplanerForFlate);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-
-        Assert.True(isValid);
-    }
-    
-    [Fact]
-    public void Opprett_Og_Valider_Finn_Arealplaner_Resultat()
-    {
-        var finnArealplanerResultat = new FinnArealplanerResultat()
-        {
-            Arealplaner = new List<Arealplan>()
-            {
-                new Arealplan()
-                {
-                    NasjonalArealplanId = new NasjonalArealplanId()
-                    {
-                        AdministrativEnhet = new AdministrativEnhet()
-                        {
-                            Type = AdministrativEnhetType.Kommunenummer,
-                            Nummer = "1"
-                        },
-                        Planidentifikasjon = "",
-                    },
-                    Plannavn = "",
-                    Planstatus = new Planstatus()
-                    {
-                        Kodeverdi = "2",
-                        Kodebeskrivelse = "Planforslag"
-                    },
-                    Plantype = new Plantype() // Kode
-                    {
-                        Kodeverdi = "21",
-                        Kodebeskrivelse = "Kommunedelplan"
-                    },
-                    PlandokumentasjonOppdatert = false,
-                    ForslagstillerType = new ForslagstillerType()
-                    {
-                        Kodeverdi = "2",
-                        Kodebeskrivelse = "privat"
-                    },
-                    UbehandletKlage = false,
-                    AlternativFinnes = true,
-                }
-            }
-        };
-        
-        var jsonString = JsonConvert.SerializeObject(finnArealplanerResultat,
-            new Newtonsoft.Json.Converters.StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-
-        var jObject = JObject.Parse(jsonString);
-
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatFinnArealplaner);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(finnArealplaner, FiksPlanMeldingtypeV2.FinnArealplanerForFlate);
+        WriteJsonSampleFile("Requests/FinnArealplanerForFlate", jsonString);
     }
 }

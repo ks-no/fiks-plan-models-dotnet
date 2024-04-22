@@ -30,7 +30,7 @@ public class FinnMidlertidigeForbudMotTiltakTests : ModelTestsBase
                 Type = FlateType.Polygon,
                 Koordinatsystem = new Koordinatsystem()
                 {
-                    Kodeverdi = "",
+                    Kodeverdi = "EPSG:3857",
                     Kodebeskrivelse = ""
                 },
                 Koordinater = new List<ICollection<double>>(4)
@@ -42,24 +42,8 @@ public class FinnMidlertidigeForbudMotTiltakTests : ModelTestsBase
                 }
             }
         };
-
-        var jsonString = JsonConvert.SerializeObject(finnMidlertidigeForbudMottiltak,
-            new StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-
-        var jObject = JObject.Parse(jsonString);
-
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.FinnMidlertidigForbudMotTiltak);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(finnMidlertidigeForbudMottiltak, FiksPlanMeldingtypeV2.FinnMidlertidigForbudMotTiltak);
+        WriteJsonSampleFile("Requests/FinnMidlertidigForbud", jsonString);
     }
 
     [Fact]
@@ -73,7 +57,7 @@ public class FinnMidlertidigeForbudMotTiltakTests : ModelTestsBase
                 {
                     Saksnummer = new Saksnummer()
                     {
-                        Saksaar = 2024,
+                        Saksaar = 2020,
                         Sakssekvensnummer = 1
                     },
                     Omraade = new Flate()
@@ -81,44 +65,29 @@ public class FinnMidlertidigeForbudMotTiltakTests : ModelTestsBase
                         Type = FlateType.Polygon,
                         Koordinatsystem = new Koordinatsystem()
                         {
-                            Kodeverdi = "",
+                            Kodeverdi = "EPSG:3857",
                             Kodebeskrivelse = ""
                         },
                         Koordinater = new List<ICollection<double>>(4)
                         {
-                            new List<double>() {2.2, 3.3},
-                            new List<double>() {2.2, 3.3},
-                            new List<double>() {2.2, 3.3},
-                            new List<double>() {2.2, 3.3},
+                            new List<double>() { 2.2, 3.3 },
+                            new List<double>() { 2.2, 3.3 },
+                            new List<double>() { 2.2, 3.3 },
+                            new List<double>() { 2.2, 3.3 },
                         }
                     },
-                    Avgjoerelsedato = new DateTimeOffset(DateTime.Now),
+                    Avgjoerelsedato = new DateTimeOffset(new DateTime(2021, 1, 15)),
                     PblTiltakForbudtype = new PblTiltakForbudtype()
                     {
                         Kodeverdi = "",
                         Kodebeskrivelse = ""
                     },
-                    GyldigTilDato = new DateTimeOffset(DateTime.Today.AddYears(10))
+                    GyldigTilDato = new DateTimeOffset(new DateTime(2030, 1, 1))
                 }
             }
         };
 
-        var jsonString = JsonConvert.SerializeObject(resultat,
-            new StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-
-        var jObject = JObject.Parse(jsonString);
-
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatFinnMidlertidigForbud);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(resultat, FiksPlanMeldingtypeV2.ResultatFinnMidlertidigForbud);
+        WriteJsonSampleFile("Responses/FinnMidlertidigForbud", jsonString);
     }
 }

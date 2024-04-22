@@ -57,8 +57,10 @@
 
     <ItemGroup>
       <Folder Include="Models" />
-      <Folder Include="Samples\Responses\" />
       <Folder Include="Samples\Requests\" />
+      <Folder Include="Samples\Responses\FinnMidlertidigForbud\" />
+      <Folder Include="Samples\Responses\FinnPlanbehandlinger\" />
+      <Folder Include="Samples\Responses\Old\" />
     </ItemGroup>
 
 </Project>

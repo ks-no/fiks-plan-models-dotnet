@@ -2,6 +2,7 @@ using KS.Fiks.Plan.Models.V2.felles.FlateTyper;
 using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
 using KS.Fiks.Plan.Models.V2.felles.PlanbehandlingTyper;
 using KS.Fiks.Plan.Models.V2.felles.PosisjonTyper;
+using KS.Fiks.Plan.Models.V2.felles.SaksnummerTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.PlanbehandlingerFinnResultatTyper;
 using KS.Fiks.Plan.Models.V2.innsyn.PlanbehandlingerFinnTyper;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
@@ -30,29 +31,16 @@ public class FinnPlanbehandlingerTests : ModelTestsBase
             {
                 AdministrativEnhet = new AdministrativEnhet()
                 {
-                    Type = AdministrativEnhetType.Fylkesnummer,
-                    Nummer = "1"
+                    Type = AdministrativEnhetType.Kommunenummer,
+                    Nummer = "0821"
                 },
-                Planidentifikasjon = "1"
+                Planidentifikasjon = "01_27_1988"
             },
             InkluderPlandokumenter = true
         };
         
-        var jsonString = JsonConvert.SerializeObject(finnPlanbehandlinger, new StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-            
-        var jObject = JObject.Parse(jsonString);
-            
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.FinnPlanbehandlinger);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(finnPlanbehandlinger, FiksPlanMeldingtypeV2.FinnPlanbehandlinger);
+        WriteJsonSampleFile("Requests/FinnPlanbehandlinger", jsonString);
     }
 
     [Fact]
@@ -69,38 +57,31 @@ public class FinnPlanbehandlingerTests : ModelTestsBase
                         Type = PosisjonType.Point,
                         Koordinatsystem = new Koordinatsystem() // Kode
                         {
-                            Kodeverdi = "",
+                            Kodeverdi = "EPSG:3857",
                             Kodebeskrivelse = ""
                         },
                         Koordinater = new List<double>(2)
                         {
-                            2.2,
-                            2.2
+                            1.02345,
+                            2.33333
                         }
                     },
                     Planbehandlingtype = new Planbehandlingtype() // Kode
                     {
-                        Kodeverdi = "",
-                        Kodebeskrivelse = ""
+                        Kodeverdi = "1",
+                        Kodebeskrivelse = "planstatus"
+                    },
+                    Dato = new DateTimeOffset(new DateTime(2020, 06, 13)),
+                    Saksnummer = new Saksnummer()
+                    {
+                        Saksaar = 2019,
+                        Sakssekvensnummer = 123124
                     }
                 }
             }
         };
             
-        var jsonString = JsonConvert.SerializeObject(finnPlanbehandlingerResultat, new StringEnumConverter());
-
-        _testOutputHelper.WriteLine($"Json:\n{jsonString}");
-            
-        var jObject = JObject.Parse(jsonString);
-            
-        // Get Schemafile
-        var jSchema = GetSchemaFile(FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger);
-        IList<string> validatonErrorMessages;
-        var isValid = jObject.IsValid(jSchema, out validatonErrorMessages);
-        foreach (var errorMessage in validatonErrorMessages)
-        {
-            _testOutputHelper.WriteLine($"Errormessage from IsValid: {errorMessage}");
-        }
-        Assert.True(isValid);
+        var jsonString = ValidateWithSchema(finnPlanbehandlingerResultat, FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger);
+        WriteJsonSampleFile("Responses/FinnPlanbehandlinger", jsonString);
     }
 }
