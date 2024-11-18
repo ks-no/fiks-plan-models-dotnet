@@ -172,55 +172,18 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
         private static void initSkjemanavn()
         {
             Skjemanavn = new Dictionary<string, string>();
-            AddSkjemanavnTilDictionary(FinnArealplanerForMatrikkelenhet);
-            AddSkjemanavnTilDictionary(FinnArealplanerForAdresse);
-            AddSkjemanavnTilDictionary(FinnArealplaner);
-            AddSkjemanavnTilDictionary(FinnDispensasjoner);
-            AddSkjemanavnTilDictionary(FinnPlanbehandlinger);
-            AddSkjemanavnTilDictionary(HentArealplan);
-            AddSkjemanavnTilDictionary(HentGjeldendePlandokumenter);
-            AddSkjemanavnTilDictionary(HentAktoerer);
-            AddSkjemanavnTilDictionary(HentRelatertePlaner);
-            AddSkjemanavnTilDictionary(HentKodeliste);
-            AddSkjemanavnTilDictionary(HentDokumentfil);
-            AddSkjemanavnTilDictionary(FinnArealplanerForFlate);
-            AddSkjemanavnTilDictionary(HentPlanomraader);
-            AddSkjemanavnTilDictionary(ResultatFinnArealplaner);
-            AddSkjemanavnTilDictionary(ResultatFinnDispensasjoner);
-            AddSkjemanavnTilDictionary(ResultatHentGjeldendePlandokumenter);
-            AddSkjemanavnTilDictionary(ResultatHentAktoerer);
-            AddSkjemanavnTilDictionary(ResultatHentRelatertePlaner);
-            AddSkjemanavnTilDictionary(ResultatHentKodeliste);
-            AddSkjemanavnTilDictionary(ResultatHentDokumentfil);
-            AddSkjemanavnTilDictionary(OpprettArealplan);
-            AddSkjemanavnTilDictionary(RegistrerPlanavgrensning);
-            AddSkjemanavnTilDictionary(RegistrerPlanbehandling);
-            AddSkjemanavnTilDictionary(OppdaterArealplan);
-            AddSkjemanavnTilDictionary(RegistrerDispensasjon);
-            AddSkjemanavnTilDictionary(OppdaterDispensasjon);
-            AddSkjemanavnTilDictionary(FinnMidlertidigForbudMotTiltak);
-            AddSkjemanavnTilDictionary(ResultatFinnPlanbehandlinger);
-            AddSkjemanavnTilDictionary(ResultatHentArealplan);
-            AddSkjemanavnTilDictionary(ResultatHentPlanomraader);
-            AddSkjemanavnTilDictionary(ResultatFinnMidlertidigForbud);
-            AddSkjemanavnTilDictionary(RegistrerMidlertidigForbudMotTiltak);
-            AddSkjemanavnTilDictionary(KvitteringOpprettArealplan);
-            AddSkjemanavnTilDictionary(KvitteringRegistrerDispensasjon);
-            AddSkjemanavnTilDictionary(MottatOppdaterDispensasjon);
-            AddSkjemanavnTilDictionary(MottattOppdaterArealplan);
-            AddSkjemanavnTilDictionary(MottattOpprettArealplan);
-            AddSkjemanavnTilDictionary(MottattRegistrerDispensasjon);
-            AddSkjemanavnTilDictionary(MottattRegistrerPlanavgrensning);
-            AddSkjemanavnTilDictionary(MottattRegistrerPlanbehandling);
-            AddSkjemanavnTilDictionary(MottattRegistrerMidlertidigForbudMotTiltak);
-            AddSkjemanavnTilDictionary(KvitteringOppdaterArealplan);
-            AddSkjemanavnTilDictionary(KvitteringOppdaterDispensasjon);
-            AddSkjemanavnTilDictionary(KvitteringRegistrerPlanavgrensning);
-            AddSkjemanavnTilDictionary(KvitteringRegistrerPlanbehandling);
-            AddSkjemanavnTilDictionary(KvitteringRegistrerMidlertidigForbudMotTiltak);
-            AddSkjemanavnTilDictionary(RegistrerPlanomraade);
-            AddSkjemanavnTilDictionary(MottattRegistrerPlanomraade);
-            AddSkjemanavnTilDictionary(KvitteringRegistrerPlanomraade);
+            foreach (var meldingstype in InnsynTyper)
+            {
+                AddSkjemanavnTilDictionary(meldingstype);
+            }
+            foreach (var meldingstype in OppdateringTyper)
+            {
+                AddSkjemanavnTilDictionary(meldingstype);
+            }
+            foreach (var meldingstype in FeilmeldingTyper)
+            {
+                AddSkjemanavnTilDictionary(meldingstype);
+            }
         }
 
         private static void AddSkjemanavnTilDictionary(string meldingstype)
