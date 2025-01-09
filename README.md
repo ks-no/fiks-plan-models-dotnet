@@ -1,4 +1,4 @@
-# Fiks Plan nuget-pakke og eksempler
+# ![](KSDigital25.png) Fiks Plan nuget-pakke og eksempler
 
 ## Nuget pakke
 Prosjektet `KS.Fiks.Plan.Models.V2` inneholder hjelpeklasser for protokollen og produserer nuget pakken `KS.Fiks.Plan.Models.V2` som inneholder hjelpeklassene, json skjema og genererte modeller for Fiks Plan protokollen.

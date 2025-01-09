@@ -42,10 +42,6 @@
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.plantyper/*.json" />
         <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.vertikalnivaa/*.json" />
         <!--EmbeddedResource Include="Schema/V2/meldingstyper/meldingstyper.json" /-->
-        <None Include="KS.png">
-            <Pack>true</Pack>
-            <PackagePath>/</PackagePath>
-        </None>
         <None Include="LICENSE" Pack="true" PackagePath="" />
         <None Include="README.md" Pack="true" PackagePath="" />
         <None Include="fiks-io-strongly-named-key.snk">
@@ -53,10 +49,6 @@
         </None>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models" />
     </ItemGroup>
 
 </Project>
