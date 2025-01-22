@@ -27,25 +27,15 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Schema/V2/*.json" />
-        <!--EmbeddedResource Include="Schema/V2/kodelister/**/*.json" /-->
-        <!--Content Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper.json" Pack="true" PackagePath="">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content-->
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dispensasjonstyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.plandispensasjonstyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.dokumenttyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.forslagsstillertyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.lovreferanser/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.pbltiltakforbudtyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.planforholdtyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.planstatuser/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.plantyper/*.json" />
-        <EmbeddedResource Include="Schema/V2/kodelister/no.ks.fiks.plan.v2.kodelister.vertikalnivaa/*.json" />
         <!--EmbeddedResource Include="Schema/V2/meldingstyper/meldingstyper.json" /-->
         <None Include="LICENSE" Pack="true" PackagePath="" />
         <None Include="README.md" Pack="true" PackagePath="" />
         <None Include="fiks-io-strongly-named-key.snk">
             <Link>fiks-io-strongly-named-key.snk</Link>
+        </None>
+        <None Include="KS.png">
+            <Pack>true</Pack>
+            <PackagePath>/</PackagePath>
         </None>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
