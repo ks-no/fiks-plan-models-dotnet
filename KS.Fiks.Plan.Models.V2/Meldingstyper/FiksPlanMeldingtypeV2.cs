@@ -129,8 +129,6 @@ namespace KS.Fiks.Plan.Models.V2.Meldingstyper
             MottattRegistrerMidlertidigForbudMotTiltak,
             KvitteringRegistrerMidlertidigForbudMotTiltak,
             OppdaterArealplan,
-            MottattOppdaterArealplan,
-            KvitteringOppdaterArealplan,
             RegistrerDispensasjon,
             MottattRegistrerDispensasjon,
             KvitteringRegistrerDispensasjon,
