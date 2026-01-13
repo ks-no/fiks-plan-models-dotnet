@@ -68,7 +68,7 @@ pipeline {
           steps {
             dir("${GENERATOR_FOLDER}") {
               unstash 'jsonSchemas'
-              sh 'dotnet run Schema/V2 output'
+              sh 'dotnet run fiks-plan-specification/Schema/V2 output'
               stash(name: 'generated', includes: 'output/**')
             }
           }
