@@ -1,3 +1,4 @@
 [submodule "fiks-plan-specification"]
 	path = fiks-plan-specification
-	url = git@github.com:ks-no/fiks-plan-specification.git
+	url = https://github.com/ks-no/fiks-plan-specification.git
+	branch = main
