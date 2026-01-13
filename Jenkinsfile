@@ -42,24 +42,18 @@ pipeline {
                 }
             }
         }
-        stage('Fetch specification') {
-          steps { 
-            dir('temp') {
-              git branch: params.triggerbranch,
-              url: 'https://github.com/ks-no/fiks-plan-specification.git'
-              sh 'git submodule  update --init --recursive --remote'
-          
-              dir("fiks-arkiv-specification") {
-                  sh "git fetch"
-                  sh "git checkout ${API_VERSION}"
-                  sh "git pull"
-              }
-              
-              stash(name: 'jsonSchemas', includes: 'fiks-plan-specification/Schema/V2/*')
-              stash(name: 'kodelister', includes: 'fiks-plan-specification/Schema/V2/kodelister/**/*')
-              stash(name: 'meldingstyper', includes: 'fiks-plan-specification/Schema/V2/meldingstyper/meldingstyper.json')
+        stage('Fetch and stash specification files') {
+            steps { 
+                sh 'git submodule update --init --recursive --remote'
+                dir("fiks-arkiv-specification") {
+                    sh "git fetch"
+                    sh "git checkout ${API_VERSION}"
+                    sh "git pull"
+                }
+                stash(name: 'jsonSchemas', includes: 'fiks-plan-specification/Schema/V2/*')
+                stash(name: 'kodelister', includes: 'fiks-plan-specification/Schema/V2/kodelister/**/*')
+                stash(name: 'meldingstyper', includes: 'fiks-plan-specification/Schema/V2/meldingstyper/meldingstyper.json')
             }
-          }
         }
         stage('Generate models') {
           agent {
