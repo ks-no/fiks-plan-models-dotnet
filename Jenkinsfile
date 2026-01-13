@@ -45,7 +45,7 @@ pipeline {
         stage('Fetch and stash specification files') {
             steps { 
                 sh 'git submodule update --init --recursive --remote'
-                dir("fiks-arkiv-specification") {
+                dir("fiks-plan-specification") {
                     sh "git fetch"
                     sh "git checkout ${API_VERSION}"
                     sh "git pull"
