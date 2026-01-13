@@ -26,6 +26,7 @@ pipeline {
                     env.GIT_SHA = sh(returnStdout: true, script: 'git rev-parse HEAD').substring(0, 7)
                     env.REPO_NAME = scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
                     env.CURRENT_VERSION = findVersionPrefix()
+                    env.API_VERSION = "${params.apiVersion}"
                     env.NEXT_VERSION = params.specifiedVersion == "" ? incrementVersion(env.CURRENT_VERSION) : params.specifiedVersion
                     if(params.isRelease) {
                       env.VERSION_SUFFIX = ""
@@ -46,9 +47,17 @@ pipeline {
             dir('temp') {
               git branch: params.triggerbranch,
               url: 'https://github.com/ks-no/fiks-plan-specification.git'
-              stash(name: 'jsonSchemas', includes: 'Schema/V2/*')
-              stash(name: 'kodelister', includes: 'Schema/V2/kodelister/**/*')
-              stash(name: 'meldingstyper', includes: 'Schema/V2/meldingstyper/meldingstyper.json')
+              sh 'git submodule  update --init --recursive --remote'
+          
+              dir("fiks-arkiv-specification") {
+                  sh "git fetch"
+                  sh "git checkout ${API_VERSION}"
+                  sh "git pull"
+              }
+              
+              stash(name: 'jsonSchemas', includes: 'fiks-plan-specification/Schema/V2/*')
+              stash(name: 'kodelister', includes: 'fiks-plan-specification/Schema/V2/kodelister/**/*')
+              stash(name: 'meldingstyper', includes: 'fiks-plan-specification/Schema/V2/meldingstyper/meldingstyper.json')
             }
           }
         }

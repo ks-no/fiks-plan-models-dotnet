@@ -21,3 +21,9 @@ Bygg-pipeline med Jenkinsfile sørger for å hente siste versjon av skjema fra s
 ## Eksempler
 
 Se [readme.md](https://github.com/ks-no/fiks-plan-models-dotnet/blob/main/KS.Fiks.Plan.Models.V2/README.md) i `KS.Fiks.Plan.Models.V2` for bruk av nuget pakken og eksempler.
+
+
+Før bygg må submodul hentes:
+```shell
+git submodule  update --init --recursive --remote
+```

@@ -15,6 +15,7 @@ namespace KS.Fiks.Plan.Models.V2.Tests.Validation;
 public class ValidateTests
 {
     private readonly ITestOutputHelper _testOutputHelper;
+    private const string SchemaPath = "./../../../../fiks-plan-specification/Schema/";
 
     public ValidateTests(ITestOutputHelper testOutputHelper)
     {
@@ -28,7 +29,7 @@ public class ValidateTests
         var isValid = false;
         var jsonPath = $"Validation/hentAktoererPayloadValid.json";
             
-        var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
+        var validationSchema = GetJSchema($"{SchemaPath}/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
         var json = GetJson(jsonPath);
 
         try
@@ -49,7 +50,7 @@ public class ValidateTests
         var isValid = false;
         var jsonPath = $"Validation/registrerDispensasjonPayloadValid2.json";
             
-        var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.schema.json");
+        var validationSchema = GetJSchema($"{SchemaPath}/V2/no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer.schema.json");
         var json = GetJson(jsonPath);
 
         try
@@ -82,7 +83,7 @@ public class ValidateTests
         var isValid = false;
         var jsonPath = $"Validation/hentAktoererPyloadNotValid.json";
             
-        var validationSchema = GetJSchema("./../../../../Schema/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
+        var validationSchema = GetJSchema($"{SchemaPath}/V2/no.ks.fiks.plan.v2.innsyn.aktoerer.hent.schema.json");
         var json = GetJson(jsonPath);
 
         try
@@ -101,7 +102,7 @@ public class ValidateTests
     [Fact]
     public void Validate_NasjonalArealplanId()
     {
-        var jsonFileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
+        var jsonFileReader = File.OpenText($"{SchemaPath}/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
         var jsonTextReader = new JsonTextReader(jsonFileReader);
         var validationSchema = JSchema.Load(jsonTextReader);
         AddAdditionalPropertiesFalseToSchemaProperties(validationSchema.Properties);
@@ -203,22 +204,22 @@ public class ValidateTests
     {
         var resolver = new JSchemaPreloadedResolver();
         // Add nasjonalarealplanid
-        var fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
+        var fileReader = File.OpenText($"{SchemaPath}/V2/no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json");
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         // Add saksnummer
-        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.saksnummer.schema.json");
+        fileReader = File.OpenText($"{SchemaPath}/V2/no.ks.fiks.plan.v2.felles.saksnummer.schema.json");
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.saksnummer.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         // Add posisjon
-        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.posisjon.schema.json");
+        fileReader = File.OpenText($"{SchemaPath}/V2/no.ks.fiks.plan.v2.felles.posisjon.schema.json");
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.posisjon.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         // Add dokument
-        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.dokument.schema.json");
+        fileReader = File.OpenText($"{SchemaPath}/V2/no.ks.fiks.plan.v2.felles.dokument.schema.json");
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.dokument.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         // Add arealplan
-        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.arealplan.schema.json");
+        fileReader = File.OpenText($"{SchemaPath}/V2/no.ks.fiks.plan.v2.felles.arealplan.schema.json");
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.arealplan.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         // Add dispensasjon
-        fileReader = File.OpenText("./../../../../Schema/V2/no.ks.fiks.plan.v2.felles.dispensasjon.schema.json");
+        fileReader = File.OpenText($"{SchemaPath}/V2/no.ks.fiks.plan.v2.felles.dispensasjon.schema.json");
         resolver.Add(new Uri("no.ks.fiks.plan.v2.felles.dispensasjon.schema.json", UriKind.RelativeOrAbsolute), fileReader.ReadToEnd());
         
         var jsonFileReader = File.OpenText(schemaPath);
