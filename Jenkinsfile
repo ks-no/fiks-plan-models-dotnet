@@ -10,6 +10,7 @@ pipeline {
         booleanParam(name: 'isRelease', defaultValue: false, description: 'Skal prosjektet releases?')
         booleanParam(name: 'pushToNugetOrg', defaultValue: false, description: 'Skal artifaktet pushes til nuget.org? Kun relevant for pre-release bygg da release alltid pushes dit')
         string(name: "specifiedVersion", defaultValue: "", description: "Hva er det nye versjonsnummeret (X.X.X)? Som default releases snapshot-versjonen")
+        string(name: "apiVersion", defaultValue: "main", description: "Hva er API versjon som skal brukes under bygg? Default er main")
         text(name: "releaseNotes", defaultValue: "Ingen endringer utført", description: "Hva er endret i denne releasen?")
         text(name: "securityReview", defaultValue: "Endringene har ingen sikkerhetskonsekvenser", description: "Har endringene sikkerhetsmessige konsekvenser, og hvilke tiltak er i så fall iverksatt?")
         string(name: "reviewer", defaultValue: "Endringene krever ikke review", description: "Hvem har gjort review?")
@@ -26,6 +27,7 @@ pipeline {
                     env.GIT_SHA = sh(returnStdout: true, script: 'git rev-parse HEAD').substring(0, 7)
                     env.REPO_NAME = scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
                     env.CURRENT_VERSION = findVersionPrefix()
+                    env.API_VERSION = "${params.apiVersion}"
                     env.NEXT_VERSION = params.specifiedVersion == "" ? incrementVersion(env.CURRENT_VERSION) : params.specifiedVersion
                     if(params.isRelease) {
                       env.VERSION_SUFFIX = ""
@@ -41,16 +43,18 @@ pipeline {
                 }
             }
         }
-        stage('Fetch specification') {
-          steps { 
-            dir('temp') {
-              git branch: params.triggerbranch,
-              url: 'https://github.com/ks-no/fiks-plan-specification.git'
-              stash(name: 'jsonSchemas', includes: 'Schema/V2/*')
-              stash(name: 'kodelister', includes: 'Schema/V2/kodelister/**/*')
-              stash(name: 'meldingstyper', includes: 'Schema/V2/meldingstyper/meldingstyper.json')
+        stage('Fetch and stash specification files') {
+            steps { 
+                sh 'git submodule update --init --recursive --remote'
+                dir("fiks-plan-specification") {
+                    sh "git fetch"
+                    sh "git checkout ${API_VERSION}"
+                    sh "git pull"
+                }
+                stash(name: 'jsonSchemas', includes: 'fiks-plan-specification/Schema/V2/*')
+                stash(name: 'kodelister', includes: 'fiks-plan-specification/Schema/V2/kodelister/**/*')
+                stash(name: 'meldingstyper', includes: 'fiks-plan-specification/Schema/V2/meldingstyper/meldingstyper.json')
             }
-          }
         }
         stage('Generate models') {
           agent {
@@ -64,7 +68,7 @@ pipeline {
           steps {
             dir("${GENERATOR_FOLDER}") {
               unstash 'jsonSchemas'
-              sh 'dotnet run Schema/V2 output'
+              sh 'dotnet run fiks-plan-specification/Schema/V2 output'
               stash(name: 'generated', includes: 'output/**')
             }
           }

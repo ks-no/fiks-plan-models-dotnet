@@ -19,6 +19,9 @@ static class Generator
     {
         "no.ks.fiks.plan.v2.felles.nasjonalarealplanid.schema.json",
         "no.ks.fiks.plan.v2.felles.flate.schema.json",
+        "no.ks.fiks.plan.v2.felles.linje.schema.json",
+        "no.ks.fiks.plan.v2.felles.handlingsomraade.schema.json",
+        "no.ks.fiks.plan.v2.felles.utnytting.schema.json",
         "no.ks.fiks.plan.v2.felles.dokument.schema.json",
         "no.ks.fiks.plan.v2.felles.posisjon.schema.json",
         "no.ks.fiks.plan.v2.felles.saksnummer.schema.json",
@@ -26,6 +29,8 @@ static class Generator
         "no.ks.fiks.plan.v2.felles.arealplan.schema.json",
         "no.ks.fiks.plan.v2.felles.planbehandling.schema.json",
         "no.ks.fiks.plan.v2.felles.midlertidigforbud.schema.json",
+        "no.ks.fiks.plan.v2.felles.planomraade.schema.json",
+        "no.ks.fiks.plan.v2.felles.arealformaalomraade.schema.json",
     };
 
     private static IEnumerable<string>? allFellesSchemas;
