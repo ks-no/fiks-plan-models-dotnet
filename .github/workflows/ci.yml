@@ -1,0 +1,285 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      isRelease:
+        description: 'Skal prosjektet releases?'
+        type: boolean
+        default: false
+      pushToNugetOrg:
+        description: 'Skal artifaktet pushes til nuget.org? Kun relevant for pre-release bygg da release alltid pushes dit'
+        type: boolean
+        default: false
+      specifiedVersion:
+        description: 'Hva er det nye versjonsnummeret (X.X.X)? Som default releases snapshot-versjonen'
+        type: string
+        default: ''
+      releaseNotes:
+        description: 'Hva er endret i denne releasen?'
+        type: string
+        default: 'Ingen endringer utført'
+      securityReview:
+        description: 'Har endringene sikkerhetsmessige konsekvenser, og hvilke tiltak er i så fall iverksatt?'
+        type: string
+        default: 'Endringene har ingen sikkerhetskonsekvenser'
+      reviewer:
+        description: 'Hvem har gjort review?'
+        type: string
+        default: 'Endringene krever ikke review'
+      triggerbranch:
+        description: 'Hvilke branch fra KS.Fiks.Plan.Specification skal det bygges fra?'
+        type: string
+        default: 'main'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  MODELS_FOLDER: KS.Fiks.Plan.Models.V2
+  GENERATOR_FOLDER: KS.Fiks.Plan.JsonModelGenerator
+  DOTNET_VERSION: '6.0.x'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      current_version: ${{ steps.init.outputs.current_version }}
+      next_version: ${{ steps.init.outputs.next_version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Initialize version variables
+        id: init
+        shell: bash
+        run: |
+          GIT_SHA=$(git rev-parse HEAD | cut -c1-7)
+          echo "GIT_SHA=$GIT_SHA" >> "$GITHUB_ENV"
+
+          CURRENT_VERSION=$(grep -oPm1 '(?<=<VersionPrefix>)[^<]+' "$MODELS_FOLDER/$MODELS_FOLDER.csproj")
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> "$GITHUB_ENV"
+
+          SPECIFIED_VERSION="${{ inputs.specifiedVersion }}"
+          if [ -z "$SPECIFIED_VERSION" ]; then
+            IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+            patch=$((patch + 1))
+            NEXT_VERSION="$major.$minor.$patch"
+          else
+            NEXT_VERSION="$SPECIFIED_VERSION"
+          fi
+          echo "NEXT_VERSION=$NEXT_VERSION" >> "$GITHUB_ENV"
+
+          IS_RELEASE="${{ inputs.isRelease }}"
+          TRIGGER_BRANCH="${{ inputs.triggerbranch }}"
+          if [ "$IS_RELEASE" = "true" ]; then
+            VERSION_SUFFIX=""
+            BUILD_SUFFIX=""
+          else
+            TIMESTAMP=$(date -u +"%Y%m%d%H%M%S%3N")
+            if [ "${TRIGGER_BRANCH:-main}" = "main" ] && [ "$GITHUB_REF_NAME" = "main" ]; then
+              RC_PREFIX="rc."
+            else
+              RC_PREFIX=""
+            fi
+            VERSION_SUFFIX="${RC_PREFIX}build.${TIMESTAMP}"
+            BUILD_SUFFIX="--version-suffix ${VERSION_SUFFIX}"
+          fi
+          echo "VERSION_SUFFIX=$VERSION_SUFFIX" >> "$GITHUB_ENV"
+          echo "BUILD_SUFFIX=$BUILD_SUFFIX" >> "$GITHUB_ENV"
+          echo "current_version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+          echo "next_version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch specification from fiks-plan-specification
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7.0.0
+        with:
+          repository: ks-no/fiks-plan-specification
+          ref: ${{ inputs.triggerbranch || 'main' }}
+          path: temp
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 #v5.3.0
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Generate models
+        working-directory: ${{ env.GENERATOR_FOLDER }}
+        run: |
+          cp -r ../temp/Schema .
+          dotnet run Schema/V2 output
+
+      - name: Unfold generated artifacts
+        run: |
+          mkdir -p unfold
+          mv "$GENERATOR_FOLDER/output/"* unfold/
+
+      - name: Write nuget.config
+        env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: |
+          cat > "$MODELS_FOLDER/nuget.config" <<EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+          <packageSources>
+          <add key="ArtifactoryRestore" value="https://artifactory.fiks.ks.no/artifactory/api/nuget/v3/nuget-all/index.json" />
+          <add key="ArtifactoryPush" value="https://artifactory.fiks.ks.no/artifactory/api/nuget/nuget-all" />
+          </packageSources>
+          <packageSourceCredentials>
+          <ArtifactoryRestore>
+          <add key="Username" value="${ARTIFACTORY_USERNAME}" />
+          <add key="ClearTextPassword" value="${ARTIFACTORY_PASSWORD}" />
+          </ArtifactoryRestore>
+          <ArtifactoryPush>
+          <add key="Username" value="${ARTIFACTORY_USERNAME}" />
+          <add key="ClearTextPassword" value="${ARTIFACTORY_PASSWORD}" />
+          </ArtifactoryPush>
+          </packageSourceCredentials>
+          </configuration>
+          EOF
+
+      - name: Restore NuGet packages
+        working-directory: ${{ env.MODELS_FOLDER }}
+        run: dotnet restore --configfile nuget.config
+
+      - name: Copy schemas and generated models into models project
+        run: |
+          mkdir -p "$MODELS_FOLDER/Schema"
+          cp -r temp/Schema/V2 "$MODELS_FOLDER/Schema/"
+          cp -r unfold/* "$MODELS_FOLDER/"
+
+      - name: Build and pack
+        working-directory: ${{ env.MODELS_FOLDER }}
+        run: dotnet build --no-restore -c Release ${{ env.BUILD_SUFFIX }}
+
+      - name: Collect nupkg artifacts
+        working-directory: ${{ env.MODELS_FOLDER }}
+        run: |
+          find . -path "*/Release/*.nupkg" -exec mv {} . \;
+          find . -path "*/Release/*.snupkg" -exec mv {} . \;
+
+      - name: Upload nupkg
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
+        with:
+          name: nupkg
+          path: ${{ env.MODELS_FOLDER }}/*.nupkg
+
+      - name: Upload snupkg
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
+        with:
+          name: snupkg
+          path: ${{ env.MODELS_FOLDER }}/*.snupkg
+
+  # ── Sign & Publish (Windows – required for DigiCert STM) ──────────────────
+  sign-and-publish:
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Download nupkg
+        if: ${{ !(inputs.isRelease == true || inputs.pushToNugetOrg == true) }}
+        uses: actions/download-artifact@v4
+        with:
+          name: nupkg
+          path: packages
+
+      - name: Sign NuGet packages
+        if: ${{ inputs.isRelease == true || inputs.pushToNugetOrg == true }}
+        uses: ks-no/github-actions-public/dotnet-sign-nuget-packages@main
+        with:
+          sm-host: ${{ vars.SM_HOST }}
+          sm-keypair-alias: ${{ vars.SM_KEY_PAIR_ALIAS }}
+          sm-api-key: ${{ secrets.SM_API_KEY }}
+          sm-client-cert-file-base64: ${{ secrets.SM_CLIENT_CERT_FILE }}
+          sm-client-cert-password: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Push to Artifactory
+        working-directory: packages
+        run: |
+          dotnet nuget add source https://artifactory.fiks.ks.no/artifactory/api/nuget/nuget-all `
+          --name ArtifactoryPush `
+          --username "${{ secrets.ARTIFACTORY_USERNAME }}" `
+          --password "${{ secrets.ARTIFACTORY_PASSWORD }}" `
+          --store-password-in-clear-text
+          dotnet nuget push "*.nupkg" -s ArtifactoryPush
+
+      - name: Push to nuget.org
+        if: ${{ inputs.isRelease == true || inputs.pushToNugetOrg == true }}
+        working-directory: packages
+        env:
+          NUGET_ACCESS_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_PUSH_REPO: 'https://api.nuget.org/v3/index.json'
+        run: dotnet nuget push "*.nupkg" -k "$env:NUGET_ACCESS_KEY" -s "$env:NUGET_PUSH_REPO"
+
+  # ── Tag & GitHub Release ───────────────────────────────────────────────────
+  release:
+    needs: [build, sign-and-publish]
+    if: ${{ inputs.isRelease == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Download signed nupkg
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        with:
+          name: signed-nupkg
+          path: ${{ env.MODELS_FOLDER }}
+
+      - name: Download snupkg
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        with:
+          name: snupkg
+          path: ${{ env.MODELS_FOLDER }}
+
+      - name: Bump version in csproj
+        working-directory: ${{ env.MODELS_FOLDER }}
+        run: |
+          sed -i "s|<VersionPrefix>.*</VersionPrefix>|<VersionPrefix>${{ needs.build.outputs.next_version }}</VersionPrefix>|" \
+            "${{ env.MODELS_FOLDER }}.csproj"
+
+      - name: Commit and tag release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "${{ env.MODELS_FOLDER }}/${{ env.MODELS_FOLDER }}.csproj"
+          git commit -m "chore: bump version to ${{ needs.build.outputs.next_version }} [skip ci]"
+          git tag "v${{ needs.build.outputs.current_version }}"
+          git push origin HEAD:${{ github.ref_name }}
+          git push origin "v${{ needs.build.outputs.current_version }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b #v3.0.1
+        with:
+          tag_name: v${{ needs.build.outputs.current_version }}
+          name: v${{ needs.build.outputs.current_version }}
+          body: |
+            **Release notes:**
+            ${{ inputs.releaseNotes }}
+
+            **Security review:**
+            ${{ inputs.securityReview }}
+
+            **Reviewer:** ${{ inputs.reviewer }}
+          files: |
+            ${{ env.MODELS_FOLDER }}/*.nupkg
+            ${{ env.MODELS_FOLDER }}/*.snupkg
