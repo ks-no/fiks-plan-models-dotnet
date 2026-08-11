@@ -43,7 +43,7 @@ concurrency:
 env:
   MODELS_FOLDER: KS.Fiks.Plan.Models.V2
   GENERATOR_FOLDER: KS.Fiks.Plan.JsonModelGenerator
-  DOTNET_VERSION: '6.0.x'
+  DOTNET_VERSION: '10.0.x'
 
 jobs:
   build:
@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7.0.0
+        uses: ks-no/github-actions-public/checkout@main
         with:
           fetch-depth: 0
 
@@ -100,14 +100,14 @@ jobs:
           echo "next_version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Fetch specification from fiks-plan-specification
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7.0.0
+        uses: ks-no/github-actions-public/checkout@main
         with:
           repository: ks-no/fiks-plan-specification
           ref: ${{ inputs.triggerbranch || 'main' }}
           path: temp
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2 #v5.3.0
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 #v6.0.0
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -168,13 +168,13 @@ jobs:
           find . -path "*/Release/*.snupkg" -exec mv {} . \;
 
       - name: Upload nupkg
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
+        uses: ks-no/github-actions-public/upload-artifact@main
         with:
           name: nupkg
           path: ${{ env.MODELS_FOLDER }}/*.nupkg
 
       - name: Upload snupkg
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
+        uses: ks-no/github-actions-public/upload-artifact@main
         with:
           name: snupkg
           path: ${{ env.MODELS_FOLDER }}/*.snupkg
@@ -188,7 +188,7 @@ jobs:
     steps:
       - name: Download nupkg
         if: ${{ !(inputs.isRelease == true || inputs.pushToNugetOrg == true) }}
-        uses: actions/download-artifact@v4
+        uses: ks-no/github-actions-public/download-artifact@main
         with:
           name: nupkg
           path: packages
@@ -204,7 +204,7 @@ jobs:
           sm-client-cert-password: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -235,51 +235,29 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7.0.0
+        uses: ks-no/github-actions-public/checkout@main
         with:
           fetch-depth: 0
 
       - name: Download signed nupkg
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        uses: ks-no/github-actions-public/download-artifact@main
         with:
           name: signed-nupkg
           path: ${{ env.MODELS_FOLDER }}
 
       - name: Download snupkg
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        uses: ks-no/github-actions-public/download-artifact@main
         with:
           name: snupkg
           path: ${{ env.MODELS_FOLDER }}
 
-      - name: Bump version in csproj
-        working-directory: ${{ env.MODELS_FOLDER }}
-        run: |
-          sed -i "s|<VersionPrefix>.*</VersionPrefix>|<VersionPrefix>${{ needs.build.outputs.next_version }}</VersionPrefix>|" \
-            "${{ env.MODELS_FOLDER }}.csproj"
-
-      - name: Commit and tag release
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "${{ env.MODELS_FOLDER }}/${{ env.MODELS_FOLDER }}.csproj"
-          git commit -m "chore: bump version to ${{ needs.build.outputs.next_version }} [skip ci]"
-          git tag "v${{ needs.build.outputs.current_version }}"
-          git push origin HEAD:${{ github.ref_name }}
-          git push origin "v${{ needs.build.outputs.current_version }}"
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b #v3.0.1
+      - name: Bump version, tag, create Github release
+        uses: ks-no/github-actions-public/create-github-release@main
         with:
-          tag_name: v${{ needs.build.outputs.current_version }}
-          name: v${{ needs.build.outputs.current_version }}
-          body: |
-            **Release notes:**
-            ${{ inputs.releaseNotes }}
-
-            **Security review:**
-            ${{ inputs.securityReview }}
-
-            **Reviewer:** ${{ inputs.reviewer }}
-          files: |
-            ${{ env.MODELS_FOLDER }}/*.nupkg
-            ${{ env.MODELS_FOLDER }}/*.snupkg
+          current-version: ${{ needs.build.outputs.current_version }}
+          next-version: ${{ needs.build.outputs.next_version }}
+          release-notes: ${{ inputs.releaseNotes }}
+          reviewer: ${{ inputs.reviewer }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          actor: ${{ github.actor }}
+          ref-name: ${{ github.ref_name }}
